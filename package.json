@@ -1,0 +1,50 @@
+{
+  "name": "hadathah-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://ve-store.tareeqy.online/",
+  "author": "Askar <mr.askar1984@gmail.com>",
+  "main": "main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "copy-build": "cp -R dist/* /var/www/html/hadathah.org/public/",
+    "precopy-build": "rm -rf /var/www/html/hadathah.org/public/*",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "getCss": "tailwindcss -i ./src/index.css -o ./src/App.css --watch",
+    "format": "prettier --write src/**/*.{js,jsx}"
+  },
+  "dependencies": {
+    "@backlightco/react-slick-rtl": "^1.0.0",
+    "@datepicker-react/styled": "^2.8.4",
+    "@react-spring/web": "^9.7.3",
+    "@use-gesture/react": "^10.3.1",
+    "axios": "^1.6.8",
+    "postcss-css-variables": "^0.19.0",
+    "postcss-import": "^16.1.0",
+    "postcss-nesting": "^12.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.2.0",
+    "react-router-dom": "^6.22.0",
+    "react-slick": "^0.30.2",
+    "rollup-plugin-visualizer": "^5.12.0",
+    "styled-components": "^6.1.9",
+    "swiper": "^11.1.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^9.1.1",
+    "postcss": "^8.4.38",
+    "prettier": "^3.2.5",
+    "tailwindcss": "^3.4.1",
+    "terser": "^5.30.4",
+    "vite": "^5.2.9",
+    "vite-plugin-compression": "^0.5.1"
+  },
+  "packageManager": "yarn@1.22.22"
+}
