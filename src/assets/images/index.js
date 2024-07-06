@@ -1,10 +1,11 @@
 // export images
 export { default as LogoArt } from './logo.png';
+export { default as LogoArt2 } from './logo2.png';
 export { default as BannerBackground } from './banner-bg.png';
 export { default as FbIcon } from './fb-icon.png';
 export { default as Img1 } from './img-1.png';
 export { default as Img2 } from './img-2.png';
-export { default as Img3 } from './products/electronic/img-3.png';
+export { default as Img3 } from './img-3.png';
 export { default as Img4 } from './products/electronic/img-4.png';
 export { default as Img5 } from './products/beauty/img-5.png';
 export { default as Img6 } from './products/electronic/img-6.png';
