@@ -9,10 +9,11 @@
   "main": "main.js",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "copy-build": "cp -R dist/* /var/www/html/hadathah.org/public/",
-    "precopy-build": "rm -rf /var/www/html/hadathah.org/public/*",
+    "precopy-build": "rm -rf var/www/html/ve-shop.co//public/*",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    
+    "build": "vite build",
+    "copy-dist": "cp -R dist/* /var/www/html/ve-shop.co//public",
     "preview": "vite preview",
     "getCss": "tailwindcss -i ./src/index.css -o ./src/App.css --watch",
     "format": "prettier --write src/**/*.{js,jsx}"
