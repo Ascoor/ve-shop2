@@ -171,6 +171,12 @@ const DemoData = (type) => {
     name: "Amazon",
     image: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
   },
+  {name:'Shein',
+  image:'https://upload.wikimedia.org/wikipedia/commons/0/0b/Shein_logo.svg'},
+  {
+    name: "H&M",
+    image: "https://upload.wikimedia.org/wikipedia/commons/9/9e/H_M_logo.svg",
+  }
 ];
       case 'clientList':
         return [
