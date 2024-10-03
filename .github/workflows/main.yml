@@ -11,10 +11,10 @@ jobs:
 
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v3  # Updated to the latest stable version
+      uses: actions/checkout@v3  # Latest stable version
 
     - name: Setup Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v3  # Latest stable version
       with:
         node-version: '18.20.4'  # Match the Node.js version on your server
 
@@ -23,7 +23,7 @@ jobs:
       with:
         host: ${{ secrets.HOSTINGER_HOST }}
         username: ${{ secrets.HOSTINGER_USERNAME }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}  # Use SSH key-based authentication
+        password: ${{ secrets.HOSTINGER_PASSWORD }}
         port: ${{ secrets.SERVER_PORT }}
         script: |
           cd /var/www/html/ve-shop.co/ve-frontend
