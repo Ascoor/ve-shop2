@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 
+<<<<<<< HEAD
 
 /* تأثير التحريك للعناصر المتحركة */
 @keyframes blob {
@@ -33,3 +34,6 @@
   .animation-delay-6000 {
     animation-delay: 6s;
   }
+=======
+  
+>>>>>>> 61437aadda136a5787ad4ffec00cbd22c916e3eb
