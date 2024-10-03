@@ -1,9 +1,9 @@
-name: Remote Build and Deploy on Update
+name: Remote Update and Deploy
 
 on:
   push:
     branches:
-      - master  # Triggers on pushes to the master branch.
+      - master  # Triggers the workflow on pushes to the master branch
 
 jobs:
   remote-update-and-deploy:
@@ -11,19 +11,19 @@ jobs:
 
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v2  # Checks out the repository code.
+      uses: actions/checkout@v3  # Updated to the latest stable version
 
     - name: Setup Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3  # Updated to the latest stable version
       with:
-        node-version: '20'  # Updated Node.js version to use.
+        node-version: '20'  # Node.js version to use
 
     - name: Connect to Remote Server and Run Update Commands
-      uses: appleboy/ssh-action@master
+      uses: appleboy/ssh-action@v0.1.0  # Use a stable release instead of @master
       with:
         host: ${{ secrets.HOSTINGER_HOST }}
         username: ${{ secrets.HOSTINGER_USERNAME }}
-        password: ${{ secrets.HOSTINGER_PASSWORD }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}  # Use SSH key-based authentication
         port: ${{ secrets.SERVER_PORT }}
         script: |
           cd /var/www/html/ve-shop.co/ve-frontend
@@ -32,17 +32,13 @@ jobs:
           if [ -f package-lock.json ]; then
             rm package-lock.json  # Remove package-lock.json if it exists
           fi
-          if ! command -v yarn &> /dev/null
-          then
+          if ! command -v yarn &> /dev/null; then
             npm install -g yarn  # Install Yarn if it's not installed
           fi
-          rm -r node_modules
+          rm -rf node_modules
           yarn install  # Ensure all dependencies are installed
           yarn upgrade --force  # Updates all dependencies
           yarn run build  # Builds the project
           yarn run copy-build  # Runs the custom script to copy build files
-        protocol: tcp
         timeout: 30s
         command_timeout: 10m
-        proxy_port: ${{ secrets.PROXY_PORT }}
-        proxy_timeout: 30s
