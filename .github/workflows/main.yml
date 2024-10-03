@@ -1,0 +1,48 @@
+name: Remote Build and Deploy on Update
+
+on:
+  push:
+    branches:
+      - master  # Triggers on pushes to the master branch.
+
+jobs:
+  remote-update-and-deploy:
+    runs-on: ubuntu-latest  # Specifies the runner environment.
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2  # Checks out the repository code.
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20'  # Updated Node.js version to use.
+
+    - name: Connect to Remote Server and Run Update Commands
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOSTINGER_HOST }}
+        username: ${{ secrets.HOSTINGER_USERNAME }}
+        password: ${{ secrets.HOSTINGER_PASSWORD }}
+        port: ${{ secrets.SERVER_PORT }}
+        script: |
+          cd /var/www/html/ve-shop.co/ve-frontend
+          git stash  # Stash any local changes
+          git pull origin master  # Pull the latest changes from the master branch
+          if [ -f package-lock.json ]; then
+            rm package-lock.json  # Remove package-lock.json if it exists
+          fi
+          if ! command -v yarn &> /dev/null
+          then
+            npm install -g yarn  # Install Yarn if it's not installed
+          fi
+          rm -r node_modules
+          yarn install  # Ensure all dependencies are installed
+          yarn upgrade --force  # Updates all dependencies
+          yarn run build  # Builds the project
+          yarn run copy-build  # Runs the custom script to copy build files
+        protocol: tcp
+        timeout: 30s
+        command_timeout: 10m
+        proxy_port: ${{ secrets.PROXY_PORT }}
+        proxy_timeout: 30s
