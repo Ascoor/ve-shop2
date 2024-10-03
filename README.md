@@ -1,20 +1,12 @@
-<<<<<<< HEAD
 
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 61437aadda136a5787ad4ffec00cbd22c916e3eb
 # ve-front
-=======
+
 # Getting Started with Create React App
-=======
+
 Graphic Design Project Management System
 Overview
 This readme provides a detailed and organized explanation of a graphic design project management system within an advertising company. The system encompasses database design, project management, supply management, printing processes, workflow, alerts, and accounting integration.
->>>>>>> 1b7a7aa (df)
+
 
 1. Database Design
 A. Database Tables:
@@ -116,11 +108,6 @@ Printing and Delivery of Orders.
 5. Alerts and Reminders
 Creating alerts for each stage of the project to ensure timely control and effective project management.
 
-<<<<<<< HEAD
- 
-=======
-<<<<<<< HEAD
->>>>>>> 61437aadda136a5787ad4ffec00cbd22c916e3eb
 If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
 Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
@@ -156,17 +143,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
->>>>>>> 0756e71 (Initialize project using Create React App)
-=======
+
 6. Accounting System
 Integrating the accounting system with order processes, collection, delivery, and supply of materials to ensure financial information accuracy.
->>>>>>> 1b7a7aa (df)
-=======
-# ve-front
->>>>>>> 8ffbdaaf565c70c92c4f6dc6273c0a4032b101da
-=======
-# ve-front
->>>>>>> 8ffbdaaf565c70c92c4f6dc6273c0a4032b101da
-=======
-# ve-front
->>>>>>> 8ffbdaaf565c70c92c4f6dc6273c0a4032b101da

@@ -46,10 +46,7 @@ export { default as SectionElectronics } from './category/elctronic.png';
 export { default as SectionGifts } from './category/gift.png';
 export { default as SectionKidToys } from './category/kid-toys.png';
 export { default as SectionTecnolgy } from './category/tecno.png';
-<<<<<<< HEAD
 
 // brands logos
 
 export { default as AdidasLogo } from './brands/adidas.png';
-=======
->>>>>>> 61437aadda136a5787ad4ffec00cbd22c916e3eb

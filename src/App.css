@@ -1,7 +1,6 @@
 
 /*####################### Arabic Font for App ########################*/
 
-<<<<<<< HEAD
   @font-face {
     font-family: 'almaria-font';
     src: url('./assets/fonts/Almarai-Regular.ttf') format('truetype');
@@ -10,16 +9,6 @@
     font-family: 'Cairo-Regular';
     src: url('./assets/fonts/static/Cairo-Regular.ttf') format('truetype');
   }
-=======
-@font-face {
-  font-family: 'almaria-font';
-  src: url('./assets/fonts/Almarai-Regular.ttf') format('truetype');
-}
-@font-face {
-  font-family: 'Cairo-bold';
-  src: url('./assets/fonts/static/Cairo-Bold.ttf') format('truetype');
-}
->>>>>>> 61437aadda136a5787ad4ffec00cbd22c916e3eb
 
 :root {
   /* ألوان النهار لتوفير تجربة دافئة وترحيبية */
@@ -55,7 +44,6 @@
     
 }
 
-<<<<<<< HEAD
   /*####################### Body Style for App ########################*/
   body {
     
@@ -113,49 +101,3 @@
     animation: twinkle infinite;
   }
   
-=======
-/*####################### Body Style for App ########################*/
-body {
-  
-
-  background-color: var(--day-background);
-  color: var(--day-text); /* Set the text color for light mode */
-  transition: background-color 0.3s, color 0.3s;
-  font-family: 'Cairo-bold';
-}
-
-.dark {
-  /* Define the animated gradient for the .dark class */
-  background: linear-gradient(270deg, var(--gradient-color-start), var(--gradient-color-end));
-  background-size: 200% 200%;
-  /* Set the text color variable for dark mode */
-  color: var(--night-text);
-  /* Apply the gradient animation */
-}
-/* استايل الظل المضيء بتأثير النيون */
-.neon-shadow {
-    box-shadow: 0 0 6px rgba(147, 112, 219, 0.6), /* تقليل الحجم وزيادة الشفافية */
-                0 0 12px rgba(147, 112, 219, 0.4), /* تقليل الحجم وزيادة الشفافية */
-                0 0 24px rgba(147, 112, 219, 0.2), /* تقليل الحجم وزيادة الشفافية */
-                0 0 36px rgba(147, 112, 219, 0.1); /* تقليل الحجم وزيادة الشفافية */
-  }
-
-/* In your main CSS file or <style> tag */
-.pagnation-button {
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.pagnation-button:hover {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.dark .pagnation-button {
-  shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
-}
-
-.pagnation-disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-  
->>>>>>> 61437aadda136a5787ad4ffec00cbd22c916e3eb

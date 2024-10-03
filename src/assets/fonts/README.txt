@@ -1,5 +1,5 @@
 Cairo Variable Font
-===================
+
 
 This download contains Cairo as both a variable font and static fonts.
 

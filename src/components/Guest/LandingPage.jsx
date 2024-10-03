@@ -1,7 +1,6 @@
 import React from 'react';
 import HeaderSection from './Layout/HeaderSection';
 import CategorySection from './Layout/CategorySection';
-<<<<<<< HEAD
 import BrandsSection from './Layout/BrandsSection';
 import ProductsSection from './Layout/ProductsSection';
 import FooterSection from './Layout/FooterSection';
@@ -61,29 +60,3 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
-=======
-import ClientSection from './Layout/ClientSection';
-import ProductsSection from './Layout/ProductsSection';
-import NewsletterSection from './Layout/NewsletterSection';
-import BeautyProudctsSection from './Layout/BeautyProudctsSection';
-import FooterSection from './Layout/FooterSection';
-import ImageSlider from './Layout/ImageSlider';
- 
-
-const LandingPage = () => {
-  return (
-    <>
-       <HeaderSection />
-
-      <CategorySection />
-      <ProductsSection />
-      {/* <BeautyProudctsSection />
-      <ClientSection />
-      <NewsletterSection /> */}
-      <FooterSection />
-    </>
-  );
-};
-
-export default LandingPage;
->>>>>>> 61437aadda136a5787ad4ffec00cbd22c916e3eb
