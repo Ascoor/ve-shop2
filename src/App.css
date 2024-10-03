@@ -1,0 +1,103 @@
+
+/*####################### Arabic Font for App ########################*/
+
+  @font-face {
+    font-family: 'almaria-font';
+    src: url('./assets/fonts/Almarai-Regular.ttf') format('truetype');
+  }
+  @font-face {
+    font-family: 'Cairo-Regular';
+    src: url('./assets/fonts/static/Cairo-Regular.ttf') format('truetype');
+  }
+
+:root {
+  /* ألوان النهار لتوفير تجربة دافئة وترحيبية */
+  --day-background: #ffffff; /* خلفية بيج فاتح لتعزيز الشعور بالدفء والترحاب */
+  --day-text: #424242; /* نص أغمق لتحسين القراءة في ضوء النهار */
+  --day-border-background: #8a55a2; /* حدود بلون اللافندر للتماشي مع الهوية اللونية */
+  --day-section-background: #73149f; /* خلفية القسم بلون اللافندر الغامق لخلق تباين */
+  --day-section-text: #FFFFFF; /* نص بلون أبيض لتحسين القراءة على خلفية غامقة */
+  --day-header-shadow: 0px 4px 12px rgba(251, 200, 33, .5); /* ظلال لإضافة عمق */
+  --day-hover-background: #FFFFFF; /* خلفية تحويم برتقالية لجذب الانتباه */
+  --day-hover-text: #FB8C00; /* نص تحويم بلون أبيض للتباين */
+  --day-hover-active: #f7c89d; /* لون فعال للتحويم لخلق تجربة ديناميكية */
+  --day-link-text: #8e11c7; /* لون الروابط باللافندر للإشارة والتنقل السهل */
+  --day-footer-background: #FCE4EC; /* خلفية التذييل وردية لإحساس بالنعومة */
+  --day-footer-text: #C2185B; /* نص التذييل بلون وردي أغمق لتحسين القراءة */
+
+  /* ألوان الليل لتجربة أكثر غموضاً وجاذبية */
+  --night-background: #111828; /* خلفية أزرق غامق لتجربة ليلية غامضة */
+  --night-link-text: #f2b8ff; /* لون روابط باللافندر الفاتح للتميز */
+  --night-border-background: #0F212E; /* حدود بلون بيج داكن للتباين الليلي */
+  --night-hover-background: #deb562; /* خلفية تحويم بلون أرجواني للإشراق */
+  --night-border-text: #fcf8ff; /* نص حدود بلون أفتح للقراءة السهلة */
+  --night-header-shadow: 0px 4px 12px rgba(244, 175, 24, 0.872); /* ظلال للعمق */
+  --night-text: #d3f2ff; /* نص بلون فاتح لتحسين القراءة الليلية */
+  --night-home-card: #546E7A; /* خلفية بطاقة بأزرق متوسط للتمايز */
+  --night-footer: #37474F; /* خلفية التذييل بلون أغمق للتجانس */
+  --gradient-color-start: #203055; /* بداية التدرج بالأزرق الداكن */
+  --gradient-color-center: #182135; /* نهاية التدرج بالأرجواني الفاتح */
+  --gradient-color-end: #121a2f; /* نهاية التدرج بالأرجواني الفاتح */
+    --gradient-color-landing-start: #957DAD; /* لون ترابي داكن */
+    --gradient-color-landing-mid: #D291BC; /* لون ترابي داكن */
+    --gradient-color-landing-end: #E0BBE4;   /* لون لافندر ناعم */
+    
+}
+
+  /*####################### Body Style for App ########################*/
+  body {
+    
+
+    background-color: var(--day-background);
+    color: var(--day-text); /* Set the text color for light mode */
+    transition: background-color 0.3s, color 0.3s;
+    font-family: 'Cairo-Regular';
+    
+  }
+
+  .dark {
+    /* Define the animated gradient for the .dark class */
+    background: linear-gradient(270deg, var(--gradient-color-start), var(--gradient-color-end));
+    background-size: 200% 200%;
+    /* Set the text color variable for dark mode */
+    color: var(--night-text);
+    /* Apply the gradient animation */
+  }
+  /* استايل الظل المضيء بتأثير النيون */
+  .neon-shadow {
+      box-shadow: 0 0 6px rgba(147, 112, 219, 0.6), /* تقليل الحجم وزيادة الشفافية */
+                  0 0 12px rgba(147, 112, 219, 0.4), /* تقليل الحجم وزيادة الشفافية */
+                  0 0 24px rgba(147, 112, 219, 0.2), /* تقليل الحجم وزيادة الشفافية */
+                  0 0 36px rgba(147, 112, 219, 0.1); /* تقليل الحجم وزيادة الشفافية */
+    }
+
+  /* In your main CSS file or <style> tag */
+  .pagnation-button {
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .pagnation-button:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .dark .pagnation-button {
+    shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+  }
+
+  .pagnation-disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+    
+
+
+  @keyframes twinkle {
+    0% { opacity: 0.2; }
+    50% { opacity: 1; }
+    100% { opacity: 0.2; }
+  }
+  
+  .animate-twinkle {
+    animation: twinkle infinite;
+  }
+  
