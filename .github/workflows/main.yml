@@ -14,12 +14,12 @@ jobs:
       uses: actions/checkout@v3  # Updated to the latest stable version
 
     - name: Setup Node.js
-      uses: actions/setup-node@v3  # Updated to the latest stable version
+      uses: actions/setup-node@v3
       with:
-        node-version: '20'  # Node.js version to use
+        node-version: '18.20.4'  # Match the Node.js version on your server
 
     - name: Connect to Remote Server and Run Update Commands
-      uses: appleboy/ssh-action@v0.1.0  # Use a stable release instead of @master
+      uses: appleboy/ssh-action@v0.1.8  # Use the latest stable release
       with:
         host: ${{ secrets.HOSTINGER_HOST }}
         username: ${{ secrets.HOSTINGER_USERNAME }}
@@ -42,3 +42,4 @@ jobs:
           yarn run copy-build  # Runs the custom script to copy build files
         timeout: 30s
         command_timeout: 10m
+        debug: true  # Enable debugging for detailed logs
