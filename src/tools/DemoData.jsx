@@ -1,5 +1,5 @@
 import {
- Img1, Img2, Img3, Img4, Img5, Img6, Img7, Img8, Img9, Img10, Img11, Img12, Img13, Img14, Img15
+ Slide1,Slide2,Slide3, Img4, Img5, Img6, Img7, Img8, Img9, Img10, Img11, Img12, Img13, Img14, Img15
 } from '../assets/images/index';
 
 
@@ -52,21 +52,21 @@ const DemoData = (type) => {
         
             {
               id: 1,
-              img: Img1,
+              img: Slide1,
               title: "خصم 50%",
               description: "استمتع بأفضل العروض والخصومات على منتجاتنا المتنوعة. جودة عالية وأسعار منافسة بانتظارك.",
               buttonText: "تسوق الآن",
             },
             {
               id: 2,
-              img: Img2,
+              img: Slide2,
               title: "عرض خاص",
               description: "احصل على أفضل المنتجات بأفضل الأسعار. عرض محدود لفترة قصيرة.",
               buttonText: "تسوق الآن",
             },
             {
               id: 3,
-              img: Img3,
+              img: Slide3,
               title: "تخفيضات الصيف",
               description: "استفد من تخفيضات الصيف الرائعة على جميع المنتجات.",
               buttonText: "تسوق الآن",
@@ -171,11 +171,27 @@ const DemoData = (type) => {
     name: "Amazon",
     image: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
   },
-  {name:'Shein',
-  image:'https://upload.wikimedia.org/wikipedia/commons/0/0b/Shein_logo.svg'},
+  {name:'SHEIN',
+  image:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Shein_Logo_2017.svg/530px-Shein_Logo_2017.svg.png?20240613050303'},
   {
     name: "H&M",
-    image: "https://upload.wikimedia.org/wikipedia/commons/9/9e/H_M_logo.svg",
+    image: "https://www.svgrepo.com/show/516891/hm.svg",
+  },
+  {
+    name: "D&G",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Dolce_%26_Gabbana.svg/468px-Dolce_%26_Gabbana.svg.png?20101121121508"
+  },
+  {
+    name: "CHANEL",
+    image: "https://www.logo.wine/a/logo/Chanel/Chanel-Logo.wine.svg",
+  },
+  {
+    name:"GUCCI",
+    image: "https://www.logo.wine/a/logo/Gucci/Gucci-Logo.wine.svg",
+  },
+  {
+    name:"ZARA",
+    image: "https://www.logo.wine/a/logo/Zara_(retailer)/Zara_(retailer)-Logo.wine.svg",
   }
 ];
       case 'clientList':

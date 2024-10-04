@@ -1,4 +1,7 @@
 import React from 'react';
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import HeaderSection from './Layout/HeaderSection';
 import CategorySection from './Layout/CategorySection';
 import BrandsSection from './Layout/BrandsSection';
@@ -50,10 +53,7 @@ const LandingPage = () => {
   <ReviewsSection />
 </div>
  
- 
-<footer className="text-white py-10 px-4 lg:px-16">
   <FooterSection />
-</footer>
 
       </div>
   );

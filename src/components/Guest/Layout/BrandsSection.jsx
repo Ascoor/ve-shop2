@@ -1,8 +1,5 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import DemoData from "../../../tools/DemoData";
 
@@ -17,13 +14,13 @@ const BrandsSection = () => {
       {/* Swiper Container */}
       <div className="relative max-w-6xl mx-auto px-4 sm:px-8">
         {/* Custom Previous Button (on the right side now) */}
-        <div className="swiper-button-prev-custom absolute -right-12 top-1/2 transform -translate-y-1/2 z-10 cursor-pointer p-3 rounded-full bg-blue-800 hover:bg-yellow-400 transition duration-300">
-          <span className="text-2xl font-bold text-white hover:text-gray-600">❮</span>
+        <div className="swiper-button-prev-custom absolute -right-12 top-1/2 transform -translate-y-1/2 z-10 cursor-pointer p-3 rounded-full bg-violet-400 hover:bg-violet-800 border-4 border-violet-700 transition duration-300">
+          <span className="text-2xl font-bold text-white hover:text-yellow-400">❮</span>
         </div>
 
         {/* Custom Next Button (on the left side now) */}
-        <div className="swiper-button-next-custom absolute -left-12 top-1/2 transform -translate-y-1/2 z-10 cursor-pointer p-3 rounded-full bg-blue-800 hover:bg-yellow-400 transition duration-300">
-          <span className="text-2xl font-bold text-white hover:text-gray-600">❯</span>
+        <div className="swiper-button-next-custom absolute -left-12 top-1/2 transform -translate-y-1/2 z-10 cursor-pointer p-3 rounded-full bg-violet-400 hover:bg-violet-800  border-violet-700  transition duration-300">
+          <span className="text-2xl font-bold text-white hover:text-yellow-400">❯</span>
         </div>
 
         {/* Swiper Component with Custom Margins for Navigation */}
@@ -68,7 +65,11 @@ const BrandsSection = () => {
           {/* Swiper Slides */}
           {brandsData.map((brand, index) => (
             <SwiperSlide key={index}>
-              <div className="p-8 md:p-6 transition duration-300 shadow-lg rounded-lg  flex justify-center items-center">
+              <div className="relative p-8 md:p-6 transition duration-300 shadow-xl rounded-xl flex justify-center items-center bg-transparent overflow-hidden">
+              {/* دائرة الخلفية */}
+               <div className="absolute inset-0 flex justify-center items-center">
+    <div className="w-64 h-64 rounded-full border-6 border-violet-500 opacity-80"></div>
+  </div>
               <img
   src={brand.image}
   alt={brand.name}

@@ -34,6 +34,11 @@ export { default as RightIcon } from './right-icon.png';
 export { default as SearchIcon } from './search-icon.png';
 export { default as ShoppingBagIcon } from './shopping-bag.png';
 
+//slides
+export { default as Slide1 } from './slides/slide-1.png';
+export { default as Slide2 } from './slides/slide-2.png';
+export { default as Slide3 } from './slides/slide-3.png';
+export { default as Slide4 } from './slides/slide-4.png';
 
 
 
