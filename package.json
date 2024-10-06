@@ -1,0 +1,48 @@
+{
+  "name": "ve-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "VE-SHOP is a modern e-commerce frontend using Next.js, React, and Redux Toolkit.",
+  "homepage": "https://veshop.co",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ascoor/ve-shop"
+  },
+  "author": "Ask-ar.net Developer",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.1.9",
+    "@heroicons/react": "^2.1.5",
+    "@reduxjs/toolkit": "^2.2.7",
+    "axios": "^1.7.7",
+    "formik": "^2.4.6",
+    "next": "^14.2.14",
+    "next-redux-wrapper": "^8.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.3.0",
+    "react-rating-stars-component": "^2.2.3",
+    "react-redux": "^9.1.2",
+    "react-redux-toastr": "^8.0.0",
+    "redux-persist": "^6.0.0",
+    "swiper": "^11.1.14",
+    "yup": "^1.4.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.12.0",
+    "eslint-config-next": "^14.2.14",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.13"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "yarn": ">=1.22.0"
+  }
+}
