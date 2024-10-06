@@ -13,6 +13,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "copy-build": "cp -R dist/* /var/www/html/ve-shop.co/public",
+    "precopy-build": "rm -rf /var/www/html/ve-shop.co/public/*",
     "lint": "next lint"
   },
   "dependencies": {
