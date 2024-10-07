@@ -46,7 +46,8 @@ jobs:
 
           # بناء التطبيق
           yarn build
-
+          yarn precopy-build
+          yarn copy-build
           # إدارة العملية باستخدام PM2
           if pm2 list | grep -q "ve-frontend"; then
             pm2 restart ve-frontend
