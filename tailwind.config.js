@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        cairo: ['Cairo'],
+        cairo: ['Cairo, sans-serif'],
       },
     },
   },
