@@ -13,9 +13,6 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "copy-build": "cp -R .next/* /var/www/html/ve-shop.co/public",
-    "precopy-build": "rm -rf /var/www/html/ve-shop.co/public/*",
-    "deploy": "yarn build && yarn precopy-build && yarn copy-build",
     "lint": "next lint"
   },
   "dependencies": {
