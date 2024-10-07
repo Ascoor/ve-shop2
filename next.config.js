@@ -2,8 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  basePath: '',                          // تحديد المسار الأساسي إذا كان هناك مسار فرعي
-  assetPrefix: '/public/',                // تعيين مسار الملفات الثابتة
+  distDir: 'build', // قم بتغيير `distDir` إلى مسار مختلف مثل `build`
 };
 
 module.exports = nextConfig;
