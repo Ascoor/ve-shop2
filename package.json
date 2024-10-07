@@ -9,16 +9,16 @@
     "url": "https://github.com/Ascoor/ve-shop"
   },
   "author": "Ask-ar.net Developer",
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "copy-build": "cp -R .next/* /var/www/html/ve-shop.co/public",
-    "precopy-build": "rm -rf /var/www/html/ve-shop.co/public/*",
-    "start:prod": "NODE_ENV=production pm2 start yarn --name 've-frontend' -- start",
-    "deploy": "yarn build && yarn precopy-build && yarn copy-build",
-    "lint": "next lint"
-  },
+"scripts": {
+  "dev": "next dev",
+  "build": "next build",
+  "predeploy": "rm -rf /var/www/html/ve-shop.co/public/*",
+  "deploy": "yarn build && yarn copy-build",
+  "copy-build": "cp -R .next/* /var/www/html/ve-shop.co/public",
+  "start": "next start",
+  "start:prod": "NODE_ENV=production pm2 start yarn --name 've-frontend' -- start",
+  "lint": "next lint"
+},
   "dependencies": {
     "@headlessui/react": "^2.1.9",
     "@heroicons/react": "^2.1.5",
