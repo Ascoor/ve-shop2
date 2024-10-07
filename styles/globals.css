@@ -12,7 +12,11 @@
   padding-right: 0.75rem;
   width: 100%;
 }
-
+@layer utilities {
+  .font-cairo {
+    font-family: 'Cairo', sans-serif;
+  }
+}
 /* ضبط الخطوط المخصصة */
 body {
   font-family: 'Cairo', sans-serif;
