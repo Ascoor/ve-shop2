@@ -13,6 +13,7 @@ const Slider = ({ loading }) => {
           alt='black-friday'
           width={2400}
           height={1600}
+          layout='responsive'
           className='w-full h-full object-contain p-4'
           priority
         />
