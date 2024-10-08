@@ -1,9 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import { HYDRATE } from 'next-redux-wrapper';
-import { setupListeners } from '@reduxjs/toolkit/query';
 import cartSlice from './reducers/cartSlice';
-import authSlice from './reducers/authSlice';
+import authSlice from './slices/authSlice';  // تأكد من المسار الصحيح
 import favoriteSlice from './reducers/favoriteSlice';
 import messageSlice from './reducers/messageSlice';
 import { productApi } from './services/productApi';
@@ -24,7 +23,7 @@ const rootReducer = combineReducers({
   [productApi.reducerPath]: productApi.reducer,
   cart: cartSlice,
   favorite: favoriteSlice,
-  auth: authSlice,
+  auth: authSlice,  // تأكد من أن المفتاح هو `auth`
   message: messageSlice,
   toastr: toastrReducer,
 });
@@ -56,8 +55,5 @@ const store = configureStore({
     }).concat(productApi.middleware),
 });
 
-setupListeners(store.dispatch);
-
 export const persistor = persistStore(store);
-
 export default store;

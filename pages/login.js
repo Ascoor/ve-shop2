@@ -1,50 +1,38 @@
-import Image from "next/image";
-import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/router";
-import { setMessage } from "../store/reducers/messageSlice";
-import {
-  loginUserThunk,
-  setUser,
-  selectUser,
-  selectStatus,
-  selectError,
-} from "../store/reducers/authSlice";
-import { toastr } from "react-redux-toastr";
+
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { loginUserThunk } from '../store/slices/authSlice';
+import Link from 'next/link';
+import Image from 'next/image';
 import { Form, Formik } from "formik";
+
 import * as Yup from "yup";
 
-const Login = () => {
+const LoginPage = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-  const router = useRouter();
-  const user = useSelector(selectUser);
-  const status = useSelector(selectStatus);
-  const error = useSelector(selectError);
 
   const initialValues = {
     email: "",
     password: "",
   };
-
+  
   const validationSchema = Yup.object({
     email: Yup.string().email("Invalid email format").required("Required"),
     password: Yup.string().required("Required"),
   });
-
+  
   const onSubmit = async (values, { setSubmitting }) => {
-    const { email, password } = values;
     try {
-      const user = await dispatch(loginUserThunk({ email, password }));
-      if (user) {
-        router.push("/");
-        toastr.success("Success", "User logged in successfully");
-      }
+      // Dispatch the login thunk with the form values
+      await dispatch(loginUserThunk(values));
     } catch (error) {
-      toastr.error("Error", error.message);
+      console.error("Login failed:", error);
     }
     setSubmitting(false);
   };
-
+  
   return (
     <div className='flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
       <div className='w-full max-w-md space-y-8'>
@@ -57,16 +45,15 @@ const Login = () => {
             height={600}
           />
           <h2 className='mt-6 text-center text-3xl font-bold tracking-tight text-gray-900'>
-          قم بتسجيل الدخول إلى حسابك
+          سجل الدخول إلى حسابك
           </h2>
           <p className='mt-2 text-center text-sm text-gray-600'>
-            أو{" "}
+            Or{" "}
             <Link
               href='/register'
               className='font-medium text-indigo-600 hover:text-indigo-500'
             >
-        
-إنشاء حساب
+          إنشاء حساب
             </Link>
           </p>
         </div>
@@ -81,8 +68,7 @@ const Login = () => {
               <input type='hidden' name='remember' defaultValue='true' />
               <div>
                 <label htmlFor='email-address' className='sr-only'>
-               
-عنوان البريد الإلكتروني
+                البريد الالكتروني
                 </label>
                 <input
                   type='email'
@@ -100,7 +86,7 @@ const Login = () => {
               </div>
               <div>
                 <label htmlFor='password' className='sr-only'>
-                  Password
+              كلمة المرور
                 </label>
                 <input
                   type='password'
@@ -129,7 +115,8 @@ const Login = () => {
                   <label
                     htmlFor='remember-me'
                     className='ml-2 block text-sm text-gray-900'
-                  >تذكرنى
+                  >
+                    تذكرني
                   </label>
                 </div>
               </div>
@@ -140,7 +127,7 @@ const Login = () => {
                   className='group relative flex w-full justify-center rounded-md border border-transparent bg-[#E43038] py-2 px-4 text-sm font-medium mt-4 text-white hover:bg-[#dd9194] focus:outline-none focus:ring-2 focus:ring-[#331416] focus:ring-offset-2'
                   disabled={!formik.isValid || formik.isSubmitting}
                 >
-                  {formik.isSubmitting ? "تحميل..." : "تسجيل الدخول"}
+                  {formik.isSubmitting ? "تحميل...." : "دخول"}
                 </button>
               </div>
             </Form>
@@ -151,4 +138,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;

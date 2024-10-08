@@ -3,7 +3,7 @@ import { Fragment } from "react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { AiOutlineLogout } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUserThunk, selectUser } from "../../store/reducers/authSlice";
+import { logoutUserThunk, selectUser } from "../../store/slices/authSlice";
 
 export default function Logout() {
   const dispatch = useDispatch();
@@ -48,7 +48,7 @@ export default function Logout() {
                     className='mr-2 h-5 w-5'
                     aria-hidden='true'
                   />
-                تسجيل الخروج
+                  Logout
                 </button>
               )}
             </Menu.Item>

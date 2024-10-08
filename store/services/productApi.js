@@ -1,10 +1,11 @@
+
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { HYDRATE } from "next-redux-wrapper";
 
 export const productApi = createApi({
   reducerPath: "productApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
+    baseUrl: 'http://127.0.0.1:8000/api',  // استخدام عنوان API Laravel
   }),
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
@@ -28,7 +29,7 @@ export const productApi = createApi({
       query: () => "/products?limit=8",
     }),
     getWomenProducts: builder.query({
-      query: () => "/products/category/women%27s%20clothing",
+      query: () => "/products/category/women",
     }),
   }),
 });

@@ -8,7 +8,7 @@ import {
   AiOutlineSearch,
 } from "react-icons/ai";
 import { useSelector } from "react-redux";
-import { selectUser } from "../../store/reducers/authSlice";
+import { selectUser } from "../../store/slices/authSlice";
 import { useState } from "react";
 import Search from "./Search";
 
@@ -18,24 +18,19 @@ const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className='flex justify-between items-center mb-5 gap-4'  >
-      {/* الشعار */}
+    <nav className=' flex justify-between items-center mb-5  gap-4 '>
       <Link href='/'>
         <Image
           src='/assets/logo.png'
-          alt='شعار المتجر'
+          alt=''
           width={180}
           height={100}
-          className='w-32 md:w-36 lg:w-44 rounded-full'
+          className='w-32 md:w-36 lg:w-44 rounded-full  '
         />
       </Link>
-      
-      {/* شريط البحث */}
       <div className='hidden md:flex items-center'>
         <Search />
       </div>
-
-      {/* قائمة التنقل */}
       <div className=' hidden md:flex items-center'>
         <ul className='flex items-center gap-3'>
           {user ? (
@@ -48,7 +43,7 @@ const Nav = () => {
                     size={30}
                     className='inline-block mr-1 text-xl'
                   />
-                  <span className='hidden text-lg md:inline-block'>تسجيل الدخول</span>
+                  <span className='hidden text-lg md:inline-block'>Login</span>
                 </Link>
               </li>
               <li className='font-semibold cursor-pointer flex items-center text-gray-700 hover:text-[#E43038]'>
@@ -58,7 +53,7 @@ const Nav = () => {
                     className='inline-block mr-1 text-xl'
                   />
                   <span className='hidden text-lg md:inline-block'>
-                    الإشتراك
+                    Register
                   </span>
                 </Link>
               </li>
@@ -77,7 +72,7 @@ const Nav = () => {
                 </span>
               )}
 
-              <span className='hidden text-lg md:inline-block'>السلة</span>
+              <span className='hidden text-lg md:inline-block'>Cart</span>
             </Link>
           </li>
         </ul>
