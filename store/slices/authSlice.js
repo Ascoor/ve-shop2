@@ -33,11 +33,13 @@ export const loginUserThunk = createAsyncThunk("auth/loginUser", async (payload,
   }
 });
 
-export const logoutUserThunk = createAsyncThunk("auth/logoutUser", async (_, { dispatch, getState }) => {
-  const state = getState();
+// تعديل دالة تسجيل الخروج
+export const logoutUserThunk = createAsyncThunk("auth/logoutUser", async (_, { dispatch }) => {
   try {
-    await logoutUser(state.auth.user.token);
+    // حذف التوكن من LocalStorage بدون إرسال أي طلب إلى الخادم
+    localStorage.removeItem('token');
     dispatch(setMessage({ message: "User logged out successfully" }));
+    return null;  // تعيين حالة المستخدم إلى null
   } catch (error) {
     dispatch(setMessage({ message: error.message, error: true }));
     throw error;
@@ -66,20 +68,19 @@ const authSlice = createSlice({
     builder
       .addCase(registerUser.pending, (state) => { state.status = "loading"; })
       .addCase(registerUser.fulfilled, (state, action) => { state.status = "succeeded"; state.user = action.payload; })
-      .addCase(registerUser.rejected, (state, action) => { state.status = "failed"; state.error = action.error.message; })  // تعديل
+      .addCase(registerUser.rejected, (state, action) => { state.status = "failed"; state.error = action.error.message; })
       .addCase(loginUserThunk.pending, (state) => { state.status = "loading"; })
       .addCase(loginUserThunk.fulfilled, (state, action) => { state.status = "succeeded"; state.user = action.payload; })
-      .addCase(loginUserThunk.rejected, (state, action) => { state.status = "failed"; state.error = action.error.message; })  // تعديل
+      .addCase(loginUserThunk.rejected, (state, action) => { state.status = "failed"; state.error = action.error.message; })
       .addCase(logoutUserThunk.pending, (state) => { state.status = "loading"; })
-      .addCase(logoutUserThunk.fulfilled, (state) => { state.status = "idle"; state.user = null; })
-      .addCase(logoutUserThunk.rejected, (state, action) => { state.status = "failed"; state.error = action.error.message; })  // تعديل
+      .addCase(logoutUserThunk.fulfilled, (state) => { state.status = "idle"; state.user = null; })  // تعيين null عند تسجيل الخروج
+      .addCase(logoutUserThunk.rejected, (state, action) => { state.status = "failed"; state.error = action.error.message; })
       .addCase(trackAuthState.pending, (state) => { state.status = "loading"; })
       .addCase(trackAuthState.fulfilled, (state, action) => { state.status = "idle"; state.user = action.payload; })
-      .addCase(trackAuthState.rejected, (state, action) => { state.status = "idle"; state.error = action.error.message; });  // تعديل
+      .addCase(trackAuthState.rejected, (state, action) => { state.status = "idle"; state.error = action.error.message; });
   },
 });
 
-// إضافة المحددات `selectors` الجديدة
 export const selectUser = (state) => state.auth.user;
 export const selectStatus = (state) => state.auth.status;
 export const selectError = (state) => state.auth.error;
