@@ -1,17 +1,23 @@
-
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { loginUserThunk } from '../store/slices/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUserThunk, selectUser } from '../store/slices/authSlice';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Form, Formik } from "formik";
-
+import { useRouter } from 'next/router';  // استيراد useRouter
 import * as Yup from "yup";
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
+  const router = useRouter();  // تهيئة useRouter
+  const user = useSelector(selectUser);  // الحصول على حالة المستخدم
+
+  // عند وجود المستخدم في حالة `user`، قم بالتوجيه إلى الصفحة الرئيسية
+  if (user) {
+    router.push('/');  // توجيه المستخدم إلى الصفحة الرئيسية مباشرةً
+  }
 
   const initialValues = {
     email: "",
@@ -26,7 +32,11 @@ const LoginPage = () => {
   const onSubmit = async (values, { setSubmitting }) => {
     try {
       // Dispatch the login thunk with the form values
-      await dispatch(loginUserThunk(values));
+      const result = await dispatch(loginUserThunk(values));
+      if (result.meta.requestStatus === "fulfilled") {
+        // إذا تم تسجيل الدخول بنجاح، قم بالتوجيه إلى الصفحة الرئيسية
+        router.push('/');
+      }
     } catch (error) {
       console.error("Login failed:", error);
     }
@@ -48,7 +58,7 @@ const LoginPage = () => {
           سجل الدخول إلى حسابك
           </h2>
           <p className='mt-2 text-center text-sm text-gray-600'>
-            Or{" "}
+            أو{" "}
             <Link
               href='/register'
               className='font-medium text-indigo-600 hover:text-indigo-500'
@@ -74,7 +84,7 @@ const LoginPage = () => {
                   type='email'
                   id='email'
                   name='email'
-                  placeholder='Enter your email'
+                  placeholder='أدخل بريدك الإلكتروني'
                   className='relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 focus:outline-none focus:border-[#E43038] mb-3 '
                   {...formik.getFieldProps("email")}
                 />
@@ -92,7 +102,7 @@ const LoginPage = () => {
                   type='password'
                   name='password'
                   id='password'
-                  placeholder='password'
+                  placeholder='كلمة المرور'
                   autoComplete='current-password'
                   className='relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2  focus:outline-none focus:border-[#E43038] mb-3 '
                   {...formik.getFieldProps("password")}

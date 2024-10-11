@@ -1,81 +1,120 @@
 import Image from "next/image";
 import Link from "next/link";
-import Logout from "./Logout";
-import {
-  AiOutlineLogin,
-  AiOutlineUser,
-  AiOutlineShoppingCart,
-  AiOutlineSearch,
-} from "react-icons/ai";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../store/slices/authSlice";
-import { useState } from "react";
-import Search from "./Search";
+import { Menu, Transition } from "@headlessui/react";
+import { Fragment, useState } from "react";
+import { AiOutlineLogin, AiOutlineUser, AiOutlineShoppingCart } from "react-icons/ai";
+import { useSelector, useDispatch } from "react-redux";
+import { selectUser, logoutUserThunk } from "../../store/slices/authSlice";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 const Nav = () => {
-  const cartItems = useSelector((state) => state.cart);
+  const cartItems = useSelector((state) => state.cart.items);
   const user = useSelector(selectUser);
-  const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logoutUserThunk());
+  };
 
   return (
-    <nav className=' flex justify-between items-center mb-5  gap-4 '>
+    <nav className='flex justify-between items-center py-4 px-8 bg-gradient-to-r from-red-500 to-red-700 text-white shadow-md'>
+      {/* شعار الموقع */}
       <Link href='/'>
         <Image
           src='/assets/logo.png'
-          alt=''
-          width={180}
-          height={100}
-          className='w-32 md:w-36 lg:w-44 rounded-full  '
+          alt='Logo'
+          width={100}
+          height={60}
+          className='w-28 md:w-36 lg:w-44 rounded-full cursor-pointer'
         />
       </Link>
+
+      {/* شريط البحث */}
       <div className='hidden md:flex items-center'>
-        <Search />
+        <input
+          type='text'
+          placeholder='ابحث عن المنتجات...'
+          className='px-4 py-2 rounded-lg border-none focus:outline-none text-gray-700'
+        />
       </div>
-      <div className=' hidden md:flex items-center'>
-        <ul className='flex items-center gap-3'>
-          {user ? (
-            <Logout />
-          ) : (
-            <>
-              <li className='font-semibold cursor-pointer flex items-center text-gray-700 hover:text-[#E43038]'>
-                <Link href='/login'>
-                  <AiOutlineLogin
-                    size={30}
-                    className='inline-block mr-1 text-xl'
-                  />
-                  <span className='hidden text-lg md:inline-block'>Login</span>
-                </Link>
-              </li>
-              <li className='font-semibold cursor-pointer flex items-center text-gray-700 hover:text-[#E43038]'>
-                <Link href='/register'>
-                  <AiOutlineUser
-                    size={30}
-                    className='inline-block mr-1 text-xl'
-                  />
-                  <span className='hidden text-lg md:inline-block'>
-                    Register
-                  </span>
-                </Link>
-              </li>
-            </>
-          )}
 
-          <li className='font-semibold cursor-pointer relative flex items-center text-gray-700 hover:text-[#E43038]'>
-            <Link href='/cart' className='flex items-center'>
-              <AiOutlineShoppingCart
-                size={30}
-                className=' inline-block mr-1 text-xl '
-              />
-              {cartItems.items.length > 0 && (
-                <span className='absolute bottom-4 left-5 bg-[#E43038] text-white rounded-full p-2 w-3 h-3 flex items-center justify-center text-xs'>
-                  {cartItems.items.length}
-                </span>
-              )}
+      {/* قائمة التنقل */}
+      <div className='hidden md:flex items-center gap-6'>
+        {user ? (
+          <Menu as='div' className='relative inline-block text-left'>
+            <div>
+              <Menu.Button className='inline-flex items-center justify-center w-full rounded-md bg-red-600 px-4 py-2 text-sm font-medium hover:bg-red-700 focus:outline-none'>
+                {user.name}
+                <ChevronDownIcon
+                  className='ml-2 -mr-1 h-5 w-5 text-white hover:text-gray-300'
+                  aria-hidden='true'
+                />
+              </Menu.Button>
+            </div>
 
-              <span className='hidden text-lg md:inline-block'>Cart</span>
+            <Transition
+              as={Fragment}
+              enter='transition ease-out duration-100'
+              enterFrom='transform opacity-0 scale-95'
+              enterTo='transform opacity-100 scale-100'
+              leave='transition ease-in duration-75'
+              leaveFrom='transform opacity-100 scale-100'
+              leaveTo='transform opacity-0 scale-95'
+            >
+              <Menu.Items className='absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+                <div className='py-1'>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        href='/profile'
+                        className={`${
+                          active ? 'bg-red-500 text-white' : 'text-gray-700'
+                        } group flex items-center px-4 py-2 text-sm`}
+                      >
+                        ملفي الشخصي
+                      </Link>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        onClick={handleLogout}
+                        className={`${
+                          active ? 'bg-red-500 text-white' : 'text-gray-700'
+                        } group flex items-center px-4 py-2 text-sm w-full`}
+                      >
+                        <AiOutlineUser className='mr-2 h-5 w-5' />
+                        تسجيل الخروج
+                      </button>
+                    )}
+                  </Menu.Item>
+                </div>
+              </Menu.Items>
+            </Transition>
+          </Menu>
+        ) : (
+          <>
+            <Link href='/login' className='font-semibold flex items-center'>
+              <AiOutlineLogin size={25} className='mr-2' />
+              دخول
             </Link>
-          </li>
-        </ul>
+            <Link href='/register' className='font-semibold flex items-center'>
+              <AiOutlineUser size={25} className='mr-2' />
+              تسجيل
+            </Link>
+          </>
+        )}
+
+        {/* السلة */}
+        <Link href='/cart' className='relative flex items-center'>
+          <AiOutlineShoppingCart size={30} />
+          {cartItems.length > 0 && (
+            <span className='absolute -top-2 -right-2 bg-white text-red-600 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold'>
+              {cartItems.length}
+            </span>
+          )}
+          <span className='ml-2 hidden md:inline-block'>السلة</span>
+        </Link>
       </div>
     </nav>
   );
