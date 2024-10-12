@@ -11,5 +11,10 @@ module.exports = {
       },
     },
   },
-  plugins: [require("@tailwindcss/aspect-ratio")],
+  
+  plugins: [
+    require("@tailwindcss/aspect-ratio"), // لمعامل العرض إلى الطول
+    require("@tailwindcss/forms"), // إذا كنت تستخدم مكونات forms الخاصة بـ Tailwind
+    require("@tailwindcss/typography"), // لتحسين النصوص إذا كنت بحاجة
+  ],
 };

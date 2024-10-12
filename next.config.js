@@ -6,6 +6,8 @@ const nextConfig = {
   output: 'standalone',
 
   images: {
+    
+    formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
         protocol: 'https',
@@ -21,10 +23,10 @@ const nextConfig = {
 
   compress: true,
 
-  i18n: {
-    locales: ['ar', 'en'],
-    defaultLocale: 'ar',
-  },
+  // i18n: {
+  //   locales: ['ar', 'en'],
+  //   defaultLocale: 'ar',
+  // },
 
   webpack: (config, { isServer }) => {
     if (!isServer) {

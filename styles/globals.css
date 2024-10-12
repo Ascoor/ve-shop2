@@ -1,23 +1,18 @@
-/* استيراد الخطوط */
-@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;800;900&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 .container-custom {
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-  width: 100%;
+  @apply mx-auto px-3 w-full; /* استخدام TailwindCSS classes بدلاً من القيم اليدوية */
 }
+
 @layer utilities {
   .font-cairo {
-    font-family: 'Cairo', sans-serif;
+    @apply font-cairo; /* استخدام الفئة المعرفة في tailwind.config.js */
   }
 }
-/* ضبط الخطوط المخصصة */
+
+/* ضبط الأنماط الافتراضية للصفحة */
 body {
   font-family: 'Cairo', sans-serif;
   direction: rtl;
