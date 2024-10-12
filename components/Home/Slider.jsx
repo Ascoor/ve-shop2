@@ -14,8 +14,11 @@ const Slider = ({ loading }) => {
           width={2400}
           height={1600}
           className='w-full h-full object-contain p-4 transition-opacity duration-500'
-          priority
-          loading="eager" // Ensures image loads eagerly if important
+          priority // تحميل سريع للصورة إذا كانت ضرورية
+          loading="eager" // تحميل فوري إذا كانت الصورة في الجزء العلوي
+          placeholder="blur" // تحميل تدريجي للصورة
+          blurDataURL='/assets/black-friday.png' // مصدر تمويه الصورة
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // لتحسين التحميل حسب حجم الشاشة
         />
       )}
     </div>
