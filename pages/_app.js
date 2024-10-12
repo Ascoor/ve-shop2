@@ -7,24 +7,28 @@ import ReduxToastr from "react-redux-toastr/lib/ReduxToastr";
 import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor } from "../store";
+import Head from 'next/head';
 
 function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
-      <ReduxToastr
-        timeOut={4000}
-        newestOnTop={false}
-        preventDuplicates
-        position='top-right'
-        getState={(state) => state.toastr}
-        transitionIn='fadeIn'
-        transitionOut='fadeOut'
-        progressBar
-        closeOnToastrClick
-      />
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
       <PersistGate loading={null} persistor={persistor}>
         <Layout>
           <Component {...pageProps} />
+          <ReduxToastr
+            timeOut={4000}
+            newestOnTop={false}
+            preventDuplicates
+            position='top-right'
+            getState={(state) => state.toastr}
+            transitionIn='fadeIn'
+            transitionOut='fadeOut'
+            progressBar
+            closeOnToastrClick
+          />
         </Layout>
       </PersistGate>
     </Provider>

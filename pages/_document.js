@@ -4,7 +4,7 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-         <Head>
+        <Head>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
           <link
@@ -12,7 +12,6 @@ class MyDocument extends Document {
             rel="stylesheet"
           />
           <meta name="description" content="Your application description" />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
         <body>
           <Main />
