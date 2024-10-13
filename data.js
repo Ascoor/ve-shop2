@@ -127,7 +127,7 @@ export const bestSellers = [
       "rate": 4.8,
       "count": 250
     },
-    "image": "/assets/products/accessores/bag.avif"
+    "image": "/assets/products/accessores/bag.jpg"
   },
   {
     "id": 2,
@@ -139,7 +139,7 @@ export const bestSellers = [
     },
     "description": "تصميم ملائم لشكل الجسم، وأكمام طويلة من قماش راجلان بلون متباين، وفتحة هنلي بثلاثة أزرار، وقماش خفيف الوزن وناعم لارتداء مريح وجيد التهوية. وقمصان مخيطة بشكل متين مع رقبة مستديرة مصنوعة من أجل المتانة ومناسبة تمامًا للارتداء في الموضة غير الرسمية ومحبي البيسبول المتحمسين. يتضمن خط العنق المستدير على طراز هنلي فتحة بثلاثة أزرار.",
     "price": 22.3,
-    "image": "/assets/products/clothes/shirt.avif"
+    "image": "/assets/products/clothes/shirt.jpg"
   },
   {
     "id": 3,
@@ -151,7 +151,7 @@ export const bestSellers = [
     },
     "description": "سترات خارجية رائعة للربيع/الخريف/الشتاء، مناسبة للعديد من المناسبات، مثل العمل، والمشي لمسافات طويلة، والتخييم، وتسلق الجبال/الصخور، وركوب الدراجات، والسفر أو الأنشطة الخارجية الأخرى. اختيار هدية جيد لك أو لعضو عائلتك. حب دافئ للأب أو الزوج أو الابن في عيد الشكر أو عيد الميلاد هذا.",
     "price": 55.99,
-    "image": "/assets/products/clothes/coat-2.avif"
+    "image": "/assets/products/clothes/coat-2.jpg"
   },
   {
     "id": 4,
@@ -163,7 +163,7 @@ export const bestSellers = [
     },
     "description": "قد يختلف اللون قليلاً بين ما يظهر على الشاشة وفي الممارسة العملية. يرجى ملاحظة أن أشكال الجسم تختلف باختلاف الشخص، لذلك يجب مراجعة معلومات الحجم التفصيلية أدناه في وصف المنتج.",
     "price": 15.99,
-    "image": "/assets/products/clothes/casual.avif"
+    "image": "/assets/products/clothes/casual.jpg"
   },
   {
     "id": 5,
@@ -175,7 +175,7 @@ export const bestSellers = [
     },
     "description": "الرضا مضمون. إرجاع أو استبدال أي طلب خلال 30 يومًا من تصميم مركز حفيظ وبيعه في الولايات المتحدة. الرضا مضمون. إرجاع أو استبدال أي طلب خلال 30 يومًا.",
     "price": 168.0,
-    "image": "/assets/products/jewelry/debla.avif"
+    "image": "/assets/products/jewelry/debla.jpg"
   },
   {
     "id": 6,
@@ -187,7 +187,7 @@ export const bestSellers = [
     },
     "description": "خاتم وعد كلاسيكي من سوليتير الماسي لخطوبة الزفاف من أجلها. هدايا لتفسد حبك أكثر للخطوبة، الزفاف، الذكرى السنوية، عيد الحب...",
     "price": 9.99,
-    "image": "/assets/products/jewelry/w-ring.avif"
+    "image": "/assets/products/jewelry/w-ring.jpg"
   },
   {
     "id": 7,
@@ -199,7 +199,7 @@ export const bestSellers = [
     },
     "description": "أقراط أذن مزدوجة مطلية بالذهب الوردي، مصنوعة من الفولاذ المقاوم للصدأ 316L",
     "price": 10.99,
-    "image": "/assets/products/jewelry/g-ring.avif"
+    "image": "/assets/products/jewelry/g-ring.jpg"
   },
   {
     "id": 8,
@@ -211,7 +211,7 @@ export const bestSellers = [
     },
     "description": "من مجموعة الأساطير لدينا، استوحينا تصميم Naga من تنين الماء الأسطوري الذي يحمي لؤلؤ المحيط. ارتدِ هذا الخاتم مواجهًا للداخل لتنعم بالحب والوفرة، أو مواجهًا للخارج للحماية.",
     "price": 10.99,
-    "image": "/assets/products/jewelry/ring.avif"
+    "image": "/assets/products/jewelry/ring.jpg"
   }
 ];
 // data/womenProducts.js
@@ -226,7 +226,7 @@ export const womenProducts = [
     },
     "description": "ملحوظة: الجاكيت بمقاس قياسي أمريكي، يرجى اختيار المقاس كملابسك المعتادة. الخامة: 100% بوليستر؛ بطانة قابلة للفصل القماش: صوف دافئ. بطانة وظيفية قابلة للفصل: لطيفة على البشرة، خفيفة الوزن ودافئة. سترة بطانة بياقة واقفة، تبقيك دافئًا في الطقس البارد. جيوب بسحّاب: جيبان لليدين بسحّاب، وجيبان بسحّاب على الصدر (يكفي لحفظ البطاقات أو المفاتيح) وجيب مخفي بالداخل. جيوب لليدين بسحّاب وجيب مخفي تحافظ على أغراضك آمنة. تصميم إنساني: غطاء رأس قابل للتعديل والفصل وأساور قابلة للتعديل لمنع الرياح والماء، لملاءمة مريحة. تصميم قابل للفصل 3 في 1 يوفر المزيد من الراحة، يمكنك فصل المعطف والجزء الداخلي حسب الحاجة، أو ارتداؤه معًا. مناسب لفصول مختلفة ويساعدك على التكيف مع المناخات المختلفة.",
     "price": 56.99,
-    "image": "/assets/products/slide-clothes/slide-coat.avif"
+    "image": "/assets/products/slide-clothes/slide-coat.jpg"
   },
   {
     "id": 10,
@@ -238,7 +238,7 @@ export const womenProducts = [
     },
     "description": "100% بولي يوريثين (الغلاف) 100% بوليستر (البطانة) 75% بوليستر 25% قطن (سترة)، مادة جلدية صناعية للأناقة والراحة / جيبان في الأمام، سترة من الجلد الصناعي بغطاء رأس 2 مقابل واحد، تفاصيل أزرار على الخصر / خياطة تفصيلية على الجانبين، يُغسل يدويًا فقط / لا تستخدم المبيضات / يُجفف بالتعليق / لا يُكوى",
     "price": 29.95,
-    "image": "/assets/products/slide-clothes/slide-coat2.avif"
+    "image": "/assets/products/slide-clothes/slide-coat2.jpg"
   },
   {
     "id": 11,
@@ -250,7 +250,7 @@ export const womenProducts = [
     },
     "description": "خفيف الوزن مثالي للرحلات أو الملابس غير الرسمية ---أكمام طويلة مع غطاء للرأس، تصميم خصر برباط قابل للتعديل. معطف واق من المطر بأزرار وسحاب أمامي، مبطن بالكامل بخطوط، ويحتوي المعطف على جيبين جانبيين بحجم جيد لحمل جميع أنواع الأشياء، ويغطي الوركين، والغطاء واسع ولكنه لا يبالغ فيه. غطاء مبطن بالقطن مرفق مع أربطة قابلة للتعديل يمنحه مظهرًا أنيقًا حقيقيًا.",
     "price": 39.99,
-    "image": "/assets/products/slide-clothes/slide-bluecoat.avif"
+    "image": "/assets/products/slide-clothes/slide-bluecoat.jpg"
   },
   {
     "id": 12,
@@ -262,7 +262,7 @@ export const womenProducts = [
     },
     "description": "95% رايون 5% سباندكس، مصنوع في الولايات المتحدة الأمريكية أو مستورد، لا تستخدم المبيضات، نسيج خفيف الوزن مع تمدد رائع للراحة، مضلع على الأكمام وخط الرقبة / خياطة مزدوجة على الحاشية السفلية",
     "price": 9.85,
-    "image": "/assets/products/slide-clothes/slide-whiteshert.avif"
+    "image": "/assets/products/slide-clothes/slide-whiteshert.jpg"
   },
   {
     "id": 13,
@@ -274,7 +274,7 @@ export const womenProducts = [
     },
     "description": "100% بوليستر، قابل للغسيل في الغسالة، 100% بوليستر كاتيوني متشابك، قابل للغسيل في الغسالة ومُقلص مسبقًا للحصول على ملاءمة رائعة، خفيف الوزن، واسع وجيد التهوية مع نسيج يمتص الرطوبة مما يساعد على إبعاد الرطوبة، نسيج خفيف الوزن ناعم مع طوق مريح على شكل حرف V وملاءمة أنحف، يوفر صورة ظلية أنيقة وأكثر أنوثة وراحة إضافية",
     "price": 7.95,
-    "image": "/assets/products/slide-clothes/slide-redshert.avif"
+    "image": "/assets/products/slide-clothes/slide-redshert.jpg"
   },
   {
     "id": 14,
@@ -286,6 +286,6 @@ export const womenProducts = [
     },
     "description": "95% قطن، 5% سباندكس، المميزات: كاجوال، أكمام قصيرة، طباعة حروف، رقبة على شكل حرف V، تي شيرت عصري، القماش ناعم وبه بعض المرونة، المناسبة: كاجوال/مكتب/شاطئ/مدرسة/منزل/شارع. الموسم: الربيع، الصيف، الخريف، الشتاء.",
     "price": 12.99,
-    "image": "/assets/products/slide-clothes/slide-collection.avif"
+    "image": "/assets/products/slide-clothes/slide-collection.jpg"
   }
 ];

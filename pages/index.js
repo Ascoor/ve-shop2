@@ -14,10 +14,11 @@ export default function Home() {
 
   return (
     <div className="font-noto">
-      <Head>
-        <title>VE-Shop</title>
-        <meta name='keywords' content='التجارة الإلكترونية, التسوق, شراء, بيع, منتجات' />
-      </Head>
+      <div class="flex items-center mb-4 text-red-500 justify-center ">
+  <h1 class="text-5xl font-bold text-center">VE-SHOP</h1>
+</div>
+
+
       
       <Brands loading={isLoading} brands={brands} />
       <Slider loading={isLoading} />

@@ -25,7 +25,7 @@ const Brands = ({ loading }) => {
                 />
               </div>
               <div className='text-center'>
-                <p className='text-sm font-semibold'>{brand.name}</p>
+                <p className='text-sm font-noto font-bold'>{brand.name}</p>
               </div>
             </>
           )}

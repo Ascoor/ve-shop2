@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Menu, Transition } from "@headlessui/react";
+import { ListboxButton, Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import { AiOutlineLogin, AiOutlineUser, AiOutlineShoppingCart } from "react-icons/ai";
+import { AiOutlineLogin, AiOutlineUser, AiOutlineShoppingCart, AiOutlineInfoCircle } from "react-icons/ai"; // Adding the Info icon
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, logoutUserThunk } from "../../store/slices/authSlice";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
@@ -18,7 +18,7 @@ const Nav = () => {
 
   return (
     <nav className="flex justify-between items-center py-4 px-8 bg-gradient-to-r from-red-500 to-red-700 text-white shadow-md" style={{ direction: 'rtl' }}>
-      {/* شعار الموقع */}
+      {/* Logo */}
       <Link href="/">
         <Image
           src="/assets/logo.png"
@@ -29,7 +29,7 @@ const Nav = () => {
         />
       </Link>
 
-      {/* شريط البحث */}
+      {/* Search Bar */}
       <div className="hidden md:flex items-center">
         <input
           type="text"
@@ -38,51 +38,35 @@ const Nav = () => {
         />
       </div>
 
-      {/* قائمة التنقل */}
+      {/* Navigation Menu */}
       <div className="hidden md:flex items-center gap-6">
+         {/* "حولنا" displayed always */}
+         <Link href="/about" className="font-semibold flex items-center">
+          <AiOutlineInfoCircle size={25} className="ml-2" />
+          حولنا
+        </Link>
         {user ? (
           <Menu as="div" className="relative inline-block text-left">
-            <div>
-              <Menu.Button className="inline-flex items-center justify-center w-full rounded-md bg-red-600 px-4 py-2 text-sm font-medium hover:bg-red-700 focus:outline-none">
-                {user.name}
-                <ChevronDownIcon
-                  className="mr-2 -ml-1 h-5 w-5 text-white hover:text-gray-300"
-                  aria-hidden="true"
-                />
-              </Menu.Button>
-            </div>
-
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-100"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
-            >
+            <Menu.Button className="inline-flex items-center justify-center w-full rounded-md bg-red-600 px-4 py-2 text-sm font-medium hover:bg-red-700 focus:outline-none">
+              {user.name}
+              <ChevronDownIcon className="mr-2 -ml-1 h-5 w-5 text-white hover:text-gray-300" aria-hidden="true" />
+            </Menu.Button>
+            <Transition as={Fragment}>
               <Menu.Items className="absolute left-0 mt-2 w-48 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div className="py-1">
+                  {/* Profile */}
                   <Menu.Item>
                     {({ active }) => (
-                      <Link
-                        href="/profile"
-                        className={`${
-                          active ? "bg-red-500 text-white" : "text-gray-700"
-                        } group flex items-center px-4 py-2 text-sm`}
-                      >
+                      <Link href="/profile" className={`${active ? "bg-red-500 text-white" : "text-gray-700"} group flex items-center px-4 py-2 text-sm`}>
                         ملفي الشخصي
                       </Link>
                     )}
                   </Menu.Item>
+
+                  {/* Logout */}
                   <Menu.Item>
                     {({ active }) => (
-                      <button
-                        onClick={handleLogout}
-                        className={`${
-                          active ? "bg-red-500 text-white" : "text-gray-700"
-                        } group flex items-center px-4 py-2 text-sm w-full`}
-                      >
+                      <button onClick={handleLogout} className={`${active ? "bg-red-500 text-white" : "text-gray-700"} group flex items-center px-4 py-2 text-sm w-full`}>
                         <AiOutlineUser className="ml-2 h-5 w-5" />
                         تسجيل الخروج
                       </button>
@@ -105,7 +89,9 @@ const Nav = () => {
           </>
         )}
 
-        {/* السلة */}
+    
+
+        {/* Cart */}
         <Link href="/cart" className="relative flex items-center">
           <AiOutlineShoppingCart size={30} />
           {cartItems.length > 0 && (

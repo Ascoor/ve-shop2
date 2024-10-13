@@ -13,6 +13,8 @@ function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <Head>
+
+      <title>VE-SHOP | متجر VE</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <ReduxToastr
