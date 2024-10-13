@@ -9,14 +9,13 @@ const Slider = ({ loading }) => {
         </div>
       ) : (
         <Image
-          src='/assets/black-friday.webp'  // استخدام الصورة المحسنة بتنسيق WebP
+          src='/assets/black-friday.webp'
           alt='Black Friday Promotion'
           width={2400}
           height={1600}
           className='w-full h-full object-contain p-4 transition-opacity duration-500'
           priority
-          loading="eager"  // تحميل الصورة بسرعة إذا كانت مهمة
-          sizes="(max-width: 768px) 100vw, (min-width: 769px) 50vw, 33vw" // تحديد حجم الصورة بناءً على الشاشة
+          loading="eager" // Ensures image loads eagerly if important
         />
       )}
     </div>

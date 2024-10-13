@@ -8,9 +8,13 @@ const Categories = () => {
   const handleHoverSubCategories = (category) => {
     setShowSubCategories(true);
     setSelectedCategory(category);
-    document.querySelector(".categories").addEventListener("mouseleave", () => {
+  };
+
+  const handleLeaveSubCategories = () => {
+    // إضافة تأخير لإخفاء الفئات الفرعية
+    setTimeout(() => {
       setShowSubCategories(false);
-    });
+    }, 200); // 200ms تأخير
   };
 
   return (
@@ -21,6 +25,7 @@ const Categories = () => {
             key={category.id}
             className='inline-block relative'
             onMouseEnter={() => handleHoverSubCategories(category)}
+            onMouseLeave={handleLeaveSubCategories}
           >
             <div className='flex flex-col items-center gap-2'>
               <div className='flex flex-row p-2 rounded-full gap-4 justify-center items-center'>
@@ -30,8 +35,8 @@ const Categories = () => {
               </div>
             </div>
             {showSubCategories && selectedCategory.id === category.id && (
-              <div className='absolute top-7 right-0 w-36 h-full z-10'> {/* استخدام right بدلاً من left لتمكين الاتجاه من اليمين */}
-                <div className='flex flex-col items-center bg-slate-50 gap-4 text-right shadow p-2'> {/* محاذاة النص إلى اليمين */}
+              <div className='absolute top-7 right-0 w-36 h-full z-10'> {/* استخدام right للـ RTL */}
+                <div className='flex flex-col items-center bg-slate-50 gap-4 text-right shadow p-2'>
                   {category.dropdown.map((subCategory) => (
                     <div
                       key={subCategory.id}

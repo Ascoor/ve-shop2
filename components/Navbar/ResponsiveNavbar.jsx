@@ -18,6 +18,21 @@ const ResponsiveNavbar = () => {
 
   const logoutUser = () => dispatch(logoutUserThunk());
 
+  // استخدام useEffect للإغلاق عند الضغط خارج الشريط
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (openNav && !e.target.closest('.nav-container')) {
+        setOpenNav(false); // إغلاق الشريط إذا تم الضغط خارج الشريط
+      }
+    };
+
+    document.addEventListener('mousedown', handleOutsideClick);
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [openNav]);
+
   return (
     <Fragment>
       <div className="flex items-center justify-between px-4 py-2 bg-white shadow-md" style={{ direction: 'rtl' }}>
@@ -34,9 +49,10 @@ const ResponsiveNavbar = () => {
           <Bars3Icon className="h-8 w-8" />
         </div>
       </div>
+
       {openNav && (
         <div className="md:hidden z-50 fixed left-0 top-0 w-full h-screen bg-black/70">
-          <div className="fixed z-50 left-0 top-0 w-[85%] sm:w-[60%] md:w-[45%] h-screen bg-[#ecf0f3] p-6 ease-in duration-500">
+          <div className="fixed z-50 left-0 top-0 w-[85%] sm:w-[60%] md:w-[45%] h-screen bg-[#ecf0f3] p-6 ease-in duration-500 nav-container">
             <div className="flex w-full items-center justify-between">
               <Link href="/">
                 <Image
@@ -45,6 +61,7 @@ const ResponsiveNavbar = () => {
                   width={75}
                   height={50}
                   className="cursor-pointer rounded-full"
+                  onClick={() => setOpenNav(false)} // إغلاق الشريط عند الضغط على الرابط
                 />
               </Link>
               <div onClick={handleNav} className="rounded-full shadow-lg shadow-gray-400 p-2 cursor-pointer">
@@ -73,7 +90,9 @@ const ResponsiveNavbar = () => {
                       <Disclosure.Panel className="p-2 text-md font-semibold grid grid-cols-2 gap-4 text-gray-500">
                         {category.dropdown.map((subCategory) => (
                           <Link key={subCategory.id} href="#">
-                            <p className="cursor-pointer hover:text-[#E43038]">{subCategory.name}</p>
+                            <p className="cursor-pointer hover:text-[#E43038]" onClick={() => setOpenNav(false)}> {/* إغلاق الشريط عند الضغط على رابط */}
+                              {subCategory.name}
+                            </p>
                           </Link>
                         ))}
                       </Disclosure.Panel>
@@ -95,10 +114,10 @@ const ResponsiveNavbar = () => {
                 </div>
               ) : (
                 <div className="flex flex-col items-center w-full">
-                  <Link href="/login" className="bg-red-600 text-white py-2 px-4 rounded-md mt-4 w-full text-center">
+                  <Link href="/login" className="bg-red-600 text-white py-2 px-4 rounded-md mt-4 w-full text-center" onClick={() => setOpenNav(false)}>
                     تسجيل الدخول
                   </Link>
-                  <Link href="/register" className="bg-red-600 text-white py-2 px-4 rounded-md mt-4 w-full text-center">
+                  <Link href="/register" className="bg-red-600 text-white py-2 px-4 rounded-md mt-4 w-full text-center" onClick={() => setOpenNav(false)}>
                     تسجيل
                   </Link>
                 </div>

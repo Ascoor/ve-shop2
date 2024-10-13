@@ -13,7 +13,7 @@ export default function Home() {
   const womenLoading = false;
 
   return (
-    <div>
+    <div className="font-noto">
       <Head>
         <title>VE-Shop</title>
         <meta name='keywords' content='التجارة الإلكترونية, التسوق, شراء, بيع, منتجات' />

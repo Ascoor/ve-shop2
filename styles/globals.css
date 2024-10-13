@@ -1,6 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* تخصيص الخط في المشروع */
+body {
+  font-family: 'Noto Sans Arabic', sans-serif;
+
+}
+
 
 .container-custom {
   margin-left: auto;
@@ -8,16 +17,4 @@
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   width: 100%;
-}
-@layer utilities {
-  .font-cairo {
-    font-family: 'Cairo', sans-serif;
-  }
-}
-/* ضبط الخطوط المخصصة */
-body
-{
-  font-family: 'Cairo', sans-serif;
-  direction: rtl;
-  text-align: right;
 }
