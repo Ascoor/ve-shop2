@@ -1,16 +1,15 @@
-// components/ProductDetails.js
+import React from 'react';
+import StarRatings from 'react-star-ratings';
 import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../store/reducers/cartSlice';
 import { addToFavorite } from '../store/reducers/favoriteSlice';
-import ReactStars from 'react-rating-stars-component';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { toastr } from 'react-redux-toastr';
 
 const ProductDetails = ({ product }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-
   const rating = Math.round(product?.rating.rate);
 
   // دالة لإضافة المنتج إلى سلة المشتريات
@@ -30,7 +29,7 @@ const ProductDetails = ({ product }) => {
   };
 
   return (
-    <div className="text-gray-600 body-font mb-10 w-full h-full"  >
+    <div className="text-gray-600 body-font mb-10 w-full h-full">
       <div className="container px-5 mx-auto">
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
           {/* عرض صورة المنتج */}
@@ -40,6 +39,7 @@ const ProductDetails = ({ product }) => {
             src={product?.image}
             width={500}
             height={500}
+            priority
           />
 
           {/* تفاصيل المنتج */}
@@ -52,11 +52,13 @@ const ProductDetails = ({ product }) => {
             </h1>
             <div className="flex mb-4">
               <span className="flex items-center">
-                <ReactStars
-                  count={5}
-                  size={24}
-                  activeColor="#ffd700"
-                  value={rating}
+                <StarRatings
+                  rating={rating}
+                  starRatedColor="#ffd700"
+                  numberOfStars={5}
+                  name='rating'
+                  starDimension="24px"
+                  starSpacing="2px"
                 />
                 <span className="text-gray-600 mr-3">
                   {product?.rating.count} تقييم

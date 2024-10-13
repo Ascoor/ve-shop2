@@ -14,15 +14,17 @@ const Footer = () => {
               title='Company'
               className='inline-flex items-center'
             >
-              <div className='flex  p-2 rounded-full justify-center items-center'>
-                <Image
-                  src='/assets/logo2.png'
-                  width={100}
-                  height={50}
-                  alt='logo'
-                  className='rounded-full '
-                />
-              </div>
+           <div className="relative w-[100px] h-[50px]"> {/* حاوية للصورة بنسب ثابتة */}
+  <Image
+    src='/assets/logo2.png'
+    alt='logo'
+    fill
+    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // تحسين أداء التحميل باستخدام 'sizes'
+    style={{ objectFit: "contain" }} // الحفاظ على نسبة العرض والارتفاع
+    className='rounded-full'
+  />
+</div>
+
               <span className='mr-2 text-xl font-bold tracking-wide text-white  uppercase'>
                 VE-SHOP
               </span>

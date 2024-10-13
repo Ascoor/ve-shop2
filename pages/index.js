@@ -1,10 +1,23 @@
 import Head from "next/head";
-import BestSeller from "../components/Home/BestSeller";
-import Brands from "../components/Home/Brands";
+import dynamic from 'next/dynamic';
 import Loading from "../components/Loading";
 import Slider from "../components/Home/Slider";
-import Collection from "../components/Home/Collection";
 import { bestSellers, womenProducts, brands } from "../data"; 
+
+// تحميل BestSeller و Collection بشكل ديناميكي
+const BestSeller = dynamic(() => import('../components/Home/BestSeller'), {
+  loading: () => <Loading />,
+  ssr: false
+});
+
+const Collection = dynamic(() => import('../components/Home/Collection'), {
+  loading: () => <Loading />,
+  ssr: false
+});
+
+const Brands = dynamic(() => import('../components/Home/Brands'), {
+  ssr: false
+});
 
 export default function Home() {
   const DemoBestSellers = bestSellers;
@@ -14,14 +27,26 @@ export default function Home() {
 
   return (
     <div className="font-noto">
-      <div class="flex items-center mb-4 text-red-500 justify-center ">
-  <h1 class="text-5xl font-bold text-center">VE-SHOP</h1>
-</div>
+      <Head>
+        <title>VE-SHOP | متجر VE</title>
+        <meta name="description" content="احصل على أفضل العروض والمنتجات من VE-Shop، بما في ذلك الإلكترونيات، الملابس، والمزيد." />
+        <meta name="keywords" content="متجر, شراء, منتجات, تسوق, إلكترونيات, ملابس, VE-Shop" />
+        <meta property="og:title" content="VE-SHOP | أفضل المنتجات والعروض" />
+        <meta property="og:description" content="اكتشف تشكيلة واسعة من المنتجات بأفضل الأسعار على VE-Shop." />
+        <meta property="og:url" content="https://ve-shop.co" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+      </Head>
+
+      <div className="flex items-center mb-4 text-red-500 justify-center">
+        <h1 className="text-5xl font-bold text-center">VE-SHOP</h1>
+      </div>
 
 
-      
+
+      {/* تحميل المكونات بشكل ديناميكي */}
       <Brands loading={isLoading} brands={brands} />
-      <Slider loading={isLoading} />
+      <Slider loading={isLoading} lazyLoad={true} />
 
       {isLoading || womenLoading ? (
         <Loading />

@@ -29,43 +29,58 @@ const ResponsiveNavbar = () => {
 
   return (
     <Fragment>
-      <div className='flex items-center justify-between px-4 py-2 bg-white shadow-md'>
-        <div className='flex items-center w-full justify-between'>
-          <Link href='/'>
-            <Image
-              src='/assets/logo.png'
-              alt='logo'
-              width={50}
-              height={50}
-              className='cursor-pointer rounded-full'
-            />
+      <div className="flex items-center justify-between px-4 py-2 bg-white shadow-md">
+        <div className="flex items-center w-full justify-between">
+          <Link href="/">
+            <div className="relative w-[75px] h-[50px]">
+              <Image
+                src="/assets/logo.png"
+                alt="logo"
+                fill
+                sizes="(max-width: 768px) 100vw, 
+                       (max-width: 1200px) 50vw, 
+                       33vw"
+                className="cursor-pointer rounded-full"
+                priority // لتحميل الشعار بسرعة
+              />
+            </div>
           </Link>
-          <div onClick={handleNav} className='md:hidden text-gray-700'>
-            <Bars3Icon className='h-8 w-8' />
+          <div onClick={handleNav} className="md:hidden text-gray-700">
+            <Bars3Icon className="h-8 w-8" />
           </div>
         </div>
 
         {openNav && (
           <div
-            id='nav'
-            className='md:hidden z-50 fixed right-0 top-0 w-full h-screen bg-black/70'
+            id="nav"
+            className="md:hidden z-50 fixed right-0 top-0 w-full h-screen bg-black/70"
             onClick={(e) => {
               if (e.target.id === "nav") setOpenNav(false); // Close when clicking outside
-            }}>
+            }}
+          >
             <div
-              className={`fixed z-50 right-0 top-0 w-[85%] sm:w-[60%] md:w-[45%] h-screen bg-[#ecf0f3] p-6 transition-all duration-700 ease-in-out overflow-y-auto`}>
-              <div className='flex w-full items-center justify-between'>
-                <Link href='/' onClick={() => setOpenNav(false)}>
-                  <Image
-                    src='/assets/logo.png'
-                    alt='logo'
-                    width={75}
-                    height={50}
-                    className='cursor-pointer rounded-full'
-                  />
+              className={`fixed z-50 right-0 top-0 w-[85%] sm:w-[60%] md:w-[45%] h-screen bg-[#ecf0f3] p-6 transition-all duration-700 ease-in-out overflow-y-auto`}
+            >
+              <div className="flex w-full items-center justify-between">
+                <Link href="/" onClick={() => setOpenNav(false)}>
+                  <div className="relative w-[75px] h-[50px]">
+                    <Image
+                      src="/assets/logo.png"
+                      alt="logo"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 
+                             (max-width: 1200px) 50vw, 
+                             33vw"
+                      className="cursor-pointer rounded-full"
+                      priority
+                    />
+                  </div>
                 </Link>
-                <div onClick={handleNav} className='rounded-full shadow-lg shadow-gray-400 p-2 cursor-pointer'>
-                  <XMarkIcon className='h-4 w-4 text-gray-500' />
+                <div
+                  onClick={handleNav}
+                  className="rounded-full shadow-lg shadow-gray-400 p-2 cursor-pointer"
+                >
+                  <XMarkIcon className="h-4 w-4 text-gray-500" />
                 </div>
               </div>
 
@@ -77,6 +92,7 @@ const ResponsiveNavbar = () => {
                   className='px-8 w-full border-none rounded-lg py-2 text-gray-700 focus:outline-none'
                 />
               </div>
+
               <Link href="/cart" className="relative flex items-center" onClick={() => setOpenNav(false)}>
                 <AiOutlineShoppingCart size={30} />
                 {cartItems.length > 0 && (

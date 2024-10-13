@@ -53,6 +53,7 @@ const LoginPage = () => {
             className='mx-auto h-36 w-auto rounded-full'
             width={600}
             height={600}
+            priority 
           />
           <h2 className='mt-6 text-center text-3xl font-bold tracking-tight text-gray-900'>
           سجل الدخول إلى حسابك
@@ -81,37 +82,30 @@ const LoginPage = () => {
                 البريد الالكتروني
                 </label>
                 <input
-                  type='email'
-                  id='email'
-                  name='email'
-                  placeholder='أدخل بريدك الإلكتروني'
-                  className='relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 focus:outline-none focus:border-[#E43038] mb-3 '
-                  {...formik.getFieldProps("email")}
-                />
-                {formik.touched.email && formik.errors.email ? (
-                  <div className='text-xs text-red-500'>
-                    {formik.errors.email}
-                  </div>
-                ) : null}
+  type="email"
+  id="email"
+  name="email"
+  placeholder="أدخل بريدك الإلكتروني"
+  autoComplete="username"  // إضافة هذه الخاصية
+  className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 focus:outline-none focus:border-[#E43038] mb-3"
+  {...formik.getFieldProps("email")}
+/>
+
               </div>
               <div>
                 <label htmlFor='password' className='sr-only'>
               كلمة المرور
                 </label>
                 <input
-                  type='password'
-                  name='password'
-                  id='password'
-                  placeholder='كلمة المرور'
-                  autoComplete='current-password'
-                  className='relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2  focus:outline-none focus:border-[#E43038] mb-3 '
-                  {...formik.getFieldProps("password")}
-                />
-                {formik.touched.password && formik.errors.password ? (
-                  <div className='text-xs text-red-500'>
-                    {formik.errors.password}
-                  </div>
-                ) : null}
+  type="password"
+  name="password"
+  id="password"
+  placeholder="كلمة المرور"
+  autoComplete="current-password"  // موجود بالفعل وهو صحيح
+  className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2  focus:outline-none focus:border-[#E43038] mb-3"
+  {...formik.getFieldProps("password")}
+/>
+
               </div>
 
               <div className='flex items-center justify-between'>
