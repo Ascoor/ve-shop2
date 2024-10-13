@@ -15,7 +15,8 @@ export default function Home() {
   return (
     <div className="font-noto">
       <div class="flex items-center mb-4 text-red-500 justify-center ">
-  <h1 class="text-5xl font-bold text-center">VE-SHOP</h1>
+<h1 className="text-5xl font-bold text-center">مرحباً بكم في متجر VE</h1>
+
 </div>
 
 
