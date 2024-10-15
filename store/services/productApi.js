@@ -1,4 +1,3 @@
-
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { HYDRATE } from "next-redux-wrapper";
 
@@ -19,17 +18,11 @@ export const productApi = createApi({
     getProduct: builder.query({
       query: (id) => `/products/${id}`,
     }),
-    getAscProducts: builder.query({
-      query: () => "/products?sort=asc",
+    getBrands: builder.query({
+      query: () => "/brands",  // Assuming Laravel API provides this route
     }),
-    getDescProducts: builder.query({
-      query: () => "/products?sort=desc",
-    }),
-    getLimitedProducts: builder.query({
-      query: () => "/products?limit=8",
-    }),
-    getWomenProducts: builder.query({
-      query: () => "/products/category/women",
+    getCategories: builder.query({
+      query: () => "/categories",  // Assuming Laravel API provides this route
     }),
   }),
 });
@@ -37,8 +30,6 @@ export const productApi = createApi({
 export const {
   useGetProductsQuery,
   useGetProductQuery,
-  useGetAscProductsQuery,
-  useGetDescProductsQuery,
-  useGetLimitedProductsQuery,
-  useGetWomenProductsQuery,
+  useGetBrandsQuery,
+  useGetCategoriesQuery,
 } = productApi;

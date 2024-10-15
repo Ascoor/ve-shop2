@@ -6,14 +6,14 @@ const nextConfig = {
   output: 'standalone',
 
   images: {
-    
-    formats: ["image/jpg", "image/webp"],
+ 
+    formats: ["image/jpg", "image/webp", "svg"],
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 've-shop.co',  // استبدل هذا بالنطاق الخاص بك
-        port: '',                 // يمكنك ترك الحقل فارغًا إذا لم يكن هناك منفذ محدد
-        pathname: '/**',          // أي مسار ضمن النطاق المحدد
+        hostname: 've-shop.co', 
+        port: '', 
+        pathname: '/**',
       },
     ],
     deviceSizes: [640, 750, 1080, 1200, 1920],
@@ -22,11 +22,6 @@ const nextConfig = {
   },
 
   compress: true,
-
-  // i18n: {
-  //   locales: ['ar', 'en'],
-  //   defaultLocale: 'ar',
-  // },
 
   webpack: (config, { isServer }) => {
     if (!isServer) {

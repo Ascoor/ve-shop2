@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUserThunk, selectUser } from '../store/slices/authSlice';
 import Link from 'next/link';
@@ -14,35 +14,38 @@ const LoginPage = () => {
   const router = useRouter();  // تهيئة useRouter
   const user = useSelector(selectUser);  // الحصول على حالة المستخدم
 
-  // عند وجود المستخدم في حالة `user`، قم بالتوجيه إلى الصفحة الرئيسية
-  if (user) {
-    router.push('/');  // توجيه المستخدم إلى الصفحة الرئيسية مباشرةً
-  }
+  // بعد تسجيل الدخول بنجاح، يتم التوجيه بناءً على role_id
+  useEffect(() => {
+    if (user) {
+      if (user.role_id === 1 || user.role_id === 2) {
+        router.push('/dashboard');  // توجيه المستخدم إلى لوحة التحكم
+      } else if (user.role_id === 3) {
+        router.push('/store');  // توجيه المستخدم العادي إلى المتجر
+      }
+    }
+  }, [user, router]); // يتم استدعاء useEffect عند تحديث user أو router
 
   const initialValues = {
     email: "",
     password: "",
   };
-  
+
   const validationSchema = Yup.object({
     email: Yup.string().email("Invalid email format").required("Required"),
     password: Yup.string().required("Required"),
   });
-  
+
   const onSubmit = async (values, { setSubmitting }) => {
     try {
       // Dispatch the login thunk with the form values
       const result = await dispatch(loginUserThunk(values));
-      if (result.meta.requestStatus === "fulfilled") {
-        // إذا تم تسجيل الدخول بنجاح، قم بالتوجيه إلى الصفحة الرئيسية
-        router.push('/');
-      }
+      setSubmitting(false);
     } catch (error) {
       console.error("Login failed:", error);
+      setSubmitting(false);
     }
-    setSubmitting(false);
   };
-  
+
   return (
     <div className='flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
       <div className='w-full max-w-md space-y-8'>
@@ -82,30 +85,28 @@ const LoginPage = () => {
                 البريد الالكتروني
                 </label>
                 <input
-  type="email"
-  id="email"
-  name="email"
-  placeholder="أدخل بريدك الإلكتروني"
-  autoComplete="username"  // إضافة هذه الخاصية
-  className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 focus:outline-none focus:border-[#E43038] mb-3"
-  {...formik.getFieldProps("email")}
-/>
-
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="أدخل بريدك الإلكتروني"
+                  autoComplete="username"  // إضافة هذه الخاصية
+                  className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 focus:outline-none focus:border-[#E43038] mb-3"
+                  {...formik.getFieldProps("email")}
+                />
               </div>
               <div>
                 <label htmlFor='password' className='sr-only'>
               كلمة المرور
                 </label>
                 <input
-  type="password"
-  name="password"
-  id="password"
-  placeholder="كلمة المرور"
-  autoComplete="current-password"  // موجود بالفعل وهو صحيح
-  className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2  focus:outline-none focus:border-[#E43038] mb-3"
-  {...formik.getFieldProps("password")}
-/>
-
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="كلمة المرور"
+                  autoComplete="current-password"
+                  className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2  focus:outline-none focus:border-[#E43038] mb-3"
+                  {...formik.getFieldProps("password")}
+                />
               </div>
 
               <div className='flex items-center justify-between'>

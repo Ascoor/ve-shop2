@@ -1,8 +1,11 @@
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 import Head from "next/head";
 import dynamic from 'next/dynamic';
 import Loading from "../components/Loading";
 import Slider from "../components/Home/Slider";
-import { bestSellers, womenProducts, brands } from "../data"; 
+import { bestSellers, womenProducts, brands } from "../data";
 
 // تحميل BestSeller و Collection بشكل ديناميكي
 const BestSeller = dynamic(() => import('../components/Home/BestSeller'), {
@@ -25,6 +28,24 @@ export default function Home() {
   const isLoading = false;
   const womenLoading = false;
 
+  // استخدم useRouter للتوجيه
+  const router = useRouter();
+
+  // احصل على بيانات المستخدم من Redux
+  const user = useSelector((state) => state.auth.user);
+
+  useEffect(() => {
+    // تحقق مما إذا كان المستخدم مسجل الدخول
+    if (user) {
+      // توجيه المستخدمين بناءً على role_id
+      if (user.role_id === 1 || user.role_id === 2) {
+        router.push('/dashboard');  // توجيه المستخدم إلى لوحة التحكم سواء كان Admin أو Employee
+      } else if (user.role_id === 3) {
+        router.push('/store');  // توجيه المستخدم العادي إلى المتجر
+      }
+    }
+  }, [user, router]);
+
   return (
     <div className="font-noto">
       <Head>
@@ -35,14 +56,11 @@ export default function Home() {
         <meta property="og:description" content="اكتشف تشكيلة واسعة من المنتجات بأفضل الأسعار على VE-Shop." />
         <meta property="og:url" content="https://ve-shop.co" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-
       </Head>
 
       <div className="flex items-center mb-4 text-red-500 justify-center">
         <h1 className="text-5xl font-bold text-center">VE-SHOP</h1>
       </div>
-
-
 
       {/* تحميل المكونات بشكل ديناميكي */}
       <Brands loading={isLoading} brands={brands} />
