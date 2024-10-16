@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ListboxButton, Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import { AiOutlineLogin, AiOutlineUser, AiOutlineShoppingCart, AiOutlineInfoCircle } from "react-icons/ai"; // Adding the Info icon
+import { AiOutlineLogin, AiOutlineUser, AiOutlineShoppingCart, AiOutlineInfoCircle } from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, logoutUserThunk } from "../../store/slices/authSlice";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
@@ -16,24 +16,25 @@ const Nav = () => {
     dispatch(logoutUserThunk());
   };
 
-  // التحقق من حالة المستخدم
-  const isGuest = !user || !user.role_id; // التحقق إذا كان المستخدم زائرًا أو ليس لديه role_id
-  const isAdminOrEmployee = user && (user.role_id === 1 || user.role_id === 2); // التحقق إذا كان المستخدم Admin أو Employee
+  const isGuest = !user || !user.role_id; 
+  const isAdminOrEmployee = user && (user.role_id === 1 || user.role_id === 2); 
 
   return (
     <nav className="flex justify-between items-center py-4 px-8 bg-gradient-to-r from-red-500 to-red-700 text-white shadow-md" style={{ direction: 'rtl' }}>
       {/* Logo */}
       <Link href="/">
-        <Image
-          src="/assets/logo.png"
-          alt="Logo"
-          width={80}
-          height={50}
-          className="w-20 md:w-25 lg:w-30 rounded-full cursor-pointer"
-        />
+        <div className="relative w-[80px] h-[50px]">
+          <Image
+            src="/assets/logo.png" // Ensure this path is correct
+            alt="Logo"
+            layout="fill" // This will make the image responsive
+            objectFit="contain" // Maintain aspect ratio
+            priority // Load the image with high priority
+          />
+        </div>
       </Link>
 
-      {/* Search Bar (يظهر فقط للمستخدمين role_id = 3 أو الزائرين) */}
+      {/* Search Bar (for guests or users with role_id = 3) */}
       {isGuest || (user && user.role_id === 3) ? (
         <div className="hidden md:flex items-center">
           <input
@@ -46,7 +47,7 @@ const Nav = () => {
 
       {/* Navigation Menu */}
       <div className="hidden md:flex items-center gap-6">
-          {/* Cart (يظهر فقط للمستخدمين role_id = 3 أو الزائرين) */}
+          {/* Cart */}
           {(isGuest || (user && user.role_id === 3)) && (
           <Link href="/cart" className="relative flex items-center">
             {cartItems.length > 0 && (
@@ -68,7 +69,6 @@ const Nav = () => {
             <Transition as={Fragment}>
               <Menu.Items className="absolute left-0 mt-2 w-48 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div className="py-1">
-                  {/* Profile */}
                   <Menu.Item>
                     {({ active }) => (
                       <Link href="/profile" className={`${active ? "bg-red-500 text-white" : "text-gray-700"} group flex items-center px-4 py-2 text-sm`}>
@@ -76,8 +76,6 @@ const Nav = () => {
                       </Link>
                     )}
                   </Menu.Item>
-
-                  {/* Logout */}
                   <Menu.Item>
                     {({ active }) => (
                       <button onClick={handleLogout} className={`${active ? "bg-red-500 text-white" : "text-gray-700"} group flex items-center px-4 py-2 text-sm w-full`}>
@@ -102,15 +100,14 @@ const Nav = () => {
             </Link>
           </>
         )}
-  {/* "حولنا" يظهر فقط للمستخدمين role_id = 3 أو الزائرين */}
-  {(isGuest || (user && user.role_id === 3)) && (
+        
+        {/* About Section for guests or role_id = 3 */}
+        {(isGuest || (user && user.role_id === 3)) && (
           <Link href="/about" className="font-semibold flex items-center">
             <AiOutlineInfoCircle size={25} className="ml-2" />
             حولنا
           </Link>
         )}
-
-      
       </div>
     </nav>
   );

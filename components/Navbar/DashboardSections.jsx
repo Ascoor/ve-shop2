@@ -1,10 +1,23 @@
-import { useState } from "react";
-import Link from "next/link"; // استيراد Link من Next.js
+import { useEffect, useState } from "react"; 
+import { useRouter } from "next/router"; 
+import { useSelector } from "react-redux"; 
+import Link from "next/link"; 
+import { selectUser } from '../../store/slices/authSlice'; 
 
 const DashboardSections = () => {
+  const router = useRouter();
+  const user = useSelector(selectUser); 
+
+  // Ensure user is allowed to access dashboard sections
+  useEffect(() => {
+    if (!user || user.role_id === 3) {
+      router.push('/'); // Redirect to home if not authorized
+    }
+  }, [user, router]);
+
   const [showSubSections, setShowSubSections] = useState(false);
   const [selectedSection, setSelectedSection] = useState(null);
-  
+
   const sections = [
     {
       id: 1,
@@ -84,7 +97,6 @@ const DashboardSections = () => {
       ],
     },
   ];
-
   // Handle showing and hiding of subsections
   const handleHoverSubSections = (section) => {
     setShowSubSections(true);
@@ -94,7 +106,7 @@ const DashboardSections = () => {
   const handleLeaveSubSections = () => {
     setTimeout(() => {
       setShowSubSections(false);
-    }, 200); // 200ms delay before hiding
+    }, 200);
   };
 
   return (
@@ -136,6 +148,5 @@ const DashboardSections = () => {
       </div>
     </div>
   );
-};
-
-export default DashboardSections;
+}
+export  default DashboardSections; 

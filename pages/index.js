@@ -7,7 +7,7 @@ import Loading from "../components/Loading";
 import Slider from "../components/Home/Slider";
 import { bestSellers, womenProducts, brands } from "../data";
 
-// تحميل BestSeller و Collection بشكل ديناميكي
+// Dynamically import components
 const BestSeller = dynamic(() => import('../components/Home/BestSeller'), {
   loading: () => <Loading />,
   ssr: false
@@ -28,20 +28,17 @@ export default function Home() {
   const isLoading = false;
   const womenLoading = false;
 
-  // استخدم useRouter للتوجيه
+  // Use useRouter for navigation
   const router = useRouter();
 
-  // احصل على بيانات المستخدم من Redux
+  // Get user data from Redux
   const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
-    // تحقق مما إذا كان المستخدم مسجل الدخول
+    // If user is logged in, redirect to dashboard if they have the right role
     if (user) {
-      // توجيه المستخدمين بناءً على role_id
       if (user.role_id === 1 || user.role_id === 2) {
-        router.push('/dashboard');  // توجيه المستخدم إلى لوحة التحكم سواء كان Admin أو Employee
-      } else if (user.role_id === 3) {
-        router.push('/store');  // توجيه المستخدم العادي إلى المتجر
+        router.push('/dashboard');
       }
     }
   }, [user, router]);
@@ -62,7 +59,7 @@ export default function Home() {
         <h1 className="text-5xl font-bold text-center">VE-SHOP</h1>
       </div>
 
-      {/* تحميل المكونات بشكل ديناميكي */}
+      {/* Load components dynamically */}
       <Brands loading={isLoading} brands={brands} />
       <Slider loading={isLoading} lazyLoad={true} />
 

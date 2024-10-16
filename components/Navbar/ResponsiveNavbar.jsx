@@ -11,14 +11,13 @@ import { Disclosure } from "@headlessui/react";
 
 const ResponsiveNavbar = () => {
   const cartItems = useSelector((state) => state.cart.items);
-  const user = useSelector(selectUser); // جلب بيانات المستخدم من Redux
+  const user = useSelector(selectUser);
   const [openNav, setOpenNav] = useState(false);
   const dispatch = useDispatch();
 
   const handleNav = () => setOpenNav(!openNav);
   const logoutUser = () => dispatch(logoutUserThunk());
 
-  // Handle page scroll behavior when the nav is open/closed
   useEffect(() => {
     if (openNav) {
       document.body.style.overflow = "hidden";
@@ -27,10 +26,9 @@ const ResponsiveNavbar = () => {
     }
   }, [openNav]);
 
-  // التحقق من حالة المستخدم
-  const isGuest = !user || !user.role_id; // التحقق إذا كان المستخدم زائرًا أو ليس لديه role_id
-  const isUser = user && user.role_id === 3; // التحقق إذا كان المستخدم عادي
-  const isAdminOrEmployee = user && (user.role_id === 1 || user.role_id === 2); // التحقق إذا كان المستخدم Admin أو Employee
+  const isGuest = !user || !user.role_id;
+  const isUser = user && user.role_id === 3;
+  const isAdminOrEmployee = user && (user.role_id === 1 || user.role_id === 2);
 
   return (
     <Fragment>
@@ -41,12 +39,9 @@ const ResponsiveNavbar = () => {
               <Image
                 src="/assets/logo.png"
                 alt="logo"
-                fill
-                sizes="(max-width: 768px) 100vw, 
-                       (max-width: 1200px) 50vw, 
-                       33vw"
-                className="cursor-pointer rounded-full"
-                priority
+                layout="fill" // This will make the image responsive
+                objectFit="contain" // Maintain aspect ratio
+                priority // Load the image with high priority
               />
             </div>
           </Link>
@@ -72,12 +67,9 @@ const ResponsiveNavbar = () => {
                     <Image
                       src="/assets/logo.png"
                       alt="logo"
-                      fill
-                      sizes="(max-width: 768px) 100vw, 
-                             (max-width: 1200px) 50vw, 
-                             33vw"
-                      className="cursor-pointer rounded-full"
-                      priority
+                      layout="fill" // This will make the image responsive
+                      objectFit="contain" // Maintain aspect ratio
+                      priority // Load the image with high priority
                     />
                   </div>
                 </Link>
@@ -92,7 +84,6 @@ const ResponsiveNavbar = () => {
               {/* Search Bar, Cart, and Categories: Only for role_id = 3 (User) */}
               {(isGuest || isUser) && (
                 <>
-                  {/* Search Bar */}
                   <div className='border-gray-300 my-4'>
                     <input
                       type='text'
@@ -101,7 +92,6 @@ const ResponsiveNavbar = () => {
                     />
                   </div>
 
-                  {/* Cart */}
                   <Link href="/cart" className="relative flex items-center" onClick={() => setOpenNav(false)}>
                     <AiOutlineShoppingCart size={30} />
                     {cartItems.length > 0 && (
@@ -112,7 +102,6 @@ const ResponsiveNavbar = () => {
                     <span className="mr-2 hidden md:inline-block">السلة</span>
                   </Link>
 
-                  {/* Categories */}
                   <div className="py-4 flex flex-col border-b">
                     <h1 className="text-xl font-semibold">الأقسام والمنتجات</h1>
                     <div className="flex flex-col gap-4 mt-4">
