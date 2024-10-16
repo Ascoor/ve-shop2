@@ -51,8 +51,14 @@ jobs:
             
             # Remove node_modules and install fresh dependencies
             rm -rf node_modules
-            yarn install --frozen-lockfile
+            yarn install  # Remove --frozen-lockfile to ensure dependencies install
             
+            # Verify if next is installed
+            if ! command -v next &> /dev/null; then
+              echo "Next.js is not installed!"
+              exit 1
+            fi
+
             # Build the project
             yarn build
             
@@ -64,11 +70,11 @@ jobs:
             
             # Restart Nginx to ensure everything is working properly
             sudo systemctl restart nginx
-  
+
           timeout: 60s  # Set timeout for SSH action
           command_timeout: 15m  # Allow enough time for dependencies installation and build process
           debug: true  # Enable detailed logs for debugging
-            
-            # Final confirmation message
+
+      # Final confirmation message
       - name: Confirm Deployment Success
         run: echo "Deployment completed successfully on remote server."
