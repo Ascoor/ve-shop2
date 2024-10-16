@@ -1,73 +1,72 @@
-name: Deploy Application
+name: Remote Update and Deploy
 
 on:
   push:
     branches:
       - master  # تشغيل الـ Workflow عند دفع التحديثات على فرع master
-      - main
 
 jobs:
   remote-update-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+    - name: Checkout Code
+      uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18.20.4'
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.20.4'
 
-      - name: Connect to Remote Server and Run Update Commands
-        uses: appleboy/ssh-action@v0.1.8
-        with:
-          host: ${{ secrets.HOSTINGER_HOST }}
-          username: ${{ secrets.HOSTINGER_USERNAME }}
-          password: ${{ secrets.HOSTINGER_PASSWORD }}
-          port: ${{ secrets.SERVER_PORT }}
-          script: |
-            cd /var/www/html/ve-shop.co/ve-frontend
-            
-            # تحديث الكود من المستودع
-            git stash
-            git pull origin master
+    - name: Connect to Remote Server and Run Update Commands
+      uses: appleboy/ssh-action@v0.1.8
+      with:
+        host: ${{ secrets.HOSTINGER_HOST }}
+        username: ${{ secrets.HOSTINGER_USERNAME }}
+        password: ${{ secrets.HOSTINGER_PASSWORD }}
+        port: ${{ secrets.SERVER_PORT }}
+        script: |
+          cd /var/www/html/ve-shop.co/ve-frontend
+          
+          # تحديث الكود من المستودع
+          echo "Stashing local changes (if any) and pulling updates from remote repository..."
+          git stash
+          git pull origin master
 
-            # طباعة سجل أخطاء Nginx
-            echo "Printing Nginx error logs"
-            sudo cat /var/log/nginx/error.log || echo "No Nginx error log found"
+          # تثبيت Yarn و PM2 إذا لم يكونا مثبتين
+          echo "Checking and installing Yarn and PM2 if not installed..."
+          if ! command -v yarn &> /dev/null; then
+            npm install -g yarn
+          fi
+          if ! command -v pm2 &> /dev/null; then
+            npm install -g pm2
+          fi
 
-            # طباعة سجل أخطاء PM2
-            echo "Printing PM2 error logs"
-            pm2 logs || echo "No PM2 logs found"
+          # حذف التبعيات القديمة وتثبيت الجديدة
+          echo "Removing old dependencies and installing new ones..."
+          rm -rf node_modules
+          yarn install
 
-            # تثبيت Yarn و PM2 إذا لم يكونا مثبتين
-            if ! command -v yarn &> /dev/null; then
-              npm install -g yarn
-            fi
-            if ! command -v pm2 &> /dev/null; then
-              npm install -g pm2
-            fi
+          # بناء التطبيق
+          echo "Building the application..."
+          yarn build
+          yarn precopy-build
+          yarn copy-build
 
-            # حذف التبعيات القديمة وتثبيت الجديدة
-            rm -rf node_modules
-            yarn install
+          # قتل جميع عمليات PM2 قبل إعادة التشغيل
+          echo "Killing all PM2 processes..."
+          pm2 kill
 
-            # بناء التطبيق
-            yarn build
+          # إدارة العملية باستخدام PM2
+          echo "Starting the application with PM2..."
+          pm2 start yarn --name "ve-frontend" -- start
 
-            # قتل كافة عمليات PM2 قبل إعادة التشغيل
-            echo "Killing all PM2 processes"
-            pm2 kill
+          # حفظ العمليات في PM2 للبدء التلقائي
+          pm2 save
 
-            # إدارة العملية باستخدام PM2
-            if pm2 list | grep -q "ve-frontend"; then
-              pm2 restart ve-frontend
-            else
-              pm2 start yarn --name "ve-frontend" -- start
-            fi
+          # إعادة تشغيل Nginx
+          echo "Restarting Nginx service..."
+          sudo systemctl restart nginx
 
-            pm2 save  # حفظ العمليات في PM2 للبدء التلقائي
-
-            # إعادة تشغيل Nginx
-            sudo systemctl restart nginx  # إعادة تشغيل Nginx
+    - name: Notify Success
+      run: echo "Deployment completed successfully!"
