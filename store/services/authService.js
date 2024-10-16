@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // تعيين الرابط الأساسي للـ API الخاص بـ Laravel
-const apiBaseURL = 'http://127.0.0.1:8000/api';
+const apiBaseURL = 'https://store.ve-shop.co/api';
 
 // إنشاء مستخدم جديد عبر إرسال طلب POST إلى واجهة التسجيل
 export const createUser = async (email, password, name) => {
