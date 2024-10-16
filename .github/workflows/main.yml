@@ -14,11 +14,11 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Setup Node.js environment
+      # Setup Node.js environment (stable Node 18)
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20.13.0'  # Ensure version consistency
+          node-version: '18.20.4'  # Use stable Node.js 18
 
       # Deploy on remote server
       - name: Deploy Application on Remote Server
@@ -51,7 +51,7 @@ jobs:
             
             # Remove node_modules and install fresh dependencies
             rm -rf node_modules
-            yarn install  # Remove --frozen-lockfile to ensure dependencies install
+            yarn install  # Ensure dependencies are installed without --frozen-lockfile
             
             # Verify if next is installed
             if ! yarn list | grep next; then
@@ -62,13 +62,15 @@ jobs:
             # Build the project
             yarn build
             
-            # Graceful reload for PM2 to ensure no downtime
-            pm2 stop ve-frontend || true  # Stop the app if it's running
+            # Kill all old PM2 processes and restart
+            pm2 stop all || true  # Stop all running PM2 processes
+            pm2 delete all || true  # Delete all previous PM2 processes
+
+            # Start the new instance
             pm2 start yarn --name "ve-frontend" -- start  # Start new instance
             pm2 save  # Save the PM2 process list
-            pm2 gracefulReload ve-frontend  # Graceful reload for better performance
             
-            # Restart Nginx to ensure everything is working properly
+            # Restart Nginx to apply changes
             sudo systemctl restart nginx
 
           timeout: 60s  # Set timeout for SSH action
