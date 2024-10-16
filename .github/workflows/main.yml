@@ -54,9 +54,9 @@ jobs:
             yarn install  # Remove --frozen-lockfile to ensure dependencies install
             
             # Verify if next is installed
-            if ! command -v next &> /dev/null; then
-              echo "Next.js is not installed!"
-              exit 1
+            if ! yarn list | grep next; then
+              echo "Next.js is not installed, attempting to install..."
+              yarn add next
             fi
 
             # Build the project
