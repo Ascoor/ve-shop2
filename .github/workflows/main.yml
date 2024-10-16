@@ -34,3 +34,4 @@ jobs:
           pm2 restart all  # أو يمكنك تحديد اسم التطبيق لو كان موجوداً
           sudo systemctl restart nginx
           EOF
+          
