@@ -1,7 +1,7 @@
 // store/utils/axiosInstance.js
 import axios from "axios";
 
-const API_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://127.0.0.1:8000/api";
+const API_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://store.ve-shop.co/api";
 
 const axiosInstance = axios.create({
   baseURL: API_URL,
