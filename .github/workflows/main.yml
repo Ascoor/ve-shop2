@@ -3,34 +3,57 @@ name: Deploy Application
 on:
   push:
     branches:
+      - master  # تشغيل الـ Workflow عند دفع التحديثات على فرع master
       - main
 
 jobs:
-  deploy:
+  remote-update-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'  # تأكد من ضبط الإصدار المناسب
+          node-version: '18.20.4'
 
-      - name: Install dependencies
-        run: yarn install
+      - name: Connect to Remote Server and Run Update Commands
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USERNAME }}
+          password: ${{ secrets.HOSTINGER_PASSWORD }}
+          port: ${{ secrets.SERVER_PORT }}
+          script: |
+            cd /var/www/html/ve-shop.co/ve-frontend
+            
+            # تحديث الكود من المستودع
+            git stash
+            git pull origin master
 
-      - name: Build application
-        run: yarn build
+            # تثبيت Yarn و PM2 إذا لم يكونا مثبتين
+            if ! command -v yarn &> /dev/null; then
+              npm install -g yarn
+            fi
+            if ! command -v pm2 &> /dev/null; then
+              npm install -g pm2
+            fi
 
-      - name: Deploy to server
-        run: |
-          ssh username@your-vps-ip << 'EOF'
-          cd /path/to/your/app
-          git pull origin main
-          yarn install --production
-          yarn build
-          pm2 restart all  # أو يمكنك تحديد اسم التطبيق لو كان موجوداً
-          sudo systemctl restart nginx
-          EOF
+            # حذف التبعيات القديمة وتثبيت الجديدة
+            rm -rf node_modules
+            yarn install
+
+            # بناء التطبيق
+            yarn build
+
+            # إدارة العملية باستخدام PM2
+            if pm2 list | grep -q "ve-frontend"; then
+              pm2 restart ve-frontend
+            else
+              pm2 start yarn --name "ve-frontend" -- start
+            fi
+
+            pm2 save  # حفظ العمليات في PM2 للبدء التلقائي
+            sudo systemctl restart nginx  # إعادة تشغيل Nginx
