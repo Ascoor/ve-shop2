@@ -3,48 +3,72 @@ name: Remote Update and Deploy
 on:
   push:
     branches:
-      - master  # Triggers the workflow on pushes to the master branch
+      - master  # تشغيل الـ Workflow عند دفع التحديثات على فرع master
 
 jobs:
   remote-update-and-deploy:
-    runs-on: ubuntu-latest  # Specifies the runner environment.
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3  # Latest stable version
+      # Checkout the code
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3  # Latest stable version
-      with:
-        node-version: '20.13.0'  # Match the Node.js version on your server
+      # Setup Node.js environment
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.13.0'  # Ensure version consistency
 
-    - name: Connect to Remote Server and Run Update Commands
-      uses: appleboy/ssh-action@v0.1.8  # Use the latest stable release
-      with:
-        host: ${{ secrets.HOSTINGER_HOST }}
-        username: ${{ secrets.HOSTINGER_USERNAME }}
-        password: ${{ secrets.HOSTINGER_PASSWORD }}
-        port: ${{ secrets.SERVER_PORT }}
-        script: |
-          cd /var/www/html/ve-shop.co/ve-frontend
-          git stash  # Stash any local changes
-          git pull origin master  # Pull the latest changes from the master branch
-          if [ -f package-lock.json ]; then
-            rm package-lock.json  # Remove package-lock.json if it exists
-          fi
-          if ! command -v yarn &> /dev/null; then
-            npm install -g yarn  # Install Yarn if it's not installed
-          fi
-          if ! command -v pm2 &> /dev/null; then
-            npm install -g pm2  # Install PM2 if not already installed
-          fi
-          rm -rf node_modules
-          yarn install  # Ensure all dependencies are installed
-          yarn run build  # Builds the project
-          pm2 stop ve-frontend || true  # Stop existing instance if running
-          pm2 start yarn --name "ve-frontend" -- start  # Start new instance
-          pm2 save  # Save PM2 process list
-          pm2 restart ve-frontend  # Restart the service
-        timeout: 30s
-        command_timeout: 10m
-        debug: true  # Enable debugging for detailed logs
+      # Deploy on remote server
+      - name: Deploy Application on Remote Server
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USERNAME }}
+          password: ${{ secrets.HOSTINGER_PASSWORD }}
+          port: ${{ secrets.SERVER_PORT }}
+          script: |
+            # Navigate to the project directory
+            cd /var/www/html/ve-shop.co/ve-frontend
+            
+            # Stash local changes and pull the latest changes
+            git stash --include-untracked
+            git pull origin master
+            
+            # Clean up any old files
+            if [ -f package-lock.json ]; then
+              rm package-lock.json
+            fi
+            
+            # Ensure Yarn and PM2 are installed
+            if ! command -v yarn &> /dev/null; then
+              npm install -g yarn
+            fi
+            if ! command -v pm2 &> /dev/null; then
+              npm install -g pm2
+            fi
+            
+            # Remove node_modules and install fresh dependencies
+            rm -rf node_modules
+            yarn install --frozen-lockfile
+            
+            # Build the project
+            yarn build
+            
+            # Graceful reload for PM2 to ensure no downtime
+            pm2 stop ve-frontend || true  # Stop the app if it's running
+            pm2 start yarn --name "ve-frontend" -- start  # Start new instance
+            pm2 save  # Save the PM2 process list
+            pm2 gracefulReload ve-frontend  # Graceful reload for better performance
+            
+            # Restart Nginx to ensure everything is working properly
+            sudo systemctl restart nginx
+
+        timeout: 60s  # Set timeout for SSH action
+        command_timeout: 15m  # Allow enough time for dependencies installation and build process
+        debug: true  # Enable detailed logs for debugging
+
+      # Final confirmation message
+      - name: Confirm Deployment Success
+        run: echo "Deployment completed successfully on remote server."
