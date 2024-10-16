@@ -3,23 +3,23 @@ name: Remote Update and Deploy
 on:
   push:
     branches:
-      - master  # تشغيل الـ Workflow عند دفع التحديثات على فرع master
+      - master  # Triggers the workflow on pushes to the master branch
 
 jobs:
   remote-update-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Specifies the runner environment.
 
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3  # Latest stable version
 
     - name: Setup Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v3  # Latest stable version
       with:
-        node-version: '18.20.4'
+        node-version: '20.13.0'  # Match the Node.js version on your server
 
     - name: Connect to Remote Server and Run Update Commands
-      uses: appleboy/ssh-action@v0.1.8
+      uses: appleboy/ssh-action@v0.1.8  # Use the latest stable release
       with:
         host: ${{ secrets.HOSTINGER_HOST }}
         username: ${{ secrets.HOSTINGER_USERNAME }}
@@ -27,46 +27,24 @@ jobs:
         port: ${{ secrets.SERVER_PORT }}
         script: |
           cd /var/www/html/ve-shop.co/ve-frontend
-          
-          # تحديث الكود من المستودع
-          echo "Stashing local changes (if any) and pulling updates from remote repository..."
-          git stash
-          git pull origin master
-
-          # تثبيت Yarn و PM2 إذا لم يكونا مثبتين
-          echo "Checking and installing Yarn and PM2 if not installed..."
+          git stash  # Stash any local changes
+          git pull origin master  # Pull the latest changes from the master branch
+          if [ -f package-lock.json ]; then
+            rm package-lock.json  # Remove package-lock.json if it exists
+          fi
           if ! command -v yarn &> /dev/null; then
-            npm install -g yarn
+            npm install -g yarn  # Install Yarn if it's not installed
           fi
           if ! command -v pm2 &> /dev/null; then
-            npm install -g pm2
+            npm install -g pm2  # Install PM2 if not already installed
           fi
-
-          # حذف التبعيات القديمة وتثبيت الجديدة
-          echo "Removing old dependencies and installing new ones..."
           rm -rf node_modules
-          yarn install
-
-          # بناء التطبيق
-          echo "Building the application..."
-          yarn build
-          yarn precopy-build
-          yarn copy-build
-
-          # قتل جميع عمليات PM2 قبل إعادة التشغيل
-          echo "Killing all PM2 processes..."
-          pm2 kill
-
-          # إدارة العملية باستخدام PM2
-          echo "Starting the application with PM2..."
-          pm2 start yarn --name "ve-frontend" -- start
-
-          # حفظ العمليات في PM2 للبدء التلقائي
-          pm2 save
-
-          # إعادة تشغيل Nginx
-          echo "Restarting Nginx service..."
-          sudo systemctl restart nginx
-
-    - name: Notify Success
-      run: echo "Deployment completed successfully!"
+          yarn install  # Ensure all dependencies are installed
+          yarn run build  # Builds the project
+          pm2 stop ve-frontend || true  # Stop existing instance if running
+          pm2 start yarn --name "ve-frontend" -- start  # Start new instance
+          pm2 save  # Save PM2 process list
+          pm2 restart ve-frontend  # Restart the service
+        timeout: 30s
+        command_timeout: 10m
+        debug: true  # Enable debugging for detailed logs
