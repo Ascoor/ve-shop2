@@ -11,7 +11,7 @@
   "author": "Ask-ar.net Developer",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+  "build": "next build && eslint --ignore-path .gitignore .",
     "start": "next start",
     "copy-build": "cp -R build/* /var/www/html/ve-shop.co/public",
     "precopy-build": "rm -rf /var/www/html/ve-shop.co/public/*",
