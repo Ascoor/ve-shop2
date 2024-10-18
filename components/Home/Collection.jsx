@@ -10,7 +10,7 @@ const Collection = ({ womenProducts }) => {
       
       {/* Centered "تسوق الآن" Text */}
       <div className=" inset-x-0 top-0 z-10 flex justify-center items-center h-full">
-        <h1 className="text-[#E43038] text-5xl md:text-6xl font-semibold text-center">
+        <h1 className="text-[var(--color-primary-day)] dark:text-[var(--color-primary-night)] text-5xl md:text-6xl font-semibold text-center">
           تسوق الآن
         </h1>
       </div>
@@ -20,7 +20,7 @@ const Collection = ({ womenProducts }) => {
         grabCursor={true}
         modules={[Navigation]}
         navigation={true}
-        className="w-72 h-72 md:h-96 lg:w-96 bg-white lg:h-96 xl:w-full mb-8 md:mb-0 relative z-0"
+        className="w-72 h-72 md:h-96 lg:w-96 bg-[var(--color-background-day)] dark:bg-[var(--color-background-night)] lg:h-96 xl:w-full mb-8 md:mb-0 relative z-0"
       >
         {womenProducts.map((product) => (
           <SwiperSlide key={product.id}>
@@ -37,12 +37,11 @@ const Collection = ({ womenProducts }) => {
         ))}
       </Swiper>
 
-
-      <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl tracking-wide font-semibold text-center mt-8 lg:mt-12">
+      <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl tracking-wide font-semibold text-center mt-8 lg:mt-12 text-[var(--color-primary-day)] dark:text-[var(--color-primary-night)]">
         خصومات كبيرة
       </h1>
+
       <div className="flex flex-col md:flex-row gap-4 w-full">
-      
         <div className="flex flex-col items-center justify-center w-full md:w-1/2">
           <Image
             src="/assets/autumn-sale.png"

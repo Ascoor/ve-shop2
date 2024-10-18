@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { useSelector, useDispatch } from 'react-redux';
 import { toastr } from 'react-redux-toastr';
-import { AiOutlinePlus, AiOutlineMinus, AiOutlineSelect } from 'react-icons/ai';
+import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { BsTrash } from 'react-icons/bs';
 import { removeFromCart, increaseQuantity } from '../store/reducers/cartSlice';
 import { useRouter } from 'next/router';
@@ -31,34 +31,34 @@ const Cart = () => {
   };
 
   return (
-    <div className="bg-gray-100"  >
+    <div className="bg-[var(--color-background-day)] dark:bg-[var(--color-background-night)] text-[var(--color-text-day)] dark:text-[var(--color-text-night)]">
       <div className="container mx-auto mt-10">
         <div className="flex flex-col md:flex-row shadow-md my-10">
-          <div className="w-full md:w-3/4 bg-white px-10 py-10">
-            <div className="flex justify-between border-b pb-8">
+          <div className="w-full md:w-3/4 bg-[var(--color-component-background-day)] dark:bg-[var(--color-component-background-night)] px-10 py-10">
+            <div className="flex justify-between border-b pb-8 border-[var(--color-border-day)] dark:border-[var(--color-border-night)]">
               <h1 className="font-semibold text-2xl">سلة التسوق</h1>
               <h2 className="font-semibold text-2xl">
                 {totalQuantity} {totalQuantity > 1 ? 'منتجات' : 'منتج'}{' '}
               </h2>
             </div>
             <div className="flex mt-10 mb-5">
-              <h3 className="font-semibold text-gray-600 text-xs uppercase w-2/5">
+              <h3 className="font-semibold text-[var(--color-muted-text-day)] dark:text-[var(--color-muted-text-night)] text-xs uppercase w-2/5">
                 تفاصيل المنتج
               </h3>
-              <h3 className="font-semibold text-gray-600 text-xs uppercase w-1/5 text-center">
+              <h3 className="font-semibold text-[var(--color-muted-text-day)] dark:text-[var(--color-muted-text-night)] text-xs uppercase w-1/5 text-center">
                 الكمية
               </h3>
-              <h3 className="font-semibold text-gray-600 text-xs uppercase w-1/5 text-center">
+              <h3 className="font-semibold text-[var(--color-muted-text-day)] dark:text-[var(--color-muted-text-night)] text-xs uppercase w-1/5 text-center">
                 السعر
               </h3>
-              <h3 className="font-semibold text-gray-600 text-xs uppercase w-1/5 text-center">
+              <h3 className="font-semibold text-[var(--color-muted-text-day)] dark:text-[var(--color-muted-text-night)] text-xs uppercase w-1/5 text-center">
                 حذف
               </h3>
             </div>
             {cartItems.map(item => (
               <div
                 key={item.id}
-                className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5"
+                className="flex items-center hover:bg-[var(--color-hover-background-day)] dark:hover:bg-[var(--color-hover-background-night)] -mx-8 px-6 py-5"
               >
                 <div className="flex w-2/5">
                   <div className="w-20">
@@ -85,37 +85,39 @@ const Cart = () => {
                         ? () => handleRemoveFromCart(item.id)
                         : () => dispatch(removeFromCart(item.id))
                     }
-                    className="cursor-pointer hover:text-[#E43038]"
+                    className="cursor-pointer hover:text-[var(--color-primary-day)] dark:hover:text-[var(--color-primary-night)]"
                   />
-                  <span className="text-gray-700 mx-2">{item.quantity}</span>
+                  <span className="text-[var(--color-text-day)] dark:text-[var(--color-text-night)] mx-2">{item.quantity}</span>
                   <AiOutlinePlus
                     onClick={() => dispatch(increaseQuantity(item.id))}
-                    className="cursor-pointer hover:text-[#E43038]"
+                    className="cursor-pointer hover:text-[var(--color-primary-day)] dark:hover:text-[var(--color-primary-night)]"
                   />
                 </div>
-                <span className="text-center w-1/5 font-semibold text-sm">
+                <span className="text-center w-1/5 font-semibold text-sm text-[var(--color-text-day)] dark:text-[var(--color-text-night)]">
                   ${item.price}
                 </span>
                 <BsTrash
                   onClick={() => handleRemoveFromCart(item.id)}
-                  className="text-center w-1/5 font-semibold text-2xl hover:text-[#E43038] cursor-pointer"
+                  className="text-center w-1/5 font-semibold text-2xl hover:text-[var(--color-primary-day)] dark:hover:text-[var(--color-primary-night)] cursor-pointer"
                 />
               </div>
             ))}
           </div>
-          <div id="summary" className="w-full md:w-1/4 px-8 py-10">
-            <h1 className="font-semibold text-2xl border-b pb-8">ملخص الطلب</h1>
+          <div id="summary" className="w-full md:w-1/4 px-8 py-10 bg-[var(--color-component-background-day)] dark:bg-[var(--color-component-background-night)]">
+            <h1 className="font-semibold text-2xl border-b pb-8 border-[var(--color-border-day)] dark:border-[var(--color-border-night)]">
+              ملخص الطلب
+            </h1>
             <div className="flex justify-between flex-col mt-10 mb-5">
               <div className="flex flex-col gap-7 mt-10 mb-5">
-                <span className="font-semibold text-sm uppercase flex justify-between">
+                <span className="font-semibold text-sm uppercase flex justify-between text-[var(--color-text-day)] dark:text-[var(--color-text-night)]">
                   إجمالي المنتجات في السلة:
-                  <p className="text-red-500 font-bold text-lg">
+                  <p className="text-[var(--color-primary-day)] dark:text-[var(--color-primary-night)] font-bold text-lg">
                     {totalQuantity}
                   </p>
                 </span>
-                <span className="font-semibold text-sm uppercase flex justify-between">
+                <span className="font-semibold text-sm uppercase flex justify-between text-[var(--color-text-day)] dark:text-[var(--color-text-night)]">
                   السعر الإجمالي:
-                  <p className="text-red-500 font-bold text-lg">
+                  <p className="text-[var(--color-primary-day)] dark:text-[var(--color-primary-night)] font-bold text-lg">
                     $
                     {totalQuantity === 0
                       ? 0
@@ -128,7 +130,7 @@ const Cart = () => {
             </div>
             <button
               onClick={handleCheckout}
-              className="bg-red-500 text-gray-100 text-sm uppercase font-semibold  px-5 py-3 mt-6 w-full"
+              className="bg-[var(--color-primary-day)] dark:bg-[var(--color-primary-night)] text-[var(--color-secondary-day)] dark:text-[var(--color-secondary-night)] text-sm uppercase font-semibold px-5 py-3 mt-6 w-full hover:bg-[var(--color-button-hover-day)] dark:hover:bg-[var(--color-button-hover-night)]"
             >
               إتمام الطلب
             </button>

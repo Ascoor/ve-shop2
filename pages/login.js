@@ -1,126 +1,113 @@
-import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Form, Formik } from "formik";
+import * as Yup from "yup";
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUserThunk, selectUser } from '../store/slices/authSlice';
-import Link from 'next/link';
-import Image from 'next/image';
-import { Form, Formik } from "formik";
-import { useRouter } from 'next/router';  // استيراد useRouter
-import * as Yup from "yup";
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-  const router = useRouter();  // تهيئة useRouter
-  const user = useSelector(selectUser);  // الحصول على حالة المستخدم
+  const router = useRouter();
+  const user = useSelector(selectUser);
 
-  // بعد تسجيل الدخول بنجاح، يتم التوجيه بناءً على role_id
   useEffect(() => {
     if (user) {
       if (user.role_id === 1 || user.role_id === 2) {
-        router.push('/dashboard');  // توجيه المستخدم إلى لوحة التحكم
+        router.push('/dashboard');
       } else if (user.role_id === 3) {
-        router.push('/store');  // توجيه المستخدم العادي إلى المتجر
+        router.push('/store');
       }
     }
-  }, [user, router]); // يتم استدعاء useEffect عند تحديث user أو router
+  }, [user, router]);
 
   const initialValues = {
-    email: "",
-    password: "",
+    email: '',
+    password: ''
   };
 
   const validationSchema = Yup.object({
-    email: Yup.string().email("Invalid email format").required("Required"),
-    password: Yup.string().required("Required"),
+    email: Yup.string().email("البريد الإلكتروني غير صالح").required("مطلوب"),
+    password: Yup.string().required("مطلوب")
   });
 
   const onSubmit = async (values, { setSubmitting }) => {
     try {
-      // Dispatch the login thunk with the form values
-      const result = await dispatch(loginUserThunk(values));
+      await dispatch(loginUserThunk(values));
       setSubmitting(false);
     } catch (error) {
-      console.error("Login failed:", error);
+      console.error("فشل تسجيل الدخول:", error);
       setSubmitting(false);
     }
   };
 
   return (
-    <div className='flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
-      <div className='w-full max-w-md space-y-8'>
+    <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-[var(--background-color)] text-[var(--text-color)]">
+      <div className="w-full max-w-md space-y-8">
         <div>
           <Image
             src='/assets/logo.png'
-            alt='background'
+            alt='logo'
             className='mx-auto h-36 w-auto rounded-full'
             width={600}
             height={600}
-            priority 
+            priority
           />
-          <h2 className='mt-6 text-center text-3xl font-bold tracking-tight text-gray-900'>
-          سجل الدخول إلى حسابك
+          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-[var(--primary-color)]">
+            سجل الدخول إلى حسابك
           </h2>
-          <p className='mt-2 text-center text-sm text-gray-600'>
+          <p className="mt-2 text-center text-sm text-[var(--muted-text-color)]">
             أو{" "}
-            <Link
-              href='/register'
-              className='font-medium text-indigo-600 hover:text-indigo-500'
-            >
-          إنشاء حساب
+            <Link href="/register" className="font-medium text-[var(--primary-color)] hover:text-[var(--button-hover-background-color)]">
+              إنشاء حساب
             </Link>
           </p>
         </div>
         <Formik
-          className='mt-8 space-y-6'
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={onSubmit}
         >
-          {(formik) => (
-            <Form className='-space-y-px rounded-md shadow-sm'>
-              <input type='hidden' name='remember' defaultValue='true' />
+          {formik => (
+            <form className="mt-8 space-y-6" onSubmit={formik.handleSubmit}>
               <div>
-                <label htmlFor='email-address' className='sr-only'>
-                البريد الالكتروني
-                </label>
                 <input
                   type="email"
                   id="email"
                   name="email"
                   placeholder="أدخل بريدك الإلكتروني"
-                  autoComplete="username"  // إضافة هذه الخاصية
-                  className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 focus:outline-none focus:border-[#E43038] mb-3"
+                  className="block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:border-[var(--primary-color)] mb-3 bg-[var(--background-color)] text-[var(--text-color)]"
                   {...formik.getFieldProps("email")}
                 />
-              </div>
-              <div>
-                <label htmlFor='password' className='sr-only'>
-              كلمة المرور
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="كلمة المرور"
-                  autoComplete="current-password"
-                  className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2  focus:outline-none focus:border-[#E43038] mb-3"
-                  {...formik.getFieldProps("password")}
-                />
+                {formik.touched.email && formik.errors.email ? (
+                  <div className="text-xs text-red-500">{formik.errors.email}</div>
+                ) : null}
               </div>
 
-              <div className='flex items-center justify-between'>
-                <div className='flex items-center'>
+              <div>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="كلمة المرور"
+                  className="block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:border-[var(--primary-color)] mb-3 bg-[var(--background-color)] text-[var(--text-color)]"
+                  {...formik.getFieldProps("password")}
+                />
+                {formik.touched.password && formik.errors.password ? (
+                  <div className="text-xs text-red-500">{formik.errors.password}</div>
+                ) : null}
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
                   <input
-                    id='remember-me'
-                    name='remember-me'
-                    type='checkbox'
-                    className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
+                    id="remember-me"
+                    name="remember-me"
+                    type="checkbox"
+                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                   />
-                  <label
-                    htmlFor='remember-me'
-                    className='ml-2 block text-sm text-gray-900'
-                  >
+                  <label htmlFor="remember-me" className="ml-2 block text-sm text-[var(--text-color)]">
                     تذكرني
                   </label>
                 </div>
@@ -128,14 +115,14 @@ const LoginPage = () => {
 
               <div>
                 <button
-                  type='submit'
-                  className='group relative flex w-full justify-center rounded-md border border-transparent bg-[#E43038] py-2 px-4 text-sm font-medium mt-4 text-white hover:bg-[#dd9194] focus:outline-none focus:ring-2 focus:ring-[#331416] focus:ring-offset-2'
+                  type="submit"
+                  className="w-full flex justify-center rounded-md py-2 px-4 text-sm font-medium bg-[var(--button-background-color)] text-[var(--button-text-color)] hover:bg-[var(--button-hover-background-color)] focus:outline-none focus:ring-2 focus:ring-offset-2"
                   disabled={!formik.isValid || formik.isSubmitting}
                 >
                   {formik.isSubmitting ? "تحميل...." : "دخول"}
                 </button>
               </div>
-            </Form>
+            </form>
           )}
         </Formik>
       </div>

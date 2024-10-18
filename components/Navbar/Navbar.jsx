@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Categories from "./Categories";
 import Nav from "./Nav";
@@ -7,6 +8,22 @@ import { selectUser } from '../../store/slices/authSlice';
 
 const Navbar = () => {
   const user = useSelector(selectUser); // Get user data from Redux
+
+  // Add the isDarkMode state
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    // Check localStorage for theme preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      setIsDarkMode(savedTheme === 'dark');
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    }
+  }, []);
 
   return (
     <>
@@ -31,4 +48,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-  
