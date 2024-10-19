@@ -3,60 +3,43 @@ name: Remote Update and Deploy
 on:
   push:
     branches:
-      - master  # Trigger the workflow on pushes to the master branch
+      - master
 
 jobs:
   remote-update-and-deploy:
-    runs-on: ubuntu-latest  # Specifies the runner environment
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v3  # Checkout the latest code from the repository
+      uses: actions/checkout@v3
 
     - name: Setup Node.js Environment
-      uses: actions/setup-node@v3  # Set up Node.js environment
+      uses: actions/setup-node@v3
       with:
-        node-version: '18.20.4'  # Match the Node.js version on the server
+        node-version: '18.20.4'
 
     - name: Connect to Remote Server and Run Update Commands
-      uses: appleboy/ssh-action@v0.1.8  # SSH action to connect to the remote server
+      uses: appleboy/ssh-action@v0.1.8
       with:
         host: ${{ secrets.HOSTINGER_HOST }}
         username: ${{ secrets.HOSTINGER_USERNAME }}
         password: ${{ secrets.HOSTINGER_PASSWORD }}
         port: ${{ secrets.SERVER_PORT }}
         script: |
-          # Navigate to the project directory
           cd /var/www/html/ve-shop.co/ve-frontend
-          
-          # Stash any local changes and pull the latest changes from the master branch
           git stash --include-untracked
           git pull origin master
-          
-          # Remove package-lock.json if it exists, as you're using Yarn
           [ -f package-lock.json ] && rm package-lock.json
-          
-          # Install Yarn globally if not already installed
           if ! command -v yarn &> /dev/null; then
             npm install -g yarn
           fi
-          
-          # Clean up old node_modules and reinstall dependencies
           rm -rf node_modules
-          yarn install --frozen-lockfile  # Ensures using the exact versions from yarn.lock
-          
-          # Optional: Upgrade dependencies if needed (use with caution in production)
-          yarn upgrade --force  # Forces updates to all dependencies
-          
-          # Build the project for production
+          yarn install  # Remove --frozen-lockfile
           yarn build
-          
-          # Run your custom script to copy build files to the public directory
-          yarn copy-build
-          
-        timeout: 1m  # Increase timeout for more flexibility (60 seconds)
-        command_timeout: 15m  # Allow 15 minutes for build and copy operations
-        debug: true  # Enable debugging for detailed logs
-
-    - name: Confirm Deployment Success
-      run: echo "Deployment completed successfully on remote server."
+          if [ -d ".next" ]; then
+            echo "Build successful!"
+            yarn copy-build
+          else
+            echo "Build failed!"
+            exit 1
+          fi
