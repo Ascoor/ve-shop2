@@ -3,43 +3,63 @@ name: Remote Update and Deploy
 on:
   push:
     branches:
-      - master
+      - master  # Triggers the workflow on pushes to the master branch
 
 jobs:
   remote-update-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Specifies the runner environment
 
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3  # Checkout the latest code from the repository
 
     - name: Setup Node.js Environment
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v3  # Set up Node.js environment
       with:
-        node-version: '18.20.4'
+        node-version: '18.20.4'  # Match the Node.js version on the server
 
     - name: Connect to Remote Server and Run Update Commands
-      uses: appleboy/ssh-action@v0.1.8
+      uses: appleboy/ssh-action@v0.1.8  # SSH action to connect to the remote server
       with:
         host: ${{ secrets.HOSTINGER_HOST }}
         username: ${{ secrets.HOSTINGER_USERNAME }}
         password: ${{ secrets.HOSTINGER_PASSWORD }}
         port: ${{ secrets.SERVER_PORT }}
         script: |
+          # Navigate to the project directory
           cd /var/www/html/ve-shop.co/ve-frontend
+          
+          # Stash any local changes and pull the latest changes from the master branch
           git stash --include-untracked
           git pull origin master
+          
+          # Remove package-lock.json if it exists, as you're using Yarn
           [ -f package-lock.json ] && rm package-lock.json
+          
+          # Install Yarn globally if not already installed
           if ! command -v yarn &> /dev/null; then
             npm install -g yarn
           fi
+          
+          # Clean up old node_modules and reinstall dependencies
           rm -rf node_modules
-          yarn install  # Remove --frozen-lockfile
+          yarn install  # Install dependencies without --frozen-lockfile
+
+          # Pre-copy build files from the public directory (cleanup)
+          yarn precopy-build
+          
+          # Build the project for production
           yarn build
+          
+          # Ensure the build was successful before proceeding
           if [ -d ".next" ]; then
             echo "Build successful!"
-            yarn copy-build
+            yarn copy-build  # Copy the build files to the public directory
           else
             echo "Build failed!"
             exit 1
           fi
+
+        timeout: 1m  # Increase timeout for more flexibility (60 seconds)
+        command_timeout: 15m  # Allow 15 minutes for build and copy operations
+        debug: true  # Enable debugging for detailed logs
