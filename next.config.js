@@ -7,7 +7,7 @@ const nextConfig = {
 
   images: {
  
-    formats: ["image/jpg", "image/webp", "image/svg"],
+    formats: ["image/jpg", "image/webp"],
     remotePatterns: [
       {
         protocol: 'https',
