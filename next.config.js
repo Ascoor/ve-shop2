@@ -6,8 +6,7 @@ const nextConfig = {
   // استخدام محرك التحسين SWC لضغط الشيفرة لتحسين الأداء
   swcMinify: true,
 
-  // إعداد لنشر المشروع كـ standalone
-  output: 'standalone',
+
 
   // إعدادات الصور
   images: {
