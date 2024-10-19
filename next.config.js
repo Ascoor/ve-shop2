@@ -6,7 +6,8 @@ const nextConfig = {
   // استخدام محرك التحسين SWC لضغط الشيفرة لتحسين الأداء
   swcMinify: true,
 
-
+  // إعداد لنشر المشروع كـ standalone
+  output: 'standalone',
 
   // إعدادات الصور
   images: {
@@ -44,11 +45,6 @@ const nextConfig = {
     dirs: ['pages', 'components', 'lib'], // يمكنك إضافة أي مجلدات أخرى تحتاج إلى فحصها
   },
 
-  // إعدادات الترجمة الدولية (i18n) إذا كنت تحتاج إلى دعم متعدد اللغات
-  i18n: {
-    locales: ['en', 'ar'], // اللغات المدعومة (الإنجليزية والعربية)
-    defaultLocale: 'en', // اللغة الافتراضية (الإنجليزية)
-  },
 };
 
 module.exports = nextConfig;
