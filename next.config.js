@@ -3,10 +3,10 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
 
-  output: 'standalone',
+  // إزالة استخدام `standalone` حيث أنه ليس ضروري لواجهة أمامية فقط
+  output: 'export', // يجعل Next.js يقوم بتصدير ملفات ثابتة فقط بعد البناء
 
   images: {
- 
     remotePatterns: [
       {
         protocol: 'https',
@@ -22,6 +22,7 @@ const nextConfig = {
 
   compress: true,
 
+  // لا داعي لإعدادات الخادم الداخلي
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.alias['@sentry/node'] = '@sentry/browser';
@@ -32,6 +33,9 @@ const nextConfig = {
   eslint: {
     dirs: ['pages', 'components', 'lib'],
   },
+
+  // تعطيل صفحات الخادم الديناميكي وجعل التطبيق يعمل كواجهة أمامية فقط
+  trailingSlash: true, // إضافة شريط مائل لكل الروابط (يفيد مع بعض خوادم الويب)
 };
 
 module.exports = nextConfig;
