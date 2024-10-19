@@ -7,10 +7,13 @@ const Dashboard = () => {
   const { section } = router.query; // Get the section from the URL
 
   return (
-    <div className="h-screen flex flex-col">
-      <main className="flex-1 flex items-center justify-center p-4"> {/* Center the content */}
-        <div className="border border-gray-300 rounded-lg shadow-lg w-full max-w-4xl p-6"> {/* Responsive border and padding */}
-          <DashboardCharts /> {/* Display the charts here */}
+    <div className="min-h-screen flex flex-col bg-[var(--color-background-day)] dark:bg-[var(--color-background-night)]"> 
+      <main className="flex-1 flex items-center justify-center p-4">
+        {/* قالب يتوسط الشاشة ويكون متجاوب مع الوضع الليلي والنهاري */}
+        <div className="border border-[var(--color-component-border-day)] dark:border-[var(--color-component-border-night)] 
+          rounded-lg shadow-lg h-full max-w-4xl p-6 bg-[var(--color-component-background-day)] dark:bg-[var(--color-component-background-night)] min-h-[700px]">
+          {/* Render default content or charts */}
+          {!section && <DashboardCharts />} {/* عرض المخططات الافتراضية */}
 
           {/* Render section content based on the selected section */}
           {section === 'products' && <ProductsComponent />}

@@ -3,12 +3,12 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { useDarkMode } from "../../hooks/useDarkMode"; // Import the custom hook
 import Link from "next/link";
-import { categories } from "../../data";
 import { AiOutlineInfoCircle, AiOutlineLogout, AiOutlineShoppingCart, AiOutlineUser } from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
 import { ChevronRightIcon, SunIcon, MoonIcon } from "@heroicons/react/20/solid";
 import { logoutUserThunk, selectUser } from "../../store/slices/authSlice";
 import { Disclosure } from "@headlessui/react";
+import { sections } from '../common/sectionData'; // استيراد بيانات الأقسام
 
 const ResponsiveNavbar = () => {
   const cartItems = useSelector((state) => state.cart.items);
@@ -29,7 +29,7 @@ const ResponsiveNavbar = () => {
 
   const { isDarkMode, toggleDarkMode } = useDarkMode(); // Use the custom hook
   const isGuest = !user || !user.role_id;
-  const isUser = user && user.role_id === 3;
+  const isAdminOrStaff = user && (user.role_id === 1 || user.role_id === 2);
 
   return (
     <Fragment>
@@ -80,54 +80,27 @@ const ResponsiveNavbar = () => {
                 </div>
               </div>
 
-              {/* Search Bar, Cart, and Categories: Only for role_id = 3 (User) */}
-              {(isGuest || isUser) && (
+              {/* Conditional Rendering Based on Role */}
+              {isAdminOrStaff && (
                 <>
-                  <div className='border-gray-300 my-4'>
-                    <input
-                      type='text'
-                      placeholder='Search'
-                      className='px-8 w-full border-none rounded-lg py-2 text-[var(--color-text-day)] dark:text-[var(--color-text-night)] focus:outline-none'
-                    />
-                  </div>
-
-                  {/* Cart with item count */}
-                  <Link href="/cart" className="relative flex items-center" onClick={() => setOpenNav(false)}>
-                    <AiOutlineShoppingCart size={30} className="text-[var(--color-primary-day)] dark:text-[var(--color-text-night)]" />
-                    {cartItems.length > 0 && (
-                      <span className="absolute -top-2 -left-2 bg-[var(--color-background-day)] dark:bg-[var(--color-background-night)] text-[var(--color-primary-day)] dark:text-[var(--color-primary-night)] rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
-                        {cartItems.length}
-                      </span>
-                    )}
-                    <span className="mr-2 hidden md:inline-block">السلة</span>
-                  </Link>
-
-                  {/* Dark Mode Toggle */}
-                  <div className="flex items-center gap-2 lg:gap-4 mt-4">
-                    <button onClick={toggleDarkMode}>
-                      {isDarkMode ? (
-                        <SunIcon className="h-6 w-6 text-[var(--color-secondary-night)]" />
-                      ) : (
-                        <MoonIcon className="h-6 w-6 text-[var(--color-primary-day)]" />
-                      )}
-                    </button>
-                  </div>
-
+                  {/* Display dashboard sections */}
                   <div className="py-4 flex flex-col border-b border-[var(--color-primary-day)] dark:border-[var(--color-primary-night)]">
-                    <h1 className="text-xl font-semibold">الأقسام والمنتجات</h1>
+                    <h1 className="text-xl font-semibold">أقسام لوحة التحكم</h1>
                     <div className="flex flex-col gap-4 mt-4">
-                      {categories.map((category) => (
-                        <Disclosure as='div' key={category.id}>
+                      {sections.map((section) => (
+                        <Disclosure as="div" key={section.id}>
                           {({ open }) => (
                             <>
-                              <Disclosure.Button className='flex items-center w-full py-2 text-[var(--color-text-day)] dark:text-[var(--color-text-night)] hover:text-[var(--color-primary-day)] dark:hover:text-[var(--color-primary-night)] focus:outline-none'>
-                                <span className='text-sm font-semibold'>{category.name}</span>
+                              <Disclosure.Button className="flex items-center w-full py-2 text-[var(--color-text-day)] dark:text-[var(--color-text-night)] hover:text-[var(--color-primary-day)] dark:hover:text-[var(--color-primary-night)] focus:outline-none">
+                                <span className="text-sm font-semibold">{section.name}</span>
                                 <ChevronRightIcon className={`w-5 h-5 text-[var(--color-text-day)] dark:text-[var(--color-text-night)] transform transition-transform duration-300 ${open ? "rotate-90" : ""}`} />
                               </Disclosure.Button>
-                              <Disclosure.Panel className='p-2 text-md font-semibold grid grid-cols-2 gap-4 text-[var(--color-text-day)] dark:text-[var(--color-text-night)]'>
-                                {category.dropdown.map((subCategory) => (
-                                  <Link key={subCategory.id} href='#' onClick={() => setOpenNav(false)}>
-                                    <p className='cursor-pointer hover:text-[var(--color-primary-day)] dark:hover:text-[var(--color-primary-night)]'>{subCategory.name}</p>
+                              <Disclosure.Panel className="p-2 text-md font-semibold grid grid-cols-2 gap-4 text-[var(--color-text-day)] dark:text-[var(--color-text-night)]">
+                                {section.dropdown.map((subSection) => (
+                                  <Link key={subSection.id} href={subSection.link} onClick={() => setOpenNav(false)}>
+                                    <p className="cursor-pointer hover:text-[var(--color-primary-day)] dark:hover:text-[var(--color-primary-night)]">
+                                      {subSection.name}
+                                    </p>
                                   </Link>
                                 ))}
                               </Disclosure.Panel>
@@ -141,39 +114,7 @@ const ResponsiveNavbar = () => {
               )}
 
               {/* About and User Actions */}
-              <div className="flex flex-col gap-4 mt-4">
-                <Link href="/about" onClick={() => setOpenNav(false)} className="text-sm font-semibold text-[var(--color-text-day)] dark:text-[var(--color-text-night)] hover:text-[var(--color-primary-day)] dark:hover:text-[var(--color-primary-night)] flex items-center gap-2">
-                  <AiOutlineInfoCircle />
-                  حولنا
-                </Link>
-
-                {user ? (
-                  <div className='flex flex-col items-center ml-4'>
-                    <div className='flex items-center'>
-                      <AiOutlineUser className='text-2xl text-[var(--color-text-day)] dark:text-[var(--color-text-night)]' />
-                      <span className='text-[var(--color-text-day)] dark:text-[var(--color-text-night)] font-semibold text-lg ml-2'>{user.name}</span>
-                    </div>
-                    <button
-                      onClick={logoutUser}
-                      className='ml-4 text-[var(--color-text-day)] dark:text-[var(--color-text-night)] font-semibold text-lg'>
-                      تسجيل الخروج
-                    </button>
-                  </div>
-                ) : (
-                  <div className='flex flex-col items-center w-full ml-4'>
-                    <Link href='/login' onClick={() => setOpenNav(false)}>
-                      <button className='w-full bg-[var(--color-primary-day)] dark:bg-[var(--color-primary-night)] text-[var(--color-secondary-day)] dark:text-[var(--color-secondary-night)] font-semibold text-sm py-2 rounded-md hover:bg-[var(--color-primary-day)] dark:hover:bg-[var(--color-primary-night)]'>
-                        تسجيل الدخول
-                      </button>
-                    </Link>
-                    <Link href='/register' onClick={() => setOpenNav(false)}>
-                      <button className='w-full bg-[var(--color-primary-day)] dark:bg-[var(--color-primary-night)] text-[var(--color-secondary-day)] dark:text-[var(--color-secondary-night)] font-semibold text-sm py-2 rounded-md mt-4 hover:bg-[var(--color-primary-day)] dark:hover:bg-[var(--color-primary-night)]'>
-                        تسجيل مستخدم جديد
-                      </button>
-                    </Link>     
-                  </div>
-                )}
-              </div>
+              {/* ... */}
             </div>
           </div>
         )}

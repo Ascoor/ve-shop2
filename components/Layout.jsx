@@ -22,10 +22,12 @@ const Layout = ({ children }) => {
   }, [user, router, hasRedirected]);
 
   return (
-    <div className='flex flex-col w gap-10'>
+    <div className="flex flex-col min-h-screen"> {/* Ensure full page height */}
       <Navbar />
-      {children} {/* Render the children components */}
-      <Footer />
+      <main className="flex-grow"> {/* Main content takes the remaining space */}
+        {children} {/* Render the children components */}
+      </main>
+      <Footer className="mt-auto" /> {/* Footer stays at the bottom */}
     </div>
   );
 };

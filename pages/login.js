@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Form, Formik } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUserThunk, selectUser } from '../store/slices/authSlice';
@@ -43,7 +43,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-[var(--background-color)] text-[var(--text-color)]">
+    <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-[var(--color-background-day)] text-[var(--color-text-day)] dark:bg-[var(--color-background-night)] dark:text-[var(--color-text-night)]">
       <div className="w-full max-w-md space-y-8">
         <div>
           <Image
@@ -54,12 +54,12 @@ const LoginPage = () => {
             height={600}
             priority
           />
-          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-[var(--primary-color)]">
+          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-[var(--color-primary-day)] dark:text-[var(--color-primary-night)]">
             سجل الدخول إلى حسابك
           </h2>
-          <p className="mt-2 text-center text-sm text-[var(--muted-text-color)]">
+          <p className="mt-2 text-center text-sm text-[var(--color-secondary-day)] dark:text-[var(--color-secondary-night)]">
             أو{" "}
-            <Link href="/register" className="font-medium text-[var(--primary-color)] hover:text-[var(--button-hover-background-color)]">
+            <Link href="/register" className="font-medium text-[var(--color-primary-day)] dark:text-[var(--color-primary-night)] hover:text-[var(--color-button-hover-day)] dark:hover:text-[var(--color-button-hover-night)]">
               إنشاء حساب
             </Link>
           </p>
@@ -77,7 +77,7 @@ const LoginPage = () => {
                   id="email"
                   name="email"
                   placeholder="أدخل بريدك الإلكتروني"
-                  className="block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:border-[var(--primary-color)] mb-3 bg-[var(--background-color)] text-[var(--text-color)]"
+                  className="block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:border-[var(--color-primary-day)] dark:focus:border-[var(--color-primary-night)] mb-3 bg-[var(--color-component-background-day)] dark:bg-[var(--color-component-background-night)] text-[var(--color-text-day)] dark:text-[var(--color-text-night)]"
                   {...formik.getFieldProps("email")}
                 />
                 {formik.touched.email && formik.errors.email ? (
@@ -91,7 +91,7 @@ const LoginPage = () => {
                   id="password"
                   name="password"
                   placeholder="كلمة المرور"
-                  className="block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:border-[var(--primary-color)] mb-3 bg-[var(--background-color)] text-[var(--text-color)]"
+                  className="block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:border-[var(--color-primary-day)] dark:focus:border-[var(--color-primary-night)] mb-3 bg-[var(--color-component-background-day)] dark:bg-[var(--color-component-background-night)] text-[var(--color-text-day)] dark:text-[var(--color-text-night)]"
                   {...formik.getFieldProps("password")}
                 />
                 {formik.touched.password && formik.errors.password ? (
@@ -107,7 +107,7 @@ const LoginPage = () => {
                     type="checkbox"
                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                   />
-                  <label htmlFor="remember-me" className="ml-2 block text-sm text-[var(--text-color)]">
+                  <label htmlFor="remember-me" className="ml-2 block text-sm text-[var(--color-text-day)] dark:text-[var(--color-text-night)]">
                     تذكرني
                   </label>
                 </div>
@@ -116,7 +116,7 @@ const LoginPage = () => {
               <div>
                 <button
                   type="submit"
-                  className="w-full flex justify-center rounded-md py-2 px-4 text-sm font-medium bg-[var(--button-background-color)] text-[var(--button-text-color)] hover:bg-[var(--button-hover-background-color)] focus:outline-none focus:ring-2 focus:ring-offset-2"
+                  className="w-full flex justify-center rounded-md py-2 px-4 text-sm font-medium bg-[var(--color-primary-day)] text-[var(--color-secondary-day)] hover:bg-[var(--color-button-hover-day)] dark:bg-[var(--color-primary-night)] dark:text-[var(--color-secondary-night)] dark:hover:bg-[var(--color-button-hover-night)] focus:outline-none focus:ring-2 focus:ring-offset-2"
                   disabled={!formik.isValid || formik.isSubmitting}
                 >
                   {formik.isSubmitting ? "تحميل...." : "دخول"}

@@ -20,11 +20,11 @@ const Register = () => {
   };
 
   const validationSchema = Yup.object({
-    email: Yup.string().email("Invalid email format").required("Required"),
+    email: Yup.string().email("البريد الإلكتروني غير صالح").required("مطلوب"),
     password: Yup.string()
-      .required("Password is required")
-      .min(6, "Password must be at least 6 characters"),
-    name: Yup.string().required("Name is required"),
+      .required("كلمة المرور مطلوبة")
+      .min(6, "يجب أن تحتوي كلمة المرور على 6 أحرف على الأقل"),
+    name: Yup.string().required("مطلوب إدخال الإسم"),
   });
 
   const onSubmit = async (values, { setSubmitting }) => {
@@ -35,13 +35,13 @@ const Register = () => {
         router.push("/"); 
       }
     } catch (error) {
-      console.error("Registration failed", error);
+      console.error("فشل في التسجيل", error);
     }
     setSubmitting(false);
   };
 
   return (
-    <div className='flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-[var(--background-color)] dark:bg-[var(--dark-background)]'>
+    <div className='flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-[var(--color-background-day)] text-[var(--color-text-day)] dark:bg-[var(--color-background-night)] dark:text-[var(--color-text-night)]'>
       <div className='w-full max-w-md space-y-8'>
         <div>
           <Image
@@ -51,14 +51,14 @@ const Register = () => {
             width={600}
             height={600}
           />
-          <h2 className='mt-6 text-center text-3xl font-bold tracking-tight text-[var(--textPrimary)] dark:text-[var(--dark-textPrimary)]'>
+          <h2 className='mt-6 text-center text-3xl font-bold tracking-tight text-[var(--color-primary-day)] dark:text-[var(--color-primary-night)]'>
             إنشاء حساب
           </h2>
-          <div className='mt-2 text-center text-sm text-[var(--mutedText)] dark:text-[var(--dark-mutedText)]'>
+          <div className='mt-2 text-center text-sm text-[var(--color-secondary-day)] dark:text-[var(--color-secondary-night)]'>
             أو{" "}
             <Link
               href='/login'
-              className='font-medium text-[var(--primary-color)] dark:text-[var(--dark-primary)] hover:text-[var(--buttonHover)] dark:hover:text-[var(--dark-buttonHover)]'
+              className='font-medium text-[var(--color-primary-day)] dark:text-[var(--color-primary-night)] hover:text-[var(--color-button-hover-day)] dark:hover:text-[var(--color-button-hover-night)]'
             >
               تسجيل الدخول إلى حسابك
             </Link>
@@ -77,8 +77,8 @@ const Register = () => {
                   type='email'
                   id='email'
                   name='email'
-                  placeholder='Enter your email'
-                  className='relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 focus:outline-none focus:border-[var(--primary-color)] dark:focus:border-[var(--dark-primary)] mb-3 text-[var(--textPrimary)] dark:text-[var(--dark-textPrimary)]'
+                  placeholder='أدخل بريدك الإلكتروني'
+                  className='relative block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:border-[var(--color-primary-day)] dark:focus:border-[var(--color-primary-night)] mb-3 bg-[var(--color-component-background-day)] dark:bg-[var(--color-component-background-night)] text-[var(--color-text-day)] dark:text-[var(--color-text-night)]'
                   {...formik.getFieldProps("email")}
                 />
                 {formik.touched.email && formik.errors.email ? (
@@ -93,7 +93,7 @@ const Register = () => {
                   id='name'
                   name='name'
                   placeholder='إدخل إسم المستخدم'
-                  className='relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 focus:outline-none focus:border-[var(--primary-color)] dark:focus:border-[var(--dark-primary)] mb-3 text-[var(--textPrimary)] dark:text-[var(--dark-textPrimary)]'
+                  className='relative block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:border-[var(--color-primary-day)] dark:focus:border-[var(--color-primary-night)] mb-3 bg-[var(--color-component-background-day)] dark:bg-[var(--color-component-background-night)] text-[var(--color-text-day)] dark:text-[var(--color-text-night)]'
                   {...formik.getFieldProps("name")}
                 />
                 {formik.touched.name && formik.errors.name ? (
@@ -108,7 +108,7 @@ const Register = () => {
                   id='password'
                   name='password'
                   placeholder='إدخل كلمة السر'
-                  className='relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2  focus:outline-none focus:border-[var(--primary-color)] dark:focus:border-[var(--dark-primary)] mb-3 text-[var(--textPrimary)] dark:text-[var(--dark-textPrimary)]'
+                  className='relative block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:border-[var(--color-primary-day)] dark:focus:border-[var(--color-primary-night)] mb-3 bg-[var(--color-component-background-day)] dark:bg-[var(--color-component-background-night)] text-[var(--color-text-day)] dark:text-[var(--color-text-night)]'
                   {...formik.getFieldProps("password")}
                 />
                 {formik.touched.password && formik.errors.password ? (
@@ -120,7 +120,7 @@ const Register = () => {
               <div>
                 <button
                   type='submit'
-                  className='group relative flex w-full justify-center rounded-md border border-transparent bg-[var(--primary-color)] dark:bg-[var(--dark-primary)] py-2 px-4 text-sm font-medium mt-4 text-white hover:bg-[var(--buttonHover)] dark:hover:bg-[var(--dark-buttonHover)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] dark:focus:ring-[var(--dark-primary)] focus:ring-offset-2'
+                  className='group relative flex w-full justify-center rounded-md border border-transparent bg-[var(--color-primary-day)] dark:bg-[var(--color-primary-night)] py-2 px-4 text-sm font-medium mt-4 text-white hover:bg-[var(--color-button-hover-day)] dark:hover:bg-[var(--color-button-hover-night)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-day)] dark:focus:ring-[var(--color-primary-night)] focus:ring-offset-2'
                   disabled={!formik.isValid || formik.isSubmitting}
                 >
                   {formik.isSubmitting ? "تحميل..." : "إشتراك"}

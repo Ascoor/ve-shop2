@@ -1,148 +1,146 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import LoadingBalls from './LoadingBalls'; // مكون التحميل
 
-const DynamicTable = ({ data, headers, onDelete, onEdit, onAdd }) => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filteredData, setFilteredData] = useState(data);
-  const [selectedRows, setSelectedRows] = useState([]);
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [rowToDelete, setRowToDelete] = useState(null);
+const DynamicTable = ({
+  title, // العنوان الخاص بالجدول (مثل Products Table)
+  buttonText, // نص الزر (مثل Add Product)
+  columns, // أسماء الأعمدة
+  data, // البيانات المعروضة في الجدول
+  filters, // خيارات الفلترة
+  onFilterChange, // دالة تغيير الفلاتر
+  onAddItem, // دالة زر الإضافة
+  isLoading, // حالة التحميل
+  itemsPerPage = 10 // عدد العناصر في كل صفحة
+}) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectAll, setSelectAll] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
 
-  useEffect(() => {
-    setFilteredData(
-      data.filter((item) =>
-        item.name.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+  const totalItems = data.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = data.slice(startIndex, endIndex);
+
+  const handleSelectAll = (e) => {
+    setSelectAll(e.target.checked);
+    setSelectedItems(e.target.checked ? currentItems.map((item) => item.id) : []);
+  };
+
+  const handleSelectItem = (itemId) => {
+    setSelectedItems((prevSelected) =>
+      prevSelected.includes(itemId)
+        ? prevSelected.filter((id) => id !== itemId)
+        : [...prevSelected, itemId]
     );
-  }, [searchTerm, data]);
-
-  const handleSelectAll = () => {
-    if (selectedRows.length === filteredData.length) {
-      setSelectedRows([]);
-    } else {
-      setSelectedRows(filteredData.map((item) => item.id));
-    }
   };
 
-  const handleSelectRow = (id) => {
-    if (selectedRows.includes(id)) {
-      setSelectedRows(selectedRows.filter((rowId) => rowId !== id));
-    } else {
-      setSelectedRows([...selectedRows, id]);
-    }
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    setSelectAll(false);
+    setSelectedItems([]);
   };
 
-  const handleDelete = (id) => {
-    setRowToDelete(id);
-    setShowDeleteConfirm(true);
+  const getValueByPath = (obj, path) => {
+    return path.split('.').reduce((acc, part) => acc && acc[part], obj);
   };
 
-  const confirmDelete = () => {
-    onDelete(rowToDelete);
-    setShowDeleteConfirm(false);
-    setRowToDelete(null);
-  };
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[300px]">
+        <LoadingBalls />
+      </div>
+    );
+  }
 
   return (
-    <div className="p-4">
-      {/* شريط البحث */}
-      <div className="flex justify-between items-center mb-4">
-        <input
-          type="text"
-          className="border border-gray-300 rounded-md p-2 w-full md:w-1/3"
-          placeholder="ابحث عن عنصر..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+    <div className="bg-[var(--color-component-background-day)] dark:bg-[var(--color-component-background-night)] text-[var(--color-text-day)] dark:text-[var(--color-text-night)] p-6 rounded-lg shadow-lg max-w-6xl mx-auto">
+      <div className="flex flex-row justify-between items-center mb-6">
+        <h2 className="text-2xl font-semibold">{title}</h2> {/* استخدام العنوان الممرر */}
         <button
-          className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600"
-          onClick={onAdd}
+          onClick={onAddItem}
+          className="bg-[var(--color-primary-day)] dark:bg-[var(--color-primary-night)] text-[var(--color-secondary-day)] dark:text-[var(--color-secondary-night)] px-4 py-2 rounded hover:bg-[var(--color-button-hover-day)] dark:hover:bg-[var(--color-button-hover-night)]"
         >
-          + إضافة جديد
+          {buttonText} {/* استخدام النص الممرر للزر */}
         </button>
       </div>
 
-      {/* الجدول */}
-      <div className="overflow-x-auto">
-        <table className="min-w-full table-auto border-collapse bg-white rounded-md shadow-md">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="p-2 text-center">
+      {/* Filter Section */}
+      <div className="flex justify-end my-6"> 
+  {filters.map((filter, index) => (
+    <div key={index} className="mr-4">
+      <select
+        className="border-b border-[var(--color-component-border-day)] dark:border-[var(--color-component-border-night)] 
+                  bg-[var(--color-component-background-day)] dark:bg-[var(--color-component-background-night)] 
+                  text-[var(--color-text-day)] dark:text-[var(--color-text-night)] 
+                  focus:outline-none sm:w-auto md:w-48 rounded-md p-2"
+        value={filter.value}
+        onChange={(e) => onFilterChange(filter.name, e.target.value)}
+      >
+        <option value="">{filter.label}</option>
+        {filter.options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  ))}
+</div>
+
+
+      {/* Table */}
+      <table className="w-full border-collapse">
+        <thead>
+          <tr className="border-b border-[var(--color-component-border-day)] dark:border-[var(--color-component-border-night)]">
+            <th className="px-4 py-2 text-left">
+              <input
+                type="checkbox"
+                checked={selectAll}
+                onChange={handleSelectAll}
+                className="accent-[var(--color-primary-day)] dark:accent-[var(--color-primary-night)]"
+              />
+            </th>
+            {columns.map((column) => (
+              <th key={column.key} className="px-4 py-2 text-center">
+                {column.label}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {currentItems.map((item) => (
+            <tr key={item.id} className="border-b border-[var(--color-component-border-day)] dark:border-[var(--color-component-border-night)]">
+              <td className="px-4 py-3">
                 <input
                   type="checkbox"
-                  checked={selectedRows.length === filteredData.length}
-                  onChange={handleSelectAll}
+                  checked={selectedItems.includes(item.id)}
+                  onChange={() => handleSelectItem(item.id)}
+                  className="accent-[var(--color-primary-day)] dark:accent-[var(--color-primary-night)]"
                 />
-              </th>
-              {headers.map((header) => (
-                <th key={header.key} className="p-2 text-center">
-                  {header.text}
-                </th>
+              </td>
+              {columns.map((column) => (
+                <td key={column.key} className="px-4 py-3 text-center">
+                  {getValueByPath(item, column.key)}
+                </td>
               ))}
-              <th className="p-2 text-center">الإجراء</th>
             </tr>
-          </thead>
-          <tbody>
-            {filteredData.map((item) => (
-              <tr
-                key={item.id}
-                className={`border-t ${
-                  selectedRows.includes(item.id) ? 'bg-gray-50' : ''
-                }`}
-              >
-                <td className="p-2">
-                  <input
-                    type="checkbox"
-                    checked={selectedRows.includes(item.id)}
-                    onChange={() => handleSelectRow(item.id)}
-                  />
-                </td>
-                {headers.map((header) => (
-                  <td key={header.key} className="p-2">
-                    {item[header.key]}
-                  </td>
-                ))}
-                <td className="p-2 flex space-x-2">
-                  <button
-                    className="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600"
-                    onClick={() => onEdit(item)}
-                  >
-                    تعديل
-                  </button>
-                  <button
-                    className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
-                    onClick={() => handleDelete(item.id)}
-                  >
-                    حذف
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
 
-      {/* نافذة تأكيد الحذف */}
-      {showDeleteConfirm && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-4 rounded-md shadow-md text-center">
-            <p>هل أنت متأكد أنك تريد الحذف؟</p>
-            <div className="mt-4 flex justify-center space-x-4">
-              <button
-                className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
-                onClick={confirmDelete}
-              >
-                نعم
-              </button>
-              <button
-                className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
-                onClick={() => setShowDeleteConfirm(false)}
-              >
-                لا
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Pagination */}
+      <div className="flex justify-center mt-6">
+        {Array.from({ length: totalPages }).map((_, index) => (
+          <button
+            key={index}
+            className={`mx-1 px-4 py-2 ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            onClick={() => handlePageChange(index + 1)}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
