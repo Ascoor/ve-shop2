@@ -14,7 +14,7 @@
     "build": "next build",
     "start": "next start",
     "precopy-build": "rm -rf /var/www/html/ve-shop.co/public/*",
-    "copy-build": "cp -R .next/* /var/www/html/ve-shop.co/public",
+    "copy-build": "cp -R out/* /var/www/html/ve-shop.co/public",
     "lint": "eslint . --ignore-path .gitignore"
   },
   "dependencies": {
