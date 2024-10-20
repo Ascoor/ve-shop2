@@ -4,7 +4,7 @@ import { HYDRATE } from "next-redux-wrapper";
 export const productApi = createApi({
   reducerPath: "productApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://app.ve-shop.co/api',  // استخدام عنوان API Laravel
+    baseUrl: 'https://store.ve-shop.co/api',  // استخدام عنوان API Laravel
   }),
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
