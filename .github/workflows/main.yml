@@ -16,10 +16,10 @@ jobs:
     - name: Setup Node.js Environment
       uses: actions/setup-node@v3  # Set up Node.js environment
       with:
-        node-version: '18.20.4'  # Match the Node.js version on the server
+        node-version: '18.20.4'  # Update to Node.js 20 as GitHub will move to this version by default
 
     - name: Connect to Remote Server and Run Update Commands
-      uses: appleboy/ssh-action@v0.1.8  # SSH action to connect to the remote server
+      uses: appleboy/ssh-action@v0.1.10  # Updated SSH action to connect to the remote server
       with:
         host: ${{ secrets.HOSTINGER_HOST }}
         username: ${{ secrets.HOSTINGER_USERNAME }}
@@ -29,6 +29,9 @@ jobs:
           # Navigate to the project directory
           cd /var/www/html/ve-shop.co/ve-frontend
           
+          # Log the current status
+          echo "Starting remote deployment on ve-frontend..."
+
           # Stash any local changes and pull the latest changes from the master branch
           git stash --include-untracked
           git pull origin master
@@ -45,6 +48,9 @@ jobs:
           rm -rf node_modules
           yarn install  # Install dependencies without --frozen-lockfile
 
+          # Log the installation status
+          echo "Yarn dependencies installed."
+
           # Pre-copy build files from the public directory (cleanup)
           yarn precopy-build
           
@@ -52,7 +58,7 @@ jobs:
           yarn build
           
           # Ensure the build was successful before proceeding
-          if [ -d ".next" ]; then
+          if [ -d ".next" ] && [ "$(ls -A .next)" ]; then
             echo "Build successful!"
             yarn copy-build  # Copy the build files to the public directory
           else
@@ -60,6 +66,8 @@ jobs:
             exit 1
           fi
 
-        timeout: 1m  # Increase timeout for more flexibility (60 seconds)
+          # Log successful deployment
+          echo "Deployment completed successfully."
+        timeout: 3m  # Increase timeout for more flexibility (3 minutes)
         command_timeout: 15m  # Allow 15 minutes for build and copy operations
         debug: true  # Enable debugging for detailed logs
