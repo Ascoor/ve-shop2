@@ -2,25 +2,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { useDispatch, useSelector } from 'react-redux';
-import { loginUserThunk, selectUser } from '../store/slices/authSlice';
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import { loginUserThunk } from '../store/slices/authSlice';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
-  const router = useRouter();
-  const user = useSelector(selectUser);
-
-  useEffect(() => {
-    if (user) {
-      if (user.role_id === 1 || user.role_id === 2) {
-        router.push('/dashboard');
-      } else if (user.role_id === 3) {
-        router.push('/store');
-      }
-    }
-  }, [user, router]);
 
   const initialValues = {
     email: '',
@@ -34,13 +20,14 @@ const LoginPage = () => {
 
   const onSubmit = async (values, { setSubmitting }) => {
     try {
-      await dispatch(loginUserThunk(values));
-      setSubmitting(false);
+      dispatch(loginUserThunk(values));
+      setSubmitting(false); // إيقاف حالة التحميل
     } catch (error) {
-      console.error("فشل تسجيل الدخول:", error);
-      setSubmitting(false);
+      console.error("فشل تسجيل الدخول:", error);  
+      setSubmitting(false); // إيقاف حالة التحميل في حالة الفشل
     }
   };
+
 
   return (
     <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-[var(--color-background-day)] text-[var(--color-text-day)] dark:bg-[var(--color-background-night)] dark:text-[var(--color-text-night)]">
@@ -73,10 +60,11 @@ const LoginPage = () => {
             <form className="mt-8 space-y-6" onSubmit={formik.handleSubmit}>
               <div>
                 <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="أدخل بريدك الإلكتروني"
+   
+  type="email"
+  id="email"
+  name="email"
+  placeholder="أدخل بريدك الإلكتروني"
                   className="block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:border-[var(--color-primary-day)] dark:focus:border-[var(--color-primary-night)] mb-3 bg-[var(--color-component-background-day)] dark:bg-[var(--color-component-background-night)] text-[var(--color-text-day)] dark:text-[var(--color-text-night)]"
                   {...formik.getFieldProps("email")}
                 />
@@ -87,10 +75,12 @@ const LoginPage = () => {
 
               <div>
                 <input
-                  type="password"
+    
+  type="password"
+  name="password"
+  autoComplete="current-password"
                   id="password"
-                  name="password"
-                  placeholder="كلمة المرور"
+                 placeholder="كلمة المرور"
                   className="block w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:border-[var(--color-primary-day)] dark:focus:border-[var(--color-primary-night)] mb-3 bg-[var(--color-component-background-day)] dark:bg-[var(--color-component-background-night)] text-[var(--color-text-day)] dark:text-[var(--color-text-night)]"
                   {...formik.getFieldProps("password")}
                 />

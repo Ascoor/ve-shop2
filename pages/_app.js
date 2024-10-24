@@ -8,18 +8,19 @@ import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor } from "../store";
 import Head from "next/head";
+
 function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <Head>
-  <title>VE-SHOP | أفضل المنتجات والعروض في متجر VE</title>
-  <meta name="description" content="احصل على أفضل العروض والمنتجات من VE-Shop، بما في ذلك الإلكترونيات، الملابس، والمزيد." />
-  <meta name="keywords" content="متجر, شراء, منتجات, تسوق, إلكترونيات, ملابس, VE-Shop" />
-  <meta property="og:title" content="VE-SHOP | أفضل المنتجات والعروض" />
-  <meta property="og:description" content="اكتشف تشكيلة واسعة من المنتجات بأفضل الأسعار على VE-Shop." />
-  <meta property="og:url" content="https://ve-shop.co" />
-</Head>
-<ReduxToastr
+        <title>VE-SHOP | أفضل المنتجات والعروض في متجر VE</title>
+        <meta name="description" content="احصل على أفضل العروض والمنتجات من VE-Shop، بما في ذلك الإلكترونيات، الملابس، والمزيد." />
+        <meta name="keywords" content="متجر, شراء, منتجات, تسوق, إلكترونيات, ملابس, VE-Shop" />
+        <meta property="og:title" content="VE-SHOP | أفضل المنتجات والعروض" />
+        <meta property="og:description" content="اكتشف تشكيلة واسعة من المنتجات بأفضل الأسعار على VE-Shop." />
+        <meta property="og:url" content="https://ve-shop.co" />
+      </Head>
+      <ReduxToastr
         timeOut={4000}
         newestOnTop={false}
         preventDuplicates
