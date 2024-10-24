@@ -2,14 +2,16 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  
-  // Output as static files
+
+  // Output as static files for production (Static HTML Export)
   output: 'export',
 
+  // Disable Next.js built-in image optimization (not supported in static export)
   images: {
-    unoptimized: true, // Disable image optimization since this is a static export
+    unoptimized: true,
   },
 
+  // Enable Gzip compression for better performance
   compress: true,
 };
 
