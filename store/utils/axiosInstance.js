@@ -1,26 +1,27 @@
 // store/utils/axiosInstance.js
 import axios from 'axios';
 
-const API_URL =
-  process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_API_URL;
 
 const axiosInstance = axios.create({
-  baseURL: API_URL,
+  baseURL:  process.env.NEXT_PUBLIC_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// إضافة Interceptor لإضافة Authorization header تلقائيًا
+// Interceptor to add Authorization header automatically
 axiosInstance.interceptors.request.use(
-  config => {
-    const token = localStorage.getItem('access_token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+  (config) => {
+    // Check if running on the client side
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('access_token');
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
     }
     return config;
   },
-  error => Promise.reject(error),
+  (error) => Promise.reject(error)
 );
 
 export default axiosInstance;
