@@ -40,15 +40,15 @@ const Checkout = () => {
     setCreditCard(false);
   };
 
-  // const addressValue = {
-  //   firstName: '',
-  //   lastName: '',
-  //   email: '',
-  //   address: '',
-  //   city: '',
-  //   state: '',
-  //   zip: '',
-  // };
+  const addressValue = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    address: '',
+    city: '',
+    state: '',
+    zip: '',
+  };
 
   const paymentValue = {
     paymentMethod: '',
