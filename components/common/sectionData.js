@@ -1,4 +1,4 @@
-import { FiHome, FiBox, FiTag, FiUsers, FiLayers, FiPackage, FiTruck, FiBarChart, FiDollarSign } from 'react-icons/fi';
+import {  FiBox, FiTag, FiUsers, FiLayers, FiPackage, FiTruck, FiBarChart, FiDollarSign } from 'react-icons/fi';
 
 export const sections = [
 

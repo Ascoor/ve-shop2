@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Formik } from 'formik';
@@ -10,7 +9,6 @@ import { loginUserThunk } from '../store/slices/authSlice';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
-  const router = useRouter();
 
   const initialValues = { email: '', password: '' };
   const validationSchema = Yup.object({

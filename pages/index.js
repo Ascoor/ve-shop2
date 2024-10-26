@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import Loading from '../components/Loading';

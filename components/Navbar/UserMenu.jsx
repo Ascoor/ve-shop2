@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 
@@ -5,11 +6,16 @@ const UserMenu = ({ user, handleLogout }) => {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <Menu.Button className="inline-flex items-center justify-center w-full rounded-md bg-white px-4 py-2">
-        <img
-          src={user?.avatar || '/default-avatar.png'}
-          alt="User Avatar"
-          className="rounded-full w-8 h-8 object-cover"
-        />
+  
+<Image
+  src={user?.avatar || '/default-avatar.png'}
+  alt="User Avatar"
+  className="rounded-full object-cover"
+  width={32}  // Set the width as appropriate for your design
+  height={32} // Set the height as appropriate for your design
+  priority={false} // Enable lazy loading for improved performance
+/>
+
       </Menu.Button>
       <Transition
         as={Fragment}

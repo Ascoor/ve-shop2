@@ -1,4 +1,4 @@
-import { useState } from 'react';
+
 import Image from 'next/image';
 import { useSelector, useDispatch } from 'react-redux';
 import { toastr } from 'react-redux-toastr';

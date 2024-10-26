@@ -1,9 +1,7 @@
-import { useSidebar } from '../../hooks/SidbarContext';
+
+import Image from 'next/image';
 import ChartsComponent from './Sections/Charts/ChartsComponent';
-
 const Home = () => {
-  const { isSidebarOpen } = useSidebar(); // Access isSidebarOpen from context
-
   return (
     
     <div className="container px-6 mx-auto grid">
@@ -119,12 +117,15 @@ dir="rtl">
               <td className="px-4 py-3">
                 <div className="flex items-center text-sm">
                   <div className="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                    <img
-                      className="object-cover w-full h-full rounded-full"
-                      src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-                      alt=""
-                      loading="lazy"
-                    />
+       
+<Image
+  className="object-cover w-full h-full rounded-full"
+  src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
+  alt=""
+  width={200} // العرض للصورة
+  height={200} // الارتفاع للصورة
+  priority={false} // لتفعيل lazy loading افتراضيًا
+/>
                     <div
                       className="absolute inset-0 rounded-full shadow-inner"
                       aria-hidden="true"
@@ -151,12 +152,15 @@ dir="rtl">
               <td className="px-4 py-3">
                 <div className="flex items-center text-sm">
                   <div className="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                    <img
-                      className="object-cover w-full h-full rounded-full"
-                      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&facepad=3&fit=facearea&s=707b9c33066bf8808c934c8ab394dff6"
-                      alt=""
-                      loading="lazy"
-                    />
+          
+<Image
+  className="object-cover w-full h-full rounded-full"
+  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&facepad=3&fit=facearea&s=707b9c33066bf8808c934c8ab394dff6"
+  alt=""
+  width={200} // العرض المناسب للصورة
+  height={200} // الارتفاع المناسب للصورة
+  priority={false} // تحميل بطيء افتراضيًا
+/>
                     <div
                       className="absolute inset-0 rounded-full shadow-inner"
                       aria-hidden="true"
@@ -183,12 +187,14 @@ dir="rtl">
               <td className="px-4 py-3">
                 <div className="flex items-center text-sm">
                   <div className="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                    <img
-                      className="object-cover w-full h-full rounded-full"
-                      src="https://images.unsplash.com/photo-1551069613-1904dbdcda11?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-                      alt=""
-                      loading="lazy"
-                    />
+                  <Image
+  className="object-cover w-full h-full rounded-full"
+  src="https://images.unsplash.com/photo-1551069613-1904dbdcda11?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
+  alt=""
+  width={200} // العرض للصورة
+  height={200} // الارتفاع للصورة
+  priority={false} // لتفعيل lazy loading افتراضيًا
+/>
                     <div
                       className="absolute inset-0 rounded-full shadow-inner"
                       aria-hidden="true"
@@ -215,12 +221,15 @@ dir="rtl">
               <td className="px-4 py-3">
                 <div className="flex items-center text-sm">
                   <div className="relative hidden w-8 h-8 mr-3 rounded-full md:block">
-                    <img
-                      className="object-cover w-full h-full rounded-full"
-                      src="https://images.unsplash.com/photo-1551006917-3b4c078c47c9?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-                      alt=""
-                      loading="lazy"
-                    />
+   
+<Image
+  className="object-cover w-full h-full rounded-full"
+  src="https://images.unsplash.com/photo-1551006917-3b4c078c47c9?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
+  alt=""
+  width={200}  // ضع العرض المطلوب هنا
+  height={200}  // ضع الارتفاع المطلوب هنا
+  priority={false}  // لاستخدام lazy-loading افتراضيًا
+/>
                     <div
                       className="absolute inset-0 rounded-full shadow-inner"
                       aria-hidden="true"

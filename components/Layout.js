@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import Navbar from './Navbar/Navbar';
 import Footer from './Footer/Footer';
 import AdminLayout from './AdminDashboard/Layout/AdminLayout';
-import { AdminProvider } from '../hooks/AdminContext';
 
 const Layout = ({ children }) => {
   const router = useRouter();

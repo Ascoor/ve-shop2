@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
-import Link from 'next/link';
+
 import Router from 'next/router';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';

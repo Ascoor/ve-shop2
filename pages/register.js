@@ -14,9 +14,6 @@ import * as Yup from 'yup';
 const Register = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const user = useSelector(selectUser);
-  const status = useSelector(selectStatus);
-  const error = useSelector(selectError);
 
   const initialValues = {
     email: '',
