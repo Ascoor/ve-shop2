@@ -6,7 +6,16 @@ import favoriteSlice from './reducers/favoriteSlice';
 import messageSlice from './reducers/messageSlice';
 import { productApi } from './services/productApi';
 import { reducer as toastrReducer } from 'react-redux-toastr';
-import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
 import storage from './sync_storage';
 
 // Root reducer configuration
@@ -46,15 +55,24 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 // Store configuration
-const makeStore = () => configureStore({
-  reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [HYDRATE, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }).concat(productApi.middleware),
-});
+const makeStore = () =>
+  configureStore({
+    reducer: persistedReducer,
+    middleware: getDefaultMiddleware =>
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [
+            HYDRATE,
+            FLUSH,
+            REHYDRATE,
+            PAUSE,
+            PERSIST,
+            PURGE,
+            REGISTER,
+          ],
+        },
+      }).concat(productApi.middleware),
+  });
 
 export const store = makeStore();
 export const persistor = persistStore(store);

@@ -1,28 +1,28 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { HYDRATE } from "next-redux-wrapper";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { HYDRATE } from 'next-redux-wrapper';
 
 export const productApi = createApi({
-  reducerPath: "productApi",
+  reducerPath: 'productApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://store.ve-shop.co/api',  // استخدام عنوان API Laravel
+    baseUrl: process.env.NEXT_PUBLIC_API_URL, // استخدام عنوان API Laravel
   }),
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
       return action.payload[reducerPath];
     }
   },
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     getProducts: builder.query({
-      query: () => "/products",
+      query: () => '/products',
     }),
     getProduct: builder.query({
-      query: (id) => `/products/${id}`,
+      query: id => `/products/${id}`,
     }),
     getBrands: builder.query({
-      query: () => "/brands",  // Assuming Laravel API provides this route
+      query: () => '/brands', // Assuming Laravel API provides this route
     }),
     getCategories: builder.query({
-      query: () => "/categories",  // Assuming Laravel API provides this route
+      query: () => '/categories', // Assuming Laravel API provides this route
     }),
   }),
 });

@@ -10,12 +10,12 @@ export const SidebarProvider = ({ children }) => {
 
   // Toggle desktop sidebar
   const toggleSidebar = () => {
-    setSidebarOpen((prev) => !prev);
+    setSidebarOpen(prev => !prev);
   };
 
   // Toggle mobile sidebar
   const toggleMobileSidebar = () => {
-    setMobileSidebarOpen((prev) => !prev);
+    setMobileSidebarOpen(prev => !prev);
   };
 
   return (

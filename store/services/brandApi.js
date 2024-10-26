@@ -1,28 +1,24 @@
-
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { HYDRATE } from "next-redux-wrapper";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { HYDRATE } from 'next-redux-wrapper';
 
 export const brandApi = createApi({
-  reducerPath: "brandApi",
+  reducerPath: 'brandApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://store.ve-shop.co/api',
+    baseUrl: process.env.NEXT_PUBLIC_API_URL,
   }),
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
       return action.payload[reducerPath];
     }
   },
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     getBrands: builder.query({
-      query: () => "/brands",
+      query: () => '/brands',
     }),
     getBrand: builder.query({
-      query: (id) => `/brands/${id}`,
+      query: id => `/brands/${id}`,
     }),
   }),
 });
 
-export const {
-  useGetBrandsQuery,
-  useGetBrandQuery,
-} = brandApi;
+export const { useGetBrandsQuery, useGetBrandQuery } = brandApi;

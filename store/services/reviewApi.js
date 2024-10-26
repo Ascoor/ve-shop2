@@ -1,28 +1,24 @@
-
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { HYDRATE } from "next-redux-wrapper";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { HYDRATE } from 'next-redux-wrapper';
 
 export const reviewApi = createApi({
-  reducerPath: "reviewApi",
+  reducerPath: 'reviewApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://store.ve-shop.co/api',
+    baseUrl: process.env.NEXT_PUBLIC_API_URL,
   }),
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
       return action.payload[reducerPath];
     }
   },
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     getReviews: builder.query({
-      query: () => "/reviews",
+      query: () => '/reviews',
     }),
     getReview: builder.query({
-      query: (id) => `/reviews/${id}`,
+      query: id => `/reviews/${id}`,
     }),
   }),
 });
 
-export const {
-  useGetReviewsQuery,
-  useGetReviewQuery,
-} = reviewApi;
+export const { useGetReviewsQuery, useGetReviewQuery } = reviewApi;

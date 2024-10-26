@@ -1,11 +1,12 @@
-import Image from "next/image";
+import Image from 'next/image';
 
 const Slider = ({ loading }) => {
   return (
     <div className="w-full mt-10">
       {loading ? (
         <div className="animate-pulse">
-          <div className="bg-[var(--color-muted-day)] dark:bg-[var(--color-muted-night)] h-64 w-full"></div> {/* Skeleton Loader */}
+          <div className="bg-[var(--color-muted-day)] dark:bg-[var(--color-muted-night)] h-64 w-full"></div>{' '}
+          {/* Skeleton Loader */}
         </div>
       ) : (
         <Image

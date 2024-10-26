@@ -3,71 +3,71 @@ name: Remote Update and Deploy
 on:
   push:
     branches:
-      - master  # Triggers the workflow on pushes to the master branch
+      - master # Triggers the workflow on pushes to the master branch
 
 jobs:
   remote-update-and-deploy:
-    runs-on: ubuntu-latest  # Specifies the runner environment
+    runs-on: ubuntu-latest # Specifies the runner environment
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3  # Checkout the latest code from the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3 # Checkout the latest code from the repository
 
-    - name: Setup Node.js Environment
-      uses: actions/setup-node@v3  # Set up Node.js environment
-      with:
-        node-version: '18.20.4'  # Update to Node.js 20 as GitHub will move to this version by default
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v3 # Set up Node.js environment
+        with:
+          node-version: '18.20.4' # Update to Node.js 20 as GitHub will move to this version by default
 
-    - name: Connect to Remote Server and Run Update Commands
-      uses: appleboy/ssh-action@v0.1.10  # Updated SSH action to connect to the remote server
-      with:
-        host: ${{ secrets.HOSTINGER_HOST }}
-        username: ${{ secrets.HOSTINGER_USERNAME }}
-        password: ${{ secrets.HOSTINGER_PASSWORD }}
-        port: ${{ secrets.SERVER_PORT }}
-        script: |
-          # Navigate to the project directory
-          cd /var/www/html/ve-shop.co/ve-frontend
-          
-          # Log the current status
-          echo "Starting remote deployment on ve-frontend..."
+      - name: Connect to Remote Server and Run Update Commands
+        uses: appleboy/ssh-action@v0.1.10 # Updated SSH action to connect to the remote server
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USERNAME }}
+          password: ${{ secrets.HOSTINGER_PASSWORD }}
+          port: ${{ secrets.SERVER_PORT }}
+          script: |
+            # Navigate to the project directory
+            cd /var/www/html/ve-shop.co/ve-frontend
 
-          # Stash any local changes and pull the latest changes from the master branch
-          git stash --include-untracked
-          git pull origin master
-          
-          # Remove package-lock.json if it exists, as you're using Yarn
-          [ -f package-lock.json ] && rm package-lock.json
-          
-          # Install Yarn globally if not already installed
-          if ! command -v yarn &> /dev/null; then
-            npm install -g yarn
-          fi
-          
-          # Clean up old node_modules and reinstall dependencies
-          rm -rf node_modules
-          yarn install  # Install dependencies without --frozen-lockfile
+            # Log the current status
+            echo "Starting remote deployment on ve-frontend..."
 
-          # Log the installation status
-          echo "Yarn dependencies installed."
+            # Stash any local changes and pull the latest changes from the master branch
+            git stash --include-untracked
+            git pull origin master
 
-          # Pre-copy build files from the public directory (cleanup)
-          yarn precopy-build
-          
-          # Build the project for production
-          yarn build
-          
-          # Ensure the build was successful before proceeding
-          if [ -d ".next" ] && [ "$(ls -A .next)" ]; then
-            echo "Build successful!"
-            yarn copy-build  # Copy the build files to the public directory
-          else
-            echo "Build failed!"
-            exit 1
-          fi
+            # Remove package-lock.json if it exists, as you're using Yarn
+            [ -f package-lock.json ] && rm package-lock.json
 
-          # Log successful deployment
-          echo "Deployment completed successfully."
-        timeout: 3m  # Increase timeout for more flexibility (3 minutes)
-        command_timeout: 15m  # Allow 15 minutes for build and copy operations
-        debug: true  # Enable debugging for detailed logs
+            # Install Yarn globally if not already installed
+            if ! command -v yarn &> /dev/null; then
+              npm install -g yarn
+            fi
+
+            # Clean up old node_modules and reinstall dependencies
+            rm -rf node_modules
+            yarn install  # Install dependencies without --frozen-lockfile
+
+            # Log the installation status
+            echo "Yarn dependencies installed."
+
+            # Pre-copy build files from the public directory (cleanup)
+            yarn precopy-build
+
+            # Build the project for production
+            yarn build
+
+            # Ensure the build was successful before proceeding
+            if [ -d ".next" ] && [ "$(ls -A .next)" ]; then
+              echo "Build successful!"
+              yarn copy-build  # Copy the build files to the public directory
+            else
+              echo "Build failed!"
+              exit 1
+            fi
+
+            # Log successful deployment
+            echo "Deployment completed successfully."
+          timeout: 3m # Increase timeout for more flexibility (3 minutes)
+          command_timeout: 15m # Allow 15 minutes for build and copy operations
+          debug: true # Enable debugging for detailed logs

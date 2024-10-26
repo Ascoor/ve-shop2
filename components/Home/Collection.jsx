@@ -1,13 +1,12 @@
-import Image from "next/image";
-import Link from "next/link";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-import "swiper/css/navigation";
+import Image from 'next/image';
+import Link from 'next/link';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import 'swiper/css/navigation';
 
 const Collection = ({ womenProducts }) => {
   return (
     <div dir="rtl" className="space-y-4 w-full flex flex-col gap-6 relative">
-      
       {/* Centered "تسوق الآن" Text */}
       <div className=" inset-x-0 top-0 z-10 flex justify-center items-center h-full">
         <h1 className="text-[var(--color-primary-day)] dark:text-[var(--color-primary-night)] text-5xl md:text-6xl font-semibold text-center">
@@ -22,7 +21,7 @@ const Collection = ({ womenProducts }) => {
         navigation={true}
         className="w-72 h-72 md:h-96 lg:w-96 bg-[var(--color-background-day)] dark:bg-[var(--color-background-night)] lg:h-96 xl:w-full mb-8 md:mb-0 relative z-0"
       >
-        {womenProducts.map((product) => (
+        {womenProducts.map(product => (
           <SwiperSlide key={product.id}>
             <Link href={`/detail/${product.id}`}>
               <Image

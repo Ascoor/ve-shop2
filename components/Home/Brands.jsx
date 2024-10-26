@@ -1,38 +1,63 @@
-import Image from "next/image";
-import { brands } from "../../data";
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { brands } from '../../data';
 
 const Brands = ({ loading }) => {
+  const [visibleBrands, setVisibleBrands] = useState(6);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setVisibleBrands(window.innerWidth >= 1024 ? 8 : 6);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const showAllBrands = () => {
+    setVisibleBrands(brands.length);
+  };
+
+  const displayedBrands = brands.slice(0, visibleBrands);
+
   return (
-    <div className="flex flex-wrap justify-center gap-3 items-center">
-      {brands.map((brand) => (
-        <div
-          className="flex flex-col items-center gap-2 rounded-full"
-          key={brand.id}
-        >
-          {loading ? (
-            <div className="animate-pulse">
-              <div className="bg-[var(--color-muted-day)] dark:bg-[var(--color-muted-night)] h-16 w-16 rounded-full"></div>
-            </div>
-          ) : (
-            <>
-              <div className="flex flex-row p-2 rounded-full gap-4 justify-center items-center">
+    <div className="flex flex-col items-center p-4">
+      {/* شبكة العلامات التجارية */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-6">
+        {displayedBrands.map((brand) => (
+          <div key={brand.id} className="flex flex-col items-center gap-3">
+            {loading ? (
+              <div className="animate-pulse">
+                <div className="bg-gray-200 dark:bg-gray-700 h-16 w-16 rounded-full"></div>
+              </div>
+            ) : (
+              <div className="relative w-16 h-16 rounded-full overflow-hidden shadow-lg">
                 <Image
                   src={brand.logo}
                   alt={brand.name}
-                  width={75}
-                  height={75}
-                  className="rounded-full border border-[var(--color-primary-day)] dark:border-[var(--color-primary-night)] p-1"
+                  fill
+                  className="object-cover"
                 />
               </div>
-              <div className="text-center">
-                <p className="text-sm font-noto font-bold text-[var(--color-text-day)] dark:text-[var(--color-text-night)]">
-                  {brand.name}
-                </p>
-              </div>
-            </>
-          )}
-        </div>
-      ))}
+            )}
+            <p className="text-sm font-bold text-gray-800 dark:text-gray-200 text-center">
+              {brand.name}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* زر "عرض الباقي" */}
+      {visibleBrands < brands.length && (
+        <button
+          onClick={showAllBrands}
+          className="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+        >
+          عرض المزيد
+        </button>
+      )}
     </div>
   );
 };

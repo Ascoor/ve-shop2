@@ -2,7 +2,7 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import ProductDetails from '../../components/ProductDetails';
-import { bestSellers,womenProducts } from '../../data'; // تأكد من مسار الاستيراد الصحيح
+import { bestSellers, womenProducts } from '../../data'; // تأكد من مسار الاستيراد الصحيح
 
 const ProductDetail = () => {
   const router = useRouter();
@@ -17,7 +17,9 @@ const ProductDetail = () => {
   const productId = parseInt(id, 10);
 
   // البحث عن المنتج في قائمة bestSellers and womenProducts
-  const product = bestSellers.find(item => item.id === productId) || womenProducts.find(item => item.id === productId);
+  const product =
+    bestSellers.find(item => item.id === productId) ||
+    womenProducts.find(item => item.id === productId);
 
   // إذا لم يتم العثور على المنتج
   if (!product) {
@@ -25,7 +27,7 @@ const ProductDetail = () => {
   }
 
   return (
-    <main className='container mx-auto mt-[72px]'>
+    <main className="container mx-auto mt-[72px]">
       <Head>
         <title>{product.title}</title>
       </Head>

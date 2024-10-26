@@ -1,24 +1,20 @@
 import axios from 'axios';
 
-// تعيين الرابط الأساسي للـ API الخاص بـ Laravel
-const apiBaseURL = 'https://store.ve-shop.co/api';
+const apiBaseURL = process.env.NEXT_PUBLIC_API_URL;
 
-// إنشاء مستخدم جديد عبر إرسال طلب POST إلى واجهة التسجيل
-export const createUser = async (email, password, name) => {
+export const createUser = async (name, email, password) => {
   try {
     const response = await axios.post(`${apiBaseURL}/register`, {
       name,
       email,
       password,
     });
-    // استجابة تتضمن معلومات المستخدم والتوكن
-    return response.data.user;
+    return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || error.message);
+    throw new Error(error.response?.data?.error || error.message);
   }
 };
 
-// تسجيل دخول المستخدم باستخدام البريد الإلكتروني وكلمة المرور
 export const loginUser = async (email, password) => {
   try {
     const response = await axios.post(`${apiBaseURL}/login`, {
@@ -27,24 +23,10 @@ export const loginUser = async (email, password) => {
     });
     return response.data.user;
   } catch (error) {
-    throw new Error(error.response?.data?.message || error.message);
+    throw new Error(error.response?.data?.error || error.message);
   }
 };
 
-// تسجيل خروج المستخدم الحالي من خلال إرسال طلب POST إلى واجهة تسجيل الخروج
-export const logoutUser = async (token) => {
-  try {
-    await axios.post(`${apiBaseURL}/logout`, null, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  } catch (error) {
-    throw new Error(error.response?.data?.message || error.message);
-  }
-};
-
-// التحقق من حالة المصادقة للمستخدم الحالي
 export const onAuthStateChange = async () => {
   try {
     const token = localStorage.getItem('token');
@@ -57,6 +39,6 @@ export const onAuthStateChange = async () => {
     });
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || error.message);
+    throw new Error(error.response?.data?.error || error.message);
   }
 };

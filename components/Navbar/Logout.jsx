@@ -1,6 +1,6 @@
-import { useDispatch } from "react-redux";
-import { logoutUserThunk } from "../../store/slices/authSlice";
-import { AiOutlineLogout } from "react-icons/ai";
+import { useDispatch } from 'react-redux';
+import { logoutUserThunk } from '../../store/slices/authSlice';
+import { AiOutlineLogout } from 'react-icons/ai';
 
 const Logout = () => {
   const dispatch = useDispatch();

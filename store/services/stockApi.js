@@ -1,28 +1,24 @@
-
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { HYDRATE } from "next-redux-wrapper";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { HYDRATE } from 'next-redux-wrapper';
 
 export const stockApi = createApi({
-  reducerPath: "stockApi",
+  reducerPath: 'stockApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://store.ve-shop.co/api',
+    baseUrl: process.env.NEXT_PUBLIC_API_URL,
   }),
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
       return action.payload[reducerPath];
     }
   },
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     getStocks: builder.query({
-      query: () => "/stocks",
+      query: () => '/stocks',
     }),
     getStock: builder.query({
-      query: (id) => `/stocks/${id}`,
+      query: id => `/stocks/${id}`,
     }),
   }),
 });
 
-export const {
-  useGetStocksQuery,
-  useGetStockQuery,
-} = stockApi;
+export const { useGetStocksQuery, useGetStockQuery } = stockApi;

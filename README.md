@@ -1,4 +1,5 @@
 متجر VE-Shop
+
 <div align="center"> <img src="./public/assets/logo.png" alt="logo" width="200" height="auto" /> <h1>متجر VE-Shop</h1> <p> منصة تجارة إلكترونية حديثة ومتكاملة تم تطويرها باستخدام Next.js، Redux، TailwindCSS وFirebase لتقديم تجربة تسوق سهلة ومميزة للمستخدمين. </p> <h4> <a href="https://ve-shop.co/">مشاهدة العرض التجريبي</a> <span> · </span> <a href="https://github.com/ask-ar/ve-shop/issues">الإبلاغ عن مشكلة</a> <span> · </span> <a href="https://github.com/ask-ar/ve-shop/issues">طلب ميزة جديدة</a> </h4> </div> <br /> <!-- محتويات الصفحة -->
 :notebook_with_decorative_cover: الفهرس
 :notebook_with_decorative_cover: الفهرس

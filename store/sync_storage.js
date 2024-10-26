@@ -1,4 +1,4 @@
-import createWebStorage from "redux-persist/lib/storage/createWebStorage";
+import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 
 // دالة لإنشاء تخزين وهمي "Noop" في حالة عدم توفر `localStorage`
 const createNoopStorage = () => {
@@ -11,8 +11,8 @@ const createNoopStorage = () => {
 
 // إذا كانت البيئة هي المتصفح، استخدم `localStorage`، وإلا استخدم `NoopStorage`
 const storage =
-  typeof window !== "undefined"
-    ? createWebStorage("local") // استخدم `localStorage` في بيئة المتصفح
+  typeof window !== 'undefined'
+    ? createWebStorage('local') // استخدم `localStorage` في بيئة المتصفح
     : createNoopStorage(); // استخدم `NoopStorage` في بيئة `server`
 
 export default storage;

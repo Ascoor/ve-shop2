@@ -9,7 +9,7 @@ import { toastr } from 'react-redux-toastr';
 
 const ProductDetails = ({ product }) => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector(state => state.auth);
   const rating = Math.round(product?.rating.rate);
 
   // دالة لإضافة المنتج إلى سلة المشتريات
@@ -76,10 +76,7 @@ const ProductDetails = ({ product }) => {
               <span className="title-font font-medium text-2xl text-[var(--text-color)] dark:text-[var(--dark-text-primary)]">
                 ${product?.price}
               </span>
-              <button
-                onClick={addToCartHandler}
-                className="app-button"
-              >
+              <button onClick={addToCartHandler} className="app-button">
                 أضف إلى السلة
               </button>
               <button

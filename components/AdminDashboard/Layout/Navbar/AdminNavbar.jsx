@@ -1,74 +1,170 @@
-import { useState, useEffect } from "react";
-import { FiMenu, FiSearch, FiBell, FiUser } from "react-icons/fi"; 
-import Link from "next/link";
-import { selectUser, logoutUserThunk } from "../../../../store/slices/authSlice";
-import { useSelector, useDispatch } from "react-redux";
-import { useSidebar } from "../../../../hooks/SidbarContext"; // Import sidebar context
+import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
+import { FiMenu, FiSearch, FiBell, FiUser } from 'react-icons/fi';
+import Link from 'next/link';
+import { selectUser, logoutUserThunk } from '../../../../store/slices/authSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { useSidebar } from '../../../../hooks/SidbarContext';
 import { useRouter } from 'next/router';
 
 const AdminNavbar = () => {
-  const { toggleSidebar, toggleMobileSidebar, isSidebarOpen } = useSidebar(); 
+  const [darkMode, setDarkMode] = useState(false);
+  const { toggleSidebar, toggleMobileSidebar, isSidebarOpen } = useSidebar();
   const [isNotificationsMenuOpen, setNotificationsMenuOpen] = useState(false);
   const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const router = useRouter();
 
-  // Toggle dark/light mode
+  const notificationsRef = useRef(null);
+  const profileRef = useRef(null);
+
+  useEffect(() => {
+    if (!user) router.push('/');
+  }, [user]);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        notificationsRef.current &&
+        !notificationsRef.current.contains(event.target)
+      ) {
+        setNotificationsMenuOpen(false);
+      }
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(event.target)
+      ) {
+        setProfileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const toggleNotificationsMenu = () => setNotificationsMenuOpen(prev => !prev);
+  const toggleProfileMenu = () => setProfileMenuOpen(prev => !prev);
   const toggleTheme = () => {
     setDarkMode(!darkMode);
     document.documentElement.classList.toggle('dark');
   };
 
-  // Handle redirect after logout
-  const handleLogout = () => {
-    dispatch(logoutUserThunk());
-  };
-
-  useEffect(() => {
-    console.log('User state:', user);
-    if (!user) {
-      console.log('Redirecting to login...');
-      router.push('/');
-    }
-  }, [user]);
-  
-  // Toggle notifications menu
-  const toggleNotificationsMenu = () => {
-    setNotificationsMenuOpen((prev) => !prev);
-  };
-
-  // Toggle profile menu
-  const toggleProfileMenu = () => {
-    setProfileMenuOpen((prev) => !prev);
-  };
-
   return (
-    <header className={`z-10 py-4 bg-white shadow-md dark:bg-gray-800 transition-all duration-300 ${isSidebarOpen ? 'md:mr-64' : 'md:mr-0'}`}>
+    <header
+      className={`z-10 py-4 bg-white shadow-md dark:bg-gray-800 transition-all duration-300 ${
+        isSidebarOpen ? 'md:mr-64' : 'md:mr-0'
+      }`}
+    >
       <div className="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
+        
         {/* Mobile hamburger */}
-        <button className="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple" onClick={toggleMobileSidebar}>
+        <button
+          className="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"
+          onClick={toggleMobileSidebar}
+        >
           <FiMenu className="w-6 h-6" />
         </button>
 
-        {/* Desktop toggle button */}
-        <button className="hidden md:block p-1 rounded-md focus:outline-none focus:shadow-outline-purple" onClick={toggleSidebar}>
+        {/* Desktop sidebar toggle button */}
+        <button
+          className="hidden md:block p-1 rounded-md focus:outline-none focus:shadow-outline-purple"
+          onClick={toggleSidebar}
+        >
           <FiMenu className="w-6 h-6" />
         </button>
-
-        {/* Search input */}
-        <div className="flex justify-center flex-1 lg:mr-32">
-          <div className="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
-            <div className="absolute inset-y-0 flex items-center pr-2">
-              <FiSearch className="w-4 h-4" />
-            </div>
-            <input className="w-full pr-8 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:bg-gray-700 dark:text-gray-200 focus:bg-white focus:outline-none focus:shadow-outline-purple" type="text" placeholder="Search for projects" aria-label="Search" />
-          </div>
-        </div>
 
         {/* Profile and Notifications */}
-        <ul className="flex items-center flex-shrink-0 space-x-6">
+        <ul className="flex items-center space-x-2">
+          
+          {/* Notifications */}
+          <li className="relative ml-4" ref={notificationsRef}>
+            <button
+              onClick={toggleNotificationsMenu}
+              className="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple"
+              aria-label="Notifications"
+            >
+              <FiBell className="w-5 h-5" />
+              <span className="absolute top-0 left-0 inline-block w-3 h-3 transform translate-x-1 -translate-y-1 bg-red-600 border-2 border-white rounded-full"></span>
+            </button>
+            {isNotificationsMenuOpen && (
+              <ul className="absolute left-0 w-56 p-2 mt-2 space-y-2 bg-white border border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:bg-gray-700">
+                <li className="flex">
+                  <Link href="#" className="inline-flex items-center w-full px-2 py-1 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200">
+                    Messages
+                  </Link>
+                </li>
+                <li className="flex">
+                  <Link href="#" className="inline-flex items-center w-full px-2 py-1 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200">
+                    Sales
+                    <span className="px-2 py-1 text-xs font-bold leading-none text-red-600 bg-red-100 rounded-full">2</span>
+                  </Link>
+                </li>
+                <li className="flex">
+                  <Link href="#" className="inline-flex items-center w-full px-2 py-1 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200">
+                    Alerts
+                  </Link>
+                </li>
+              </ul>
+            )}
+          </li>
+
+          {/* Profile */}
+          <li className="relative" ref={profileRef}>
+            <button
+              onClick={toggleProfileMenu}
+              className="flex items-center align-middle rounded-full focus:outline-none"
+              aria-label="Account"
+            >
+              <span className="ml-2 font-semibold hidden md:inline">{user.name}</span>
+              {user.image ? (
+                <Image
+                  className="object-cover w-8 h-8 rounded-full"
+                  src={user.image.path || '/path/to/default-image.png'}
+                  alt="Profile"
+                  width={32}
+                  height={32}
+                />
+              ) : (
+                <img
+                  className="object-cover w-8 h-8 rounded-full"
+                  src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
+                  alt="Default Profile"
+                />
+              )}
+            </button>
+            {isProfileMenuOpen && (
+              <ul className="absolute left-0 w-56 p-2 mt-2 space-y-2 bg-white border border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:bg-gray-700">
+                <li className="flex">
+                  <Link href="#" className="inline-flex items-center w-full px-2 py-1 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200">
+                    <FiUser className="w-4 h-4 mr-3" />
+                    Profile
+                  </Link>
+                </li>
+                <li className="flex">
+                  <Link href="#" className="inline-flex items-center w-full px-2 py-1 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200">
+                    <FiUser className="w-4 h-4 mr-3" />
+                    Settings
+                  </Link>
+                </li>
+                <li className="flex">
+                  <Link href="#" onClick={() => dispatch(logoutUserThunk())} className="inline-flex items-center w-full px-2 py-1 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200">
+                    <FiUser className="w-4 h-4 mr-3" />
+                    Log out
+                  </Link>
+                </li>
+              </ul>
+            )}
+          </li>
+
           {/* Theme toggler */}
           <li className="flex pl-6">
             <button className="rounded-md focus:outline-none focus:shadow-outline-purple" onClick={toggleTheme} aria-label="Toggle color mode">
@@ -82,77 +178,6 @@ const AdminNavbar = () => {
                 </svg>
               )}
             </button>
-          </li>
-          {/* Notifications menu */}
-          <li className="relative">
-            <button
-              className="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple"
-              onClick={toggleNotificationsMenu}
-              aria-label="Notifications"
-            >
-              <FiBell className="w-5 h-5" />
-              <span className="absolute top-0 left-0 inline-block w-3 h-3 transform translate-x-1 -translate-y-1 bg-red-600 border-2 border-white rounded-full"></span>
-            </button>
-            {isNotificationsMenuOpen && (
-              <ul className="absolute left-0 w-56 p-2 mt-2 space-y-2 bg-white border border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:bg-gray-700">
-                <li className="flex">
-                  <Link href="#" className="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200">
-                    Messages
-                  </Link>
-                </li>
-                <li className="flex">
-                  <Link href="#" className="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200">
-                    Sales
-                    <span className="px-2 py-1 text-xs font-bold leading-none text-red-600 bg-red-100 rounded-full">
-                      2
-                    </span>
-                  </Link>
-                </li>
-                <li className="flex">
-                  <Link href="#" className="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200">
-                    Alerts
-                  </Link>
-                </li>
-              </ul>
-            )}
-          </li>
-
-          {/* Profile menu */}
-          <li className="relative">
-            <button
-              className="align-middle rounded-full focus:shadow-outline-purple focus:outline-none"
-              onClick={toggleProfileMenu}
-              aria-label="Account"
-            >
-              <img
-                className="object-cover w-8 h-8 rounded-full"
-                src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
-                alt="Profile"
-              />
-            </button>
-
-            {isProfileMenuOpen && (
-              <ul className="absolute left-0 w-56 p-2 mt-2 space-y-2 bg-white border border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:bg-gray-700">
-                <li className="flex">
-                  <Link href="#" className="inline-flex items-center w-full px-2 py-1 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200">
-                    <FiUser className="w-4 h-4 mr-3" />
-                    <span>Profile</span>
-                  </Link>
-                </li>
-                <li className="flex">
-                  <Link href="#" className="inline-flex items-center w-full px-2 py-1 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200">
-                    <FiUser className="w-4 h-4 mr-3" />
-                    <span>Settings</span>
-                  </Link>
-                </li>
-                <li className="flex">
-                  <Link href="#" onClick={handleLogout} className="inline-flex items-center w-full px-2 py-1 text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200">
-                    <FiUser className="w-4 h-4 mr-3" />
-                    <span>Log out</span>
-                  </Link>
-                </li>
-              </ul>
-            )}
           </li>
         </ul>
       </div>

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useRouter } from "next/router";
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 import { sections } from '../common/sectionData'; // استيراد بيانات الأقسام
 
 const DashboardSections = () => {
@@ -7,7 +7,7 @@ const DashboardSections = () => {
   const [showSubSections, setShowSubSections] = useState(false);
   const [selectedSection, setSelectedSection] = useState(null);
 
-  const handleHoverSubSections = (section) => {
+  const handleHoverSubSections = section => {
     setShowSubSections(true);
     setSelectedSection(section);
   };
@@ -18,15 +18,18 @@ const DashboardSections = () => {
     }, 200);
   };
 
-  const handleSectionClick = (sectionId) => {
+  const handleSectionClick = sectionId => {
     // تحديث الرابط بناءً على القسم المختار
     router.push(`/dashboard?section=${sectionId}`);
   };
 
   return (
-    <div className="categories hidden md:flex flex-wrap items-center md:justify-center" style={{ direction: "rtl" }}>
+    <div
+      className="categories hidden md:flex flex-wrap items-center md:justify-center"
+      style={{ direction: 'rtl' }}
+    >
       <div className="group inline-block relative x-space-4">
-        {sections.map((section) => (
+        {sections.map(section => (
           <div
             key={section.id}
             className="inline-block relative"
@@ -47,12 +50,15 @@ const DashboardSections = () => {
             {showSubSections && selectedSection?.id === section.id && (
               <div className="absolute top-7 right-0 w-36 h-full z-10">
                 <div className="flex flex-col items-center bg-[var(--background-color)] gap-4 text-right shadow p-2">
-                  {section.dropdown.map((subSection) => (
+                  {section.dropdown.map(subSection => (
                     <div
                       key={subSection.id}
                       className="flex flex-col w-full text-right p-2 border-b border-[var(--primary-color)]"
                     >
-                      <a href={subSection.link} className="text-sm font-semibold hover:text-[var(--primary-color)] cursor-pointer">
+                      <a
+                        href={subSection.link}
+                        className="text-sm font-semibold hover:text-[var(--primary-color)] cursor-pointer"
+                      >
                         {subSection.name}
                       </a>
                     </div>

@@ -1,15 +1,20 @@
-import { useState, useRef, useEffect } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { AiOutlineLogin, AiOutlineUser, AiOutlineShoppingCart, AiOutlineInfoCircle } from "react-icons/ai";
-import { useSelector, useDispatch } from "react-redux";
-import { selectUser, logoutUserThunk } from "../../store/slices/authSlice";
-import { SunIcon, MoonIcon } from "@heroicons/react/20/solid";
-import { useDarkMode } from "../../hooks/useDarkMode"; // Import the custom hook
-import { FiUser } from "react-icons/fi";
+import { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import {
+  AiOutlineLogin,
+  AiOutlineUser,
+  AiOutlineShoppingCart,
+  AiOutlineInfoCircle,
+} from 'react-icons/ai';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectUser, logoutUserThunk } from '../../store/slices/authSlice';
+import { SunIcon, MoonIcon } from '@heroicons/react/20/solid';
+import { useDarkMode } from '../../hooks/useDarkMode'; // Import the custom hook
+import { FiUser } from 'react-icons/fi';
 
 const Nav = () => {
-  const cartItems = useSelector((state) => state.cart.items);
+  const cartItems = useSelector(state => state.cart.items);
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const { isDarkMode, toggleDarkMode } = useDarkMode(); // Use the custom hook
@@ -22,22 +27,24 @@ const Nav = () => {
   };
 
   const toggleProfileMenu = () => {
-    setProfileMenuOpen((prev) => !prev);
+    setProfileMenuOpen(prev => !prev);
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
+    const handleClickOutside = event => {
+      if (
+        profileMenuRef.current &&
+        !profileMenuRef.current.contains(event.target)
+      ) {
         setProfileMenuOpen(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [profileMenuRef]);
 
-    
   return (
     <nav
       className="flex justify-between items-center py-4 px-6 lg:px-8 bg-[var(--color-primary-day)] dark:bg-[var(--color-primary-night)] text-[var(--color-secondary-day)] dark:text-[var(--color-secondary-night)] shadow-md"
@@ -49,9 +56,9 @@ const Nav = () => {
           <Image
             src="/assets/logo.png"
             alt="Logo"
-            layout="fill"
-            objectFit="contain"
-            priority
+            fill // استخدم fill هنا بدلاً من layout
+            style={{ objectFit: 'contain' }} // استخدم style لتحديد كيفية عرض الصورة
+            priority // تبقى هذه الخاصية إذا كنت بحاجة لتحميل الصورة بأولوية
           />
         </div>
       </Link>
@@ -70,21 +77,33 @@ const Nav = () => {
         {!user ? (
           <>
             {/* Show Login and Register Links for guests */}
-            <Link href="/login" className="font-semibold flex items-center text-[var(--color-secondary-day)] dark:text-[var(--color-secondary-night)]">
+            <Link
+              href="/login"
+              className="font-semibold flex items-center text-[var(--color-secondary-day)] dark:text-[var(--color-secondary-night)]"
+            >
               <AiOutlineLogin size={25} className="ml-2" />
               دخول
             </Link>
-            <Link href="/register" className="font-semibold flex items-center text-[var(--color-secondary-day)] dark:text-[var(--color-secondary-night)]">
+            <Link
+              href="/register"
+              className="font-semibold flex items-center text-[var(--color-secondary-day)] dark:text-[var(--color-secondary-night)]"
+            >
               <AiOutlineUser size={25} className="ml-2" />
               تسجيل
             </Link>
-            <Link href="/about" className="font-semibold flex items-center text-[var(--color-secondary-day)] dark:text-[var(--color-secondary-night)]">
+            <Link
+              href="/about"
+              className="font-semibold flex items-center text-[var(--color-secondary-day)] dark:text-[var(--color-secondary-night)]"
+            >
               <AiOutlineInfoCircle size={25} className="ml-2" />
               حولنا
             </Link>
           </>
         ) : (
-          <div className="flex items-center gap-2 relative" ref={profileMenuRef}>
+          <div
+            className="flex items-center gap-2 relative"
+            ref={profileMenuRef}
+          >
             {/* Display user name and profile image inline */}
             <button
               className="flex items-center align-middle rounded-full focus:outline-none"
@@ -93,10 +112,12 @@ const Nav = () => {
             >
               <span className="ml-2 font-semibold">{user.name}</span>
               {user.image ? (
-                <img
+                <Image
                   className="object-cover w-8 h-8 rounded-full"
-                  src={user.image}
+                  src={user.image.path} // استخدم المسار الصحيح للصورة
                   alt="Profile"
+                  width={32}
+                  height={32}
                 />
               ) : (
                 <img
@@ -109,21 +130,30 @@ const Nav = () => {
 
             {/* Dropdown Menu */}
             {isProfileMenuOpen && (
-              <ul className="absolute left-4 w-56 p-2 top-full mt-2 space-y-2 bg-white border text-gray-800 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200 border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:bg-gray-700">
+              <ul className="absolute left-4 w-56 p-2 top-full mt-2 space-y-2 bg-white border text-gray-800 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200 border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:bg-gray-700 z-20">
                 <li className="flex">
-                  <Link href="/profile" className="inline-flex items-center w-full px-2 py-1 text-sm font-semibold hover:bg-red-400 ">
+                  <Link
+                    href="/profile"
+                    className="inline-flex items-center w-full px-2 py-1 text-sm font-semibold hover:bg-red-400 "
+                  >
                     <FiUser className="w-4 h-4 mr-3" />
                     <span>ملفي الشخصي</span>
                   </Link>
                 </li>
                 <li className="flex">
-                  <Link href="/settings" className="inline-flex items-center w-full px-2 py-1 text-sm font-semibold hover:bg-red-400 ">
+                  <Link
+                    href="/settings"
+                    className="inline-flex items-center w-full px-2 py-1 text-sm font-semibold hover:bg-red-400 "
+                  >
                     <FiUser className="w-4 h-4 mr-3" />
                     <span>الإعدادات</span>
                   </Link>
                 </li>
                 <li className="flex">
-                  <button onClick={handleLogout} className="inline-flex items-center w-full px-2 py-1 text-sm font-semibold hover:bg-red-400 ">
+                  <button
+                    onClick={handleLogout}
+                    className="inline-flex items-center w-full px-2 py-1 text-sm font-semibold hover:bg-red-400 "
+                  >
                     <FiUser className="w-4 h-4 mr-3" />
                     <span>تسجيل الخروج</span>
                   </button>

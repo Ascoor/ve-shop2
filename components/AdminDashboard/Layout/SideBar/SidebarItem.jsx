@@ -43,4 +43,4 @@ const SidebarItem = ({ href, icon: Icon, label, children }) => {
     </li>
   );
 };
-export default SidebarItem
+export default SidebarItem;

@@ -87,7 +87,9 @@ const Cart = () => {
                     }
                     className="cursor-pointer hover:text-[var(--color-primary-day)] dark:hover:text-[var(--color-primary-night)]"
                   />
-                  <span className="text-[var(--color-text-day)] dark:text-[var(--color-text-night)] mx-2">{item.quantity}</span>
+                  <span className="text-[var(--color-text-day)] dark:text-[var(--color-text-night)] mx-2">
+                    {item.quantity}
+                  </span>
                   <AiOutlinePlus
                     onClick={() => dispatch(increaseQuantity(item.id))}
                     className="cursor-pointer hover:text-[var(--color-primary-day)] dark:hover:text-[var(--color-primary-night)]"
@@ -103,7 +105,10 @@ const Cart = () => {
               </div>
             ))}
           </div>
-          <div id="summary" className="w-full md:w-1/4 px-8 py-10 bg-[var(--color-component-background-day)] dark:bg-[var(--color-component-background-night)]">
+          <div
+            id="summary"
+            className="w-full md:w-1/4 px-8 py-10 bg-[var(--color-component-background-day)] dark:bg-[var(--color-component-background-night)]"
+          >
             <h1 className="font-semibold text-2xl border-b pb-8 border-[var(--color-border-day)] dark:border-[var(--color-border-night)]">
               ملخص الطلب
             </h1>

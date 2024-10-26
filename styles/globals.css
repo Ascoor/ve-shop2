@@ -1,32 +1,42 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sixtyfour+Convergence&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 /* Day Mode Variables */
 :root {
-  --color-primary-day: #FF0000; /* Main red */
-  --color-secondary-day: #FFFFFF; /* White text */
-  --color-background-day: #F3F3F3; /* Light grey background */
-  --color-component-background-day: #FFFFFF; /* Component background (cards, containers) */
-  --color-component-border-day: #D1D1D1; /* Border color for components */
+  --color-primary-day: #ff0000; /* Main red */
+  --color-secondary-day: #ffffff; /* White text */
+  --color-background-day: #f3f3f3; /* Light grey background */
+  --color-component-background-day: #ffffff; /* Component background (cards, containers) */
+  --color-component-border-day: #d1d1d1; /* Border color for components */
   --color-text-day: #000000; /* Main text color */
-  --color-button-hover-day: #D40000; /* Button hover state */
+  --color-button-hover-day: #d40000; /* Button hover state */
+
+  /* الألوان المميزة للأزرار في وضع النهار */
+  --color-feature-button-day: #32a852; /* Bright green for main feature button */
+  --color-feature-text-day: #ffffff; /* White text */
+  --color-feature-button-hover-day: #289246; /* Darker green for hover */
 }
 
 /* Night Mode Variables */
 .dark {
-  --color-primary-night: #B22222; /* Dark red for night */
-  --color-secondary-night: #FFFFFF; /* White text in night mode */
+  --color-primary-night: #b22222; /* Dark red for night */
+  --color-secondary-night: #ffffff; /* White text in night mode */
   --color-background-night: #121212; /* Dark grey background */
-  --color-component-background-night: #1E1E1E; /* Component background (cards, containers) */
-  --color-component-border-night: #3B3B3B; /* Border color for night mode */
-  --color-text-night: #FFFFFF; /* White text in night mode */
-  --color-button-hover-night: #A52A2A; /* Darker red for button hover */
-  --dark-gradient-background: linear-gradient(180deg, #1c1c1c, #333333); /* Night mode smoky black gradient background */
+  --color-component-background-night: #1e1e1e; /* Component background (cards, containers) */
+  --color-component-border-night: #3b3b3b; /* Border color for night mode */
+  --color-text-night: #ffffff; /* White text in night mode */
+  --color-button-hover-night: #a52a2a; /* Darker red for button hover */
+  --dark-gradient-background: linear-gradient(180deg, #1c1c1c, #333333);
 
+  /* الألوان المميزة للأزرار في وضع الليل */
+  --color-feature-button-night: #4caf50; /* Bright green for main feature button */
+  --color-feature-text-night: #ffffff; /* White text */
+  --color-feature-button-hover-night: #388e3c; /* Darker green for hover */
 }
+
 
 /* General Body Styling */
 body {
@@ -47,13 +57,17 @@ body {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   width: 100%;
-  background-color: var(--color-component-background-day); /* Component background for day mode */
+  background-color: var(
+    --color-component-background-day
+  ); /* Component background for day mode */
   border: 1px solid var(--color-component-border-day); /* Component border for day mode */
   color: var(--color-text-day); /* Text color for day mode */
 }
 
 .dark .container-custom {
-  background-color: var(--color-component-background-night); /* Component background for night mode */
+  background-color: var(
+    --color-component-background-night
+  ); /* Component background for night mode */
   border: 1px solid var(--color-component-border-night); /* Component border for night mode */
   color: var(--color-text-night); /* Text color for night mode */
 }
@@ -67,7 +81,9 @@ body {
   border-radius: 0.375rem;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .app-button:hover {
@@ -75,7 +91,9 @@ body {
 }
 
 button.app-button:disabled {
-  background-color: var(--color-component-border-day); /* Disabled button state */
+  background-color: var(
+    --color-component-border-day
+  ); /* Disabled button state */
 }
 
 button.app-button:active {
@@ -84,26 +102,34 @@ button.app-button:active {
 
 /* Dark Mode Button */
 .dark .app-button {
-  background-color: var(--color-primary-night); /* Night mode button background */
+  background-color: var(
+    --color-primary-night
+  ); /* Night mode button background */
   color: var(--color-secondary-night); /* Button text color in night mode */
   border: 1px solid var(--color-primary-night); /* Button border in night mode */
 }
 
 .dark .app-button:hover {
-  background-color: var(--color-button-hover-night); /* Hover state for buttons in night mode */
+  background-color: var(
+    --color-button-hover-night
+  ); /* Hover state for buttons in night mode */
 }
 
 .dark button.app-button:disabled {
-  background-color: var(--color-component-border-night); /* Disabled button state in night mode */
+  background-color: var(
+    --color-component-border-night
+  ); /* Disabled button state in night mode */
 }
 
 .dark button.app-button:active {
-  background-color: var(--color-button-hover-night); /* Active button state in night mode */
+  background-color: var(
+    --color-button-hover-night
+  ); /* Active button state in night mode */
 }
 
 /*####################### Loading Styles ########################*/
 
-/* From Uiverse.io by Nawsome */ 
+/* From Uiverse.io by Nawsome */
 .pl {
   width: 6em;
   height: 6em;
@@ -134,7 +160,8 @@ button.app-button:active {
 
 /* Animations */
 @keyframes ringA {
-  from, 4% {
+  from,
+  4% {
     stroke-dasharray: 0 660;
     stroke-width: 20;
     stroke-dashoffset: -330;
@@ -152,7 +179,8 @@ button.app-button:active {
     stroke-dashoffset: -595;
   }
 
-  40%, 54% {
+  40%,
+  54% {
     stroke-dasharray: 0 660;
     stroke-width: 20;
     stroke-dashoffset: -660;
@@ -170,7 +198,8 @@ button.app-button:active {
     stroke-dashoffset: -925;
   }
 
-  90%, to {
+  90%,
+  to {
     stroke-dasharray: 0 660;
     stroke-width: 20;
     stroke-dashoffset: -990;
@@ -178,7 +207,8 @@ button.app-button:active {
 }
 
 @keyframes ringB {
-  from, 12% {
+  from,
+  12% {
     stroke-dasharray: 0 220;
     stroke-width: 20;
     stroke-dashoffset: -110;
@@ -196,7 +226,8 @@ button.app-button:active {
     stroke-dashoffset: -195;
   }
 
-  48%, 62% {
+  48%,
+  62% {
     stroke-dasharray: 0 220;
     stroke-width: 20;
     stroke-dashoffset: -220;
@@ -214,7 +245,8 @@ button.app-button:active {
     stroke-dashoffset: -305;
   }
 
-  98%, to {
+  98%,
+  to {
     stroke-dasharray: 0 220;
     stroke-width: 20;
     stroke-dashoffset: -330;
@@ -240,7 +272,8 @@ button.app-button:active {
     stroke-dashoffset: -175;
   }
 
-  36%, 58% {
+  36%,
+  58% {
     stroke-dasharray: 0 440;
     stroke-width: 20;
     stroke-dashoffset: -220;
@@ -258,7 +291,8 @@ button.app-button:active {
     stroke-dashoffset: -395;
   }
 
-  94%, to {
+  94%,
+  to {
     stroke-dasharray: 0 440;
     stroke-width: 20;
     stroke-dashoffset: -440;
@@ -266,7 +300,8 @@ button.app-button:active {
 }
 
 @keyframes ringD {
-  from, 8% {
+  from,
+  8% {
     stroke-dasharray: 0 440;
     stroke-width: 20;
     stroke-dashoffset: 0;
@@ -284,7 +319,8 @@ button.app-button:active {
     stroke-dashoffset: -175;
   }
 
-  44%, 50% {
+  44%,
+  50% {
     stroke-dasharray: 0 440;
     stroke-width: 20;
     stroke-dashoffset: -220;
@@ -302,9 +338,60 @@ button.app-button:active {
     stroke-dashoffset: -395;
   }
 
-  86%, to {
+  86%,
+  to {
     stroke-dasharray: 0 440;
     stroke-width: 20;
     stroke-dashoffset: -440;
+  }
+}
+
+
+.brand-name {
+  font-family: "Sixtyfour Convergence", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "BLED" 0,
+    "SCAN" 0,
+    "XELA" 0,
+    "YELA" 0;
+  font-size: 5rem;
+  font-weight: bold;
+  /* تدرجات لونية ثابتة للألوان النابضة */
+  background: linear-gradient(
+    90deg,
+    #ff0000,   /* الأحمر الأساسي */
+    #ff6ec4,   /* زهري فاتح */
+    #33b2d9,   /* أزرق زاهي */
+    #7873f5,   /* بنفسجي */
+    #ff0000    /* الأحمر الغامق */
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: rainbowFlow 10s ease-in-out infinite alternate;
+  display: inline-block;
+  text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* حركة التدفق الديناميكية */
+@keyframes rainbowFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* تأثير التجاوب */
+@media (max-width: 768px) {
+  .brand-name {
+    font-size: 3rem;
   }
 }

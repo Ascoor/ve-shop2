@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
-import { useGetProductsQuery, useGetCategoriesQuery, useGetBrandsQuery } from '../../../store/services/productApi'; // API queries
-import DynamicTable from '../../../components/common/DynamicTable'; // مكون الجدول العام
+import {
+  useGetProductsQuery,
+  useGetCategoriesQuery,
+  useGetBrandsQuery,
+} from '../../../../store/services/productApi'; // API queries
+import DynamicTable from '../../../../components/common/DynamicTable'; // مكون الجدول العام
 
 const ProductListings = () => {
   // حالة الفلاتر
   const [filterCategory, setFilterCategory] = useState('');
   const [filterBrand, setFilterBrand] = useState('');
 
-  const { data: products = [], isLoading: productsLoading } = useGetProductsQuery();
+  const { data: products = [], isLoading: productsLoading } =
+    useGetProductsQuery();
   const { data: categories = [] } = useGetCategoriesQuery();
   const { data: brands = [] } = useGetBrandsQuery();
 
@@ -21,9 +26,13 @@ const ProductListings = () => {
   ];
 
   // تصفية المنتجات بناءً على الفئة أو العلامة التجارية المختارة
-  const filteredProducts = products.filter((product) => {
-    const categoryMatch = filterCategory ? product.category?.id === parseInt(filterCategory) : true;
-    const brandMatch = filterBrand ? product.brand?.id === parseInt(filterBrand) : true;
+  const filteredProducts = products.filter(product => {
+    const categoryMatch = filterCategory
+      ? product.category?.id === parseInt(filterCategory)
+      : true;
+    const brandMatch = filterBrand
+      ? product.brand?.id === parseInt(filterBrand)
+      : true;
     return categoryMatch && brandMatch;
   });
 
@@ -33,14 +42,17 @@ const ProductListings = () => {
       name: 'category',
       label: 'التصنيفات',
       value: filterCategory,
-      options: categories.map((category) => ({ value: category.id, label: category.name }))
+      options: categories.map(category => ({
+        value: category.id,
+        label: category.name,
+      })),
     },
     {
       name: 'brand',
       label: 'البراندات',
       value: filterBrand,
-      options: brands.map((brand) => ({ value: brand.id, label: brand.name }))
-    }
+      options: brands.map(brand => ({ value: brand.id, label: brand.name })),
+    },
   ];
 
   const handleFilterChange = (name, value) => {
@@ -52,7 +64,7 @@ const ProductListings = () => {
   };
 
   const handleAddProduct = () => {
-    console.log("Add Product clicked");
+    console.log('Add Product clicked');
   };
 
   return (
