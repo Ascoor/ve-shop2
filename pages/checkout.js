@@ -40,15 +40,7 @@ const Checkout = () => {
     setCreditCard(false);
   };
 
-  const addressValue = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    address: '',
-    city: '',
-    state: '',
-    zip: '',
-  };
+
 
   const paymentValue = {
     paymentMethod: '',
@@ -144,7 +136,7 @@ const Checkout = () => {
                   <div className="w-full md:w-2/3 md:max-w-full mx-auto">
                     <div className="p-6 border border-gray-300 sm:rounded-md">
                       <Formik
-                        initialValues={initialAddressValues}
+                          initialValues={addressValue}
                         validationSchema={addressSchema}
                         enableReinitialize // لتحديث القيم عند توفر بيانات جديدة
                         onSubmit={addressSubmit}

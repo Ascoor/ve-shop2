@@ -11,12 +11,12 @@ export const renderActiveSection = (activeSection) => {
       return <Home />;
     case 'products':
       return <ProductListings />;
-    case 'product-add':
-      return <AddProduct />; // صفحة إضافة منتج
-    case 'manage-offers':
-      return <ManageOffers />; // صفحة إدارة العروض
-    case 'product-reports':
-      return <ProductReports />; // صفحة تقارير المنتجات
+    // case 'product-add':
+    //   return <AddProduct />; // صفحة إضافة منتج
+    // case 'manage-offers':
+    //   return <ManageOffers />; // صفحة إدارة العروض
+    // case 'product-reports':
+    //   return <ProductReports />; // صفحة تقارير المنتجات
     // باقي الأقسام الفرعية بناءً على الحاجة
     default:
       return <Home />;

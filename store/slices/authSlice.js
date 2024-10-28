@@ -3,7 +3,6 @@ import { setMessage } from '../reducers/messageSlice';
 import {
   createUser,
   loginUser,
-  onAuthStateChange,
 } from '../services/authService';
 
 const initialState = {

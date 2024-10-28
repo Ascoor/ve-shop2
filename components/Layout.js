@@ -22,7 +22,7 @@ const Layout = ({ children }) => {
         router.replace('/'); // توجيه إلى الصفحة الرئيسية (المتجر)
       }
     }
-  }, [user]);
+  }, [user,router]);
 
   // عرض AdminLayout إذا كان المستخدم إداري
   if (user && (user.role_id === 1 || user.role_id === 2)) {

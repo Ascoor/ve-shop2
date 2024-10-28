@@ -32,7 +32,7 @@ const Categories = () => {
             <div className="flex flex-col items-center gap-2">
               <div className="flex flex-row p-2 rounded-full gap-4 justify-center items-center">
                 {/* Main category text */}
-                <p className="cursor-pointer text-sm font-semibold hover:underline hover:text-[var(--color-primary-day)] dark:text-[var(--color-secondary-night)] decoration-[var(--color-primary-day)] dark:decoration-[var(--color-primary-night)]">
+                <p className="cursor-pointer text-sm font-semibold hover:underline hover:text-[var(--color-primary-day)] decoration-[var(--color-primary-day)]">
                   {category.name}
                 </p>
               </div>
@@ -41,13 +41,13 @@ const Categories = () => {
             {/* Show dropdown on hover */}
             {showSubCategories && selectedCategory?.id === category.id && (
               <div className="absolute top-7 right-0 w-36 h-full z-10">
-                <div className="flex flex-col items-center bg-[var(--color-background-day)] dark:bg-[var(--color-background-night)] gap-4 text-right shadow p-2">
+                <div className="flex flex-col items-center bg-[var(--color-background-day)] gap-4 text-right shadow p-2">
                   {category.dropdown.map(subCategory => (
                     <div
                       key={subCategory.id}
-                      className="flex flex-col w-full text-right p-2 border-b border-[var(--color-primary-day)] dark:border-[var(--color-primary-night)]"
+                      className="flex flex-col w-full text-right p-2 border-b border-[var(--color-primary-day)]"
                     >
-                      <p className="text-sm font-semibold hover:text-[var(--color-primary-day)] dark:hover:text-[var(--color-primary-night)] cursor-pointer">
+                      <p className="text-sm font-semibold hover:text-[var(--color-primary-day)] cursor-pointer">
                         {subCategory.name}
                       </p>
                     </div>

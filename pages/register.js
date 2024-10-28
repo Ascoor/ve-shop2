@@ -1,12 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import {
-  registerUser,
-  selectUser,
-  selectStatus,
-  selectError,
+  registerUser
 } from '../store/slices/authSlice';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';

@@ -31,118 +31,120 @@ const Cart = () => {
   };
 
   return (
-    <div className="bg-[var(--color-background-day)] dark:bg-[var(--color-background-night)] text-[var(--color-text-day)] dark:text-[var(--color-text-night)]">
-      <div className="container mx-auto mt-10">
-        <div className="flex flex-col md:flex-row shadow-md my-10">
-          <div className="w-full md:w-3/4 bg-[var(--color-component-background-day)] dark:bg-[var(--color-component-background-night)] px-10 py-10">
-            <div className="flex justify-between border-b pb-8 border-[var(--color-border-day)] dark:border-[var(--color-border-night)]">
-              <h1 className="font-semibold text-2xl">سلة التسوق</h1>
-              <h2 className="font-semibold text-2xl">
-                {totalQuantity} {totalQuantity > 1 ? 'منتجات' : 'منتج'}{' '}
-              </h2>
-            </div>
-            <div className="flex mt-10 mb-5">
-              <h3 className="font-semibold text-[var(--color-muted-text-day)] dark:text-[var(--color-muted-text-night)] text-xs uppercase w-2/5">
-                تفاصيل المنتج
-              </h3>
-              <h3 className="font-semibold text-[var(--color-muted-text-day)] dark:text-[var(--color-muted-text-night)] text-xs uppercase w-1/5 text-center">
-                الكمية
-              </h3>
-              <h3 className="font-semibold text-[var(--color-muted-text-day)] dark:text-[var(--color-muted-text-night)] text-xs uppercase w-1/5 text-center">
-                السعر
-              </h3>
-              <h3 className="font-semibold text-[var(--color-muted-text-day)] dark:text-[var(--color-muted-text-night)] text-xs uppercase w-1/5 text-center">
-                حذف
-              </h3>
-            </div>
-            {cartItems.map(item => (
-              <div
-                key={item.id}
-                className="flex items-center hover:bg-[var(--color-hover-background-day)] dark:hover:bg-[var(--color-hover-background-night)] -mx-8 px-6 py-5"
-              >
-                <div className="flex w-2/5">
-                  <div className="w-20">
-                    <Image
-                      src={item.image}
-                      alt="صورة المنتج"
-                      width={100}
-                      height={100}
-                      className="w-32 md:w-48 lg:w-64"
-                    />
-                  </div>
-                  <div className="flex flex-col justify-center ml-4 flex-grow">
-                    <span className="font-semibold text-sm">
-                      {item.title.length > 30
-                        ? item.title.substring(0, 20) + '...'
-                        : item.title}
-                    </span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-center w-1/5">
-                  <AiOutlineMinus
-                    onClick={
-                      item.quantity === 1
-                        ? () => handleRemoveFromCart(item.id)
-                        : () => dispatch(removeFromCart(item.id))
-                    }
-                    className="cursor-pointer hover:text-[var(--color-primary-day)] dark:hover:text-[var(--color-primary-night)]"
+    <div className="bg-[var(--color-background-day)] text-[var(--color-text-day)]">
+    <div className="container mx-auto mt-10">
+      <div className="flex flex-col md:flex-row shadow-md my-10">
+        <div className="w-full md:w-3/4 bg-[var(--color-component-background-day)] px-10 py-10">
+          <div className="flex justify-between border-b pb-8 border-[var(--color-border-day)]">
+            <h1 className="font-semibold text-2xl">سلة التسوق</h1>
+            <h2 className="font-semibold text-2xl">
+              {totalQuantity} {totalQuantity > 1 ? 'منتجات' : 'منتج'}{' '}
+            </h2>
+          </div>
+          <div className="flex mt-10 mb-5">
+            <h3 className="font-semibold text-[var(--color-muted-text-day)] text-xs uppercase w-2/5">
+              تفاصيل المنتج
+            </h3>
+            <h3 className="font-semibold text-[var(--color-muted-text-day)] text-xs uppercase w-1/5 text-center">
+              الكمية
+            </h3>
+            <h3 className="font-semibold text-[var(--color-muted-text-day)] text-xs uppercase w-1/5 text-center">
+              السعر
+            </h3>
+            <h3 className="font-semibold text-[var(--color-muted-text-day)] text-xs uppercase w-1/5 text-center">
+              حذف
+            </h3>
+          </div>
+          {cartItems.map(item => (
+            <div
+              key={item.id}
+              className="flex items-center hover:bg-[var(--color-hover-background-day)] -mx-8 px-6 py-5"
+            >
+              <div className="flex w-2/5">
+                <div className="w-20">
+                  <Image
+                    src={item.image}
+                    alt="صورة المنتج"
+                    width={100}
+                    height={100}
+                    className="w-32 md:w-48 lg:w-64"
                   />
-                  <span className="text-[var(--color-text-day)] dark:text-[var(--color-text-night)] mx-2">
-                    {item.quantity}
+                </div>
+                <div className="flex flex-col justify-center ml-4 flex-grow">
+                  <span className="font-semibold text-sm">
+                    {item.title.length > 30
+                      ? item.title.substring(0, 20) + '...'
+                      : item.title}
                   </span>
-                  <AiOutlinePlus
-                    onClick={() => dispatch(increaseQuantity(item.id))}
-                    className="cursor-pointer hover:text-[var(--color-primary-day)] dark:hover:text-[var(--color-primary-night)]"
-                  />
                 </div>
-                <span className="text-center w-1/5 font-semibold text-sm text-[var(--color-text-day)] dark:text-[var(--color-text-night)]">
-                  ${item.price}
+              </div>
+              <div className="flex items-center justify-center w-1/5">
+                <AiOutlineMinus
+                  onClick={
+                    item.quantity === 1
+                      ? () => handleRemoveFromCart(item.id)
+                      : () => dispatch(removeFromCart(item.id))
+                  }
+                  className="cursor-pointer hover:text-[var(--color-primary-day)]"
+                />
+                <span className="text-[var(--color-text-day)] mx-2">
+                  {item.quantity}
                 </span>
-                <BsTrash
-                  onClick={() => handleRemoveFromCart(item.id)}
-                  className="text-center w-1/5 font-semibold text-2xl hover:text-[var(--color-primary-day)] dark:hover:text-[var(--color-primary-night)] cursor-pointer"
+                <AiOutlinePlus
+                  onClick={() => dispatch(increaseQuantity(item.id))}
+                  className="cursor-pointer hover:text-[var(--color-primary-day)]"
                 />
               </div>
-            ))}
-          </div>
-          <div
-            id="summary"
-            className="w-full md:w-1/4 px-8 py-10 bg-[var(--color-component-background-day)] dark:bg-[var(--color-component-background-night)]"
-          >
-            <h1 className="font-semibold text-2xl border-b pb-8 border-[var(--color-border-day)] dark:border-[var(--color-border-night)]">
-              ملخص الطلب
-            </h1>
-            <div className="flex justify-between flex-col mt-10 mb-5">
-              <div className="flex flex-col gap-7 mt-10 mb-5">
-                <span className="font-semibold text-sm uppercase flex justify-between text-[var(--color-text-day)] dark:text-[var(--color-text-night)]">
-                  إجمالي المنتجات في السلة:
-                  <p className="text-[var(--color-primary-day)] dark:text-[var(--color-primary-night)] font-bold text-lg">
-                    {totalQuantity}
-                  </p>
-                </span>
-                <span className="font-semibold text-sm uppercase flex justify-between text-[var(--color-text-day)] dark:text-[var(--color-text-night)]">
-                  السعر الإجمالي:
-                  <p className="text-[var(--color-primary-day)] dark:text-[var(--color-primary-night)] font-bold text-lg">
-                    $
-                    {totalQuantity === 0
-                      ? 0
-                      : totalAmount
-                          .toFixed(2)
-                          .replace(/\d(?=(\d{3})+\.)/g, '$&,')}
-                  </p>
-                </span>
-              </div>
+              <span className="text-center w-1/5 font-semibold text-sm text-[var(--color-text-day)]">
+                ${item.price}
+              </span>
+              <BsTrash
+                onClick={() => handleRemoveFromCart(item.id)}
+                className="text-center w-1/5 font-semibold text-2xl hover:text-[var(--color-primary-day)] cursor-pointer"
+              />
             </div>
-            <button
-              onClick={handleCheckout}
-              className="bg-[var(--color-primary-day)] dark:bg-[var(--color-primary-night)] text-[var(--color-secondary-day)] dark:text-[var(--color-secondary-night)] text-sm uppercase font-semibold px-5 py-3 mt-6 w-full hover:bg-[var(--color-button-hover-day)] dark:hover:bg-[var(--color-button-hover-night)]"
-            >
-              إتمام الطلب
-            </button>
+          ))}
+        </div>
+        <div
+          id="summary"
+          className="w-full md:w-1/4 px-8 py-10 bg-[var(--color-component-background-day)]"
+        >
+          <h1 className="font-semibold text-2xl border-b pb-8 border-[var(--color-border-day)]">
+            ملخص الطلب
+          </h1>
+          <div className="flex justify-between flex-col mt-10 mb-5">
+            <div className="flex flex-col gap-7 mt-10 mb-5">
+              <span className="font-semibold text-sm uppercase flex justify-between text-[var(--color-text-day)]">
+                إجمالي المنتجات في السلة:
+                <p className="text-[var(--color-primary-day)] font-bold text-lg">
+                  {totalQuantity}
+                </p>
+              </span>
+              <span className="font-semibold text-sm uppercase flex justify-between text-[var(--color-text-day)]">
+                السعر الإجمالي:
+                <p className="text-[var(--color-primary-day)] font-bold text-lg">
+                  $
+                  {totalQuantity === 0
+                    ? 0
+                    : totalAmount
+                        .toFixed(2)
+                        .replace(/\d(?=(\d{3})+\.)/g, '$&,')}
+                </p>
+              </span>
+            </div>
           </div>
+          <button
+            onClick={handleCheckout}
+            className="bg-[var(--color-primary-day)] text-[var(--color-secondary-day)] text-sm uppercase font-semibold px-5 py-3 mt-6 w-full hover:bg-[var(--color-button-hover-day)]"
+          >
+            إتمام الطلب
+          </button>
         </div>
       </div>
     </div>
+  </div>
+  
+
   );
 };
 
