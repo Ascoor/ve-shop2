@@ -13,6 +13,7 @@ import {
   LineController,
 } from 'chart.js';
 import { Pie, Line, Bar } from 'react-chartjs-2';
+import { useMemo } from 'react';
 
 ChartJs.register(
   Tooltip,
@@ -29,7 +30,14 @@ ChartJs.register(
 );
 
 const ChartsComponent = () => {
-  const pieData = {
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: false, // Disable animations to improve performance
+  };
+
+  // Memoized data to prevent unnecessary re-renders
+  const pieData = useMemo(() => ({
     labels: ['القمصان', 'الأحذية', 'الحقائب'],
     datasets: [
       {
@@ -37,9 +45,9 @@ const ChartsComponent = () => {
         backgroundColor: ['#3B82F6', '#14B8A6', '#A855F7'],
       },
     ],
-  };
+  }), []);
 
-  const lineData = {
+  const lineData = useMemo(() => ({
     labels: ['يناير', 'فبراير', 'مارس', 'أبريل'],
     datasets: [
       {
@@ -55,9 +63,9 @@ const ChartsComponent = () => {
         backgroundColor: 'rgba(168, 85, 247, 0.2)',
       },
     ],
-  };
+  }), []);
 
-  const barData = {
+  const barData = useMemo(() => ({
     labels: ['يناير', 'فبراير', 'مارس', 'أبريل'],
     datasets: [
       {
@@ -71,9 +79,9 @@ const ChartsComponent = () => {
         backgroundColor: '#A855F7',
       },
     ],
-  };
+  }), []);
 
-  const doubleBarData = {
+  const doubleBarData = useMemo(() => ({
     labels: ['يناير', 'فبراير', 'مارس', 'أبريل'],
     datasets: [
       {
@@ -87,12 +95,7 @@ const ChartsComponent = () => {
         backgroundColor: '#14B8A6',
       },
     ],
-  };
-
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-  };
+  }), []);
 
   return (
     <>
@@ -128,7 +131,16 @@ const ChartsComponent = () => {
           مخطط الأعمدة المزدوجة
         </h4>
         <div style={{ height: '250px' }}>
-          <Bar data={doubleBarData} options={{ ...options, scales: { x: { stacked: true }, y: { beginAtZero: true } } }} />
+          <Bar
+            data={doubleBarData}
+            options={{
+              ...options,
+              scales: {
+                x: { stacked: true },
+                y: { beginAtZero: true, stacked: true },
+              },
+            }}
+          />
         </div>
       </div>
     </>

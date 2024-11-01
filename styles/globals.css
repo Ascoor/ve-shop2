@@ -6,38 +6,50 @@
 @tailwind utilities;
 /* Day Mode Variables */
 :root {
-  --color-primary-day: #ff0000; /* Main red */
-  --color-secondary-day: #ffffff; /* White text */
-  --color-background-day: #f3f3f3; /* Light grey background */
-  --color-component-background-day: #ffffff; /* Component background (cards, containers) */
-  --color-component-border-day: #d1d1d1; /* Border color for components */
-  --color-text-day: #000000; /* Main text color */
-  --color-button-hover-day: #d40000; /* Button hover state */
 
-  /* الألوان المميزة للأزرار في وضع النهار */
-  --color-feature-button-day: #32a852; /* Bright green for main feature button */
-  --color-feature-text-day: #ffffff; /* White text */
-  --color-feature-button-hover-day: #289246; /* Darker green for hover */
+  --color-primary-day: #e60000; 
+  --color-secondary-day: #ffffff;
+  --color-background-day: #f0f0f5; 
+    --color-lavender-day: #E6E6FA;
+  --color-light-lavender-day: #F3F3FF;
+
+  --color-component-background-day: #ffffff;
+  --color-component-border-day: #d1d1d1;
+  --color-text-day: #000000;
+  --color-text-day-hover: #1a1a1a; 
+  --color-button-hover-day: #cc0000; 
+
+  --color-feature-button-day: #32a852;
+  --color-feature-text-day: #ffffff;
+  --color-feature-button-hover-day: #289246;
+  --navbar-background-day: #f0f0f5;
+  --navbar-text-day: #333333;
+  --sidebar-background-day: #ffffff;
+  --sidebar-text-day: #000000;
+  --sidebar-hover-day: #d1d1d1;
 }
 
-/* Night Mode Variables */
 .dark {
-  --color-primary-night: #b22222; /* Dark red for night */
-  --color-secondary-night: #ffffff; /* White text in night mode */
-  --color-background-night: #121212; /* Dark grey background */
-  --color-component-background-night: #1e1e1e; /* Component background (cards, containers) */
-  --color-component-border-night: #3b3b3b; /* Border color for night mode */
-  --color-text-night: #ffffff; /* White text in night mode */
-  --color-button-hover-night: #a52a2a; /* Darker red for button hover */
+
+  --color-primary-night: #c0392b; 
+  --color-secondary-night: #ffffff;
+  --color-background-night: #1e1e2e; 
+  --color-component-background-night: #2a2f3e;
+  --color-component-border-night: #3b3b3b;
+  --color-text-night: #ffffff;
+  --color-button-hover-night: #992d2d; 
   --dark-gradient-background: linear-gradient(180deg, #1c1c1c, #333333);
+  --table-dark-gradient-background: linear-gradient(120deg, #4e4a4a, #5a5555);
 
-  /* الألوان المميزة للأزرار في وضع الليل */
-  --color-feature-button-night: #4caf50; /* Bright green for main feature button */
-  --color-feature-text-night: #ffffff; /* White text */
-  --color-feature-button-hover-night: #388e3c; /* Darker green for hover */
+  --color-feature-button-night: #4caf50;
+  --color-feature-text-night: #ffffff;
+  --color-feature-button-hover-night: #45a049; 
+  --navbar-background: var(--navbar-background-night);
+  --navbar-text: var(--navbar-text-night);
+  --sidebar-background: var(--sidebar-background-night);
+  --sidebar-text: var(--sidebar-text-night);
+  --sidebar-hover: var(--sidebar-hover-night);
 }
-
-
 /* General Body Styling */
 body {
   font-family: 'Noto Sans Arabic', sans-serif;
@@ -133,10 +145,13 @@ button.app-button:active {
 .pl {
   width: 6em;
   height: 6em;
+
 }
 
 .pl__ring {
   animation: ringA 2s linear infinite;
+  will-change: stroke-dasharray, stroke-dashoffset;
+
 }
 
 .pl__ring--a {
@@ -346,7 +361,6 @@ button.app-button:active {
   }
 }
 
-
 .brand-name {
   font-family: "Sixtyfour Convergence", sans-serif;
   font-optical-sizing: auto;
@@ -394,4 +408,19 @@ button.app-button:active {
   .brand-name {
     font-size: 3rem;
   }
+}
+/* استايل خاص بالعناصر الداخلية في TableHeader */
+.table-header {
+  @apply bg-[var(--color-background-day)] dark:bg-[var(--color-background-night)] transition-all duration-200;
+  background: var(--header-background-gradient-day);
+  --header-background-gradient-day: linear-gradient(to right, #ff7f50, #ff4500);
+  --header-background-gradient-night: linear-gradient(to right, #333, #1a1a1a);
+}
+
+.header-icon {
+  @apply text-3xl sm:text-4xl;
+}
+
+.header-title {
+  @apply text-center text-[var(--color-text-day)] dark:text-[var(--color-text-night)];
 }

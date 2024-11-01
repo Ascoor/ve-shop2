@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node.js Environment
         uses: actions/setup-node@v3 # Set up Node.js environment
         with:
-          node-version: '18.20.4' # Update to Node.js 20 as GitHub will move to this version by default
+          node-version: '18.20.4' # Update to Node.js version 18.20.4
 
       - name: Connect to Remote Server and Run Update Commands
         uses: appleboy/ssh-action@v0.1.10 # Updated SSH action to connect to the remote server
@@ -36,31 +36,26 @@ jobs:
             git stash --include-untracked
             git pull origin master
 
-            # Remove package-lock.json if it exists, as you're using Yarn
+            # Remove package-lock.json and node_modules if they exist
             [ -f package-lock.json ] && rm package-lock.json
+            [ -d node_modules ] && rm -rf node_modules
 
-            # Install Yarn globally if not already installed
-            if ! command -v yarn &> /dev/null; then
-              npm install -g yarn
-            fi
-
-            # Clean up old node_modules and reinstall dependencies
-            rm -rf node_modules
-            yarn install  # Install dependencies without --frozen-lockfile
+            # Install dependencies using npm
+            npm install # This will create a new package-lock.json
 
             # Log the installation status
-            echo "Yarn dependencies installed."
+            echo "npm dependencies installed."
 
             # Pre-copy build files from the public directory (cleanup)
-            yarn precopy-build
+            npm run precopy-build
 
             # Build the project for production
-            yarn build
+            npm run build
 
             # Ensure the build was successful before proceeding
             if [ -d ".next" ] && [ "$(ls -A .next)" ]; then
               echo "Build successful!"
-              yarn copy-build  # Copy the build files to the public directory
+              npm run copy-build  # Copy the build files to the public directory
             else
               echo "Build failed!"
               exit 1

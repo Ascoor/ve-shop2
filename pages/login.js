@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Formik } from 'formik';
@@ -9,6 +10,7 @@ import { loginUserThunk } from '../store/slices/authSlice';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const initialValues = { email: '', password: '' };
   const validationSchema = Yup.object({
@@ -18,8 +20,15 @@ const LoginPage = () => {
 
   const onSubmit = async (values, { setSubmitting }) => {
     try {
-      await dispatch(loginUserThunk(values)).unwrap();
+      const user = await dispatch(loginUserThunk(values)).unwrap();
       toastr.success('تم بنجاح', 'تم تسجيل الدخول بنجاح');
+
+      // Navigate based on user role after successful login
+      if (user.role_id === 1 || user.role_id === 2) {
+        await router.replace('/admin/dashboard'); // Redirect to admin dashboard
+      } else {
+        await router.replace('/'); // Redirect to home for regular users
+      }
     } catch (error) {
       let errorMessage = 'حدث خطأ أثناء محاولة تسجيل الدخول';
       if (error.message.includes('401')) {

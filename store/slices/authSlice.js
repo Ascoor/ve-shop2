@@ -1,9 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { setMessage } from '../reducers/messageSlice';
-import {
-  createUser,
-  loginUser,
-} from '../services/authService';
+import { createUser, loginUser } from '../services/authService';
 
 const initialState = {
   user: null,
@@ -16,16 +13,15 @@ export const registerUser = createAsyncThunk(
   async (payload, { dispatch }) => {
     const { email, password, name } = payload;
     try {
-      const user = await createUser(email, password, name);
+      const user = await createUser(name, email, password);
       dispatch(setMessage({ message: 'تم تسجيل المستخدم بنجاح' }));
       return user;
     } catch (error) {
       dispatch(setMessage({ message: error.message, error: true }));
       throw error;
     }
-  },
+  }
 );
-
 export const loginUserThunk = createAsyncThunk(
   'auth/loginUser',
   async (payload, { dispatch }) => {
@@ -33,7 +29,7 @@ export const loginUserThunk = createAsyncThunk(
     try {
       const user = await loginUser(email, password);
       dispatch(setMessage({ message: 'تم تسجيل الدخول بنجاح' }));
-      return user;
+      return user; // إعادة بيانات المستخدم بما في ذلك role_id
     } catch (error) {
       let errorMessage = 'حدث خطأ أثناء محاولة تسجيل الدخول';
       if (error.response && error.response.status === 401) {
@@ -46,21 +42,22 @@ export const loginUserThunk = createAsyncThunk(
       dispatch(setMessage({ message: errorMessage, error: true }));
       throw error;
     }
-  },
+  }
 );
 
+// لا حاجة لتغيير أي شيء هنا، لكن تأكد من أن logoutUserThunk يقوم بإزالة التوكن ويعيد الحالة إلى null
 export const logoutUserThunk = createAsyncThunk(
   'auth/logoutUser',
   async (_, { dispatch }) => {
     try {
       localStorage.removeItem('token');
       dispatch(setMessage({ message: 'تم تسجيل الخروج بنجاح' }));
-      return null;
+      return null; // هذا القيمة ستستخدم لإعادة تعيين المستخدم إلى null في extraReducers
     } catch (error) {
       dispatch(setMessage({ message: error.message, error: true }));
       throw error;
     }
-  },
+  }
 );
 
 const authSlice = createSlice({
@@ -71,9 +68,9 @@ const authSlice = createSlice({
       state.user = action.payload;
     },
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
-      .addCase(registerUser.pending, state => {
+      .addCase(registerUser.pending, (state) => {
         state.status = 'loading';
         state.error = null;
       })
@@ -85,19 +82,19 @@ const authSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
-      .addCase(loginUserThunk.pending, state => {
+      .addCase(loginUserThunk.pending, (state) => {
         state.status = 'loading';
         state.error = null;
       })
       .addCase(loginUserThunk.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.user = action.payload;
+        state.user = action.payload; // تخزين بيانات المستخدم و role_id
       })
       .addCase(loginUserThunk.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       })
-      .addCase(logoutUserThunk.fulfilled, state => {
+      .addCase(logoutUserThunk.fulfilled, (state) => {
         state.status = 'idle';
         state.user = null;
       })
@@ -108,8 +105,8 @@ const authSlice = createSlice({
   },
 });
 
-export const selectUser = state => state.auth.user;
-export const selectStatus = state => state.auth.status;
-export const selectError = state => state.auth.error;
+export const selectUser = (state) => state.auth.user;
+export const selectStatus = (state) => state.auth.status;
+export const selectError = (state) => state.auth.error;
 export const { setUser } = authSlice.actions;
 export default authSlice.reducer;

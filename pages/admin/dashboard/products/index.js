@@ -17,12 +17,12 @@ const ProductListings = () => {
   const { data: brands = [] } = useGetBrandsQuery();
 
   const columns = [
-    { key: 'name', label: 'Product' },
-    { key: 'category.name', label: 'Category' },
-    { key: 'brand.name', label: 'Brand' },
-    { key: 'price', label: 'Price' },
-    { key: 'stock.quantity', label: 'Stock' },
-    { key: 'totalSales', label: 'Total Sales' },
+    { key: 'name', label: 'المنتج' },
+    { key: 'category.name', label: 'التصنيف' },
+    { key: 'brand.name', label: 'العلامة التجارية' },
+    { key: 'price', label: 'السعر' },
+    { key: 'stock.quantity', label: 'المخزون' },
+    { key: 'totalSales', label: 'المبيعات' },
   ];
 
   // تصفية المنتجات بناءً على الفئة أو العلامة التجارية المختارة

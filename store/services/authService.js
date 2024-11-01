@@ -14,21 +14,27 @@ export const createUser = async (name, email, password) => {
     throw new Error(error.response?.data?.error || error.message);
   }
 };
-
 export const loginUser = async (email, password) => {
   try {
     const response = await axios.post(`${apiBaseURL}/login`, {
       email,
       password,
     });
-    return response.data.user;
+    const { token, user } = response.data;
+
+    // تخزين التوكن في localStorage
+    localStorage.setItem('token', token);
+
+    return { ...user, token }; // إضافة token و role_id إلى بيانات المستخدم
   } catch (error) {
     throw new Error(error.response?.data?.error || error.message);
   }
 };
-
 export const onAuthStateChange = async () => {
   try {
+    // تحقق من أن البيئة هي المتصفح قبل محاولة الوصول إلى `localStorage`
+    if (typeof window === 'undefined') return null;
+
     const token = localStorage.getItem('token');
     if (!token) return null;
 
@@ -37,7 +43,9 @@ export const onAuthStateChange = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    return response.data;
+
+    const { role_id, ...userData } = response.data;
+    return { role_id, ...userData };
   } catch (error) {
     throw new Error(error.response?.data?.error || error.message);
   }

@@ -1,50 +1,35 @@
-import Layout from '../components/Layout';
 import '../styles/globals.css';
 import 'swiper/css';
 import { Provider } from 'react-redux';
+import { useEffect, useState } from 'react';
 import store from '../store';
-import ReduxToastr from 'react-redux-toastr/lib/ReduxToastr';
-import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
+import PublicLayout from '../layouts/PublicLayout';
+import AdminStaffLayout from '../layouts/AdminStaffLayout';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor } from '../store';
-import Head from 'next/head';
+import '../styles/globals.css';
+import { selectUser } from '../store/slices/authSlice';
+import { useSelector } from 'react-redux';
+
+function AppContent({ Component, pageProps }) {
+  const user = useSelector(selectUser);
+  const userRole = user?.role_id;
+
+  // اختيار Layout بناءً على role_id
+  const Layout = userRole === 1 || userRole === 2 ? AdminStaffLayout : PublicLayout;
+
+  return (
+    <Layout userRole={userRole}>
+      <Component {...pageProps} />
+    </Layout>
+  );
+}
 
 function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
-      <Head>
-        <title>VE-SHOP | أفضل المنتجات والعروض في متجر VE</title>
-        <meta
-          name="description"
-          content="احصل على أفضل العروض والمنتجات من VE-Shop، بما في ذلك الإلكترونيات، الملابس، والمزيد."
-        />
-        <meta
-          name="keywords"
-          content="متجر, شراء, منتجات, تسوق, إلكترونيات, ملابس, VE-Shop"
-        />
-        <meta property="og:title" content="VE-SHOP | أفضل المنتجات والعروض" />
-        <meta
-          property="og:description"
-          content="اكتشف تشكيلة واسعة من المنتجات بأفضل الأسعار على VE-Shop."
-        />
-        <meta property="og:url" content="https://ve-shop.co" />
-      </Head>
-      <ReduxToastr
-        timeOut={3000} // مدة العرض
-        newestOnTop={false}
-        preventDuplicates
-        position="center-top" // مكان ظهور الرسالة
-        getState={state => state.toastr}
-        transitionIn="fadeIn"
-        transitionOut="fadeOut"
-        progressBar
-        closeOnToastrClick
-      />
-
       <PersistGate loading={null} persistor={persistor}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <AppContent Component={Component} pageProps={pageProps} />
       </PersistGate>
     </Provider>
   );

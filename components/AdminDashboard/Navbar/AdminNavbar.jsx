@@ -2,9 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { FiMenu, FiBell, FiUser } from 'react-icons/fi';
 import Link from 'next/link';
-import { selectUser, logoutUserThunk } from '../../../../store/slices/authSlice';
+import { selectUser, logoutUserThunk } from '../../../store/slices/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
-import { useSidebar } from '../../../../hooks/SidbarContext';
+import { useSidebar } from '../../../hooks/SidbarContext';
 import { useRouter } from 'next/router';
 
 const AdminNavbar = () => {
@@ -61,7 +61,7 @@ const AdminNavbar = () => {
   return (
     <header
       className={`z-10 py-4 bg-white shadow-md dark:bg-gray-800 transition-all duration-300 ${
-        isSidebarOpen ? 'md:mr-64' : 'md:mr-0'
+        isSidebarOpen ? 'md:mr-64' : 'md:mr-16'
       }`}
     >
       <div className="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">

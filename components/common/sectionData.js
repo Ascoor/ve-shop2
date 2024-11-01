@@ -18,7 +18,7 @@ export const sections = [
     name: 'إدارة التصنيفات',
     icon: FiTag,
     dropdown: [
-      { id: 21, name: 'قائمة التصنيفات', link: '/categories/list' },
+      { id: 21, name: 'قائمة التصنيفات', link: '/categories' },
       { id: 22, name: 'إضافة تصنيف', link: '/categories/add' },
       { id: 23, name: 'إدارة التصنيفات الفرعية', link: '/categories/manageSubcategories' },
     ],
