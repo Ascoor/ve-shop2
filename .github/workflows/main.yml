@@ -3,7 +3,7 @@ name: Remote Update and Deploy
 on:
   push:
     branches:
-      - master # Triggers the workflow on pushes to the master branch
+      - main # Triggers the workflow on pushes to the master branch
 
 jobs:
   remote-update-and-deploy:
