@@ -1,12 +1,12 @@
 {
-      "name": "ve-shop",
+      "name": "ve-frontend",
   "version": "1.0.0",
   "private": true,
   "description": "VE-SHOP is a modern e-commerce frontend using Vite, React, and Zustand.",
   "homepage": "https://veshop.co",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Ascoor/ve-shop2"
+    "url": "https://github.com/Ascoor/ve-frontend"
   },
   "type": "module",
   "scripts": {
