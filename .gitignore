@@ -1,0 +1,40 @@
+# ==== Common Node, Editor, System ====
+node_modules/
+dist/
+dist-ssr/
+out/
+*.local
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+desktop.ini
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.swp
+*.swo
+
+# ==== FRONTEND: ve-shop-frontend ====
+node_modules/
+dist
+.env*
+coverage
+.next
+# ==== Ignore OS files everywhere ====
+**/.DS_Store
+**/Thumbs.db
+**/ehthumbs.db
+
+# ==== Extra safety ====
+!.gitignore

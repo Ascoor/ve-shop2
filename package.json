@@ -13,6 +13,10 @@
     "dev": "vite",
     "build": "vite build",
     "build:dev": "vite build --mode development",
+     "format": "prettier --write .",
+    "precopy-build": "rm -rf /var/www/html/ve-shop.co/public/*",
+    "copy-build": "cp -R out/* /var/www/html/ve-shop.co/public",
+   
     "lint": "eslint .",
     "preview": "vite preview"
   },
